@@ -1,0 +1,225 @@
+.contact-form-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-info-card {
+  background: linear-gradient(160deg, #ffffff 0%, #f1f8f4 100%);
+  border: 1px solid rgba(27, 67, 50, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 16px 34px rgba(27, 67, 50, 0.1);
+  padding: 1.5rem 1.25rem;
+}
+
+.contact-info-card h3 {
+  color: #1b4332;
+  line-height: 1.25;
+}
+
+.contact-info-card .text-muted {
+  color: #475569 !important;
+  line-height: 1.7;
+}
+
+.contact-hours-card {
+  background: linear-gradient(145deg, #1b4332 0%, #2d6a4f 100%);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 16px;
+  box-shadow: 0 16px 32px rgba(27, 67, 50, 0.22);
+  padding: 1.25rem 1.2rem;
+  color: #f8fafc;
+}
+
+.contact-hours-title {
+  display: flex;
+  align-items: center;
+  font-size: 1.12rem;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.contact-hours-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.contact-hours-list li {
+  line-height: 1.6;
+  color: rgba(248, 250, 252, 0.96);
+}
+
+.contact-hours-list strong {
+  color: #f7d774;
+}
+
+.contact-section hr {
+  border: none;
+  border-top: 1.5px solid #e9ecef;
+  margin: 2rem 0 1.5rem 0;
+}
+
+@media (max-width: 991px) {
+  .contact-form-wrapper {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .contact-section hr {
+    margin: 1.5rem 0 1rem 0;
+  }
+
+  .contact-info-card {
+    margin-top: 0.15rem;
+  }
+}
+
+.contact-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f6faf7 100%);
+  min-height: 70vh;
+  padding-bottom: 2rem;
+}
+
+.contact-form {
+  background: linear-gradient(160deg, #ffffff 0%, #f8fbf9 100%);
+  border: 1px solid rgba(27, 67, 50, 0.11);
+  border-radius: 14px;
+  box-shadow: 0 20px 45px rgba(27, 67, 50, 0.1);
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 991px) {
+  .contact-section .row {
+    flex-direction: column;
+  }
+
+  .contact-form {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+}
+
+.contact-form .form-control {
+  border-radius: 10px;
+  border: 1px solid rgba(27, 67, 50, 0.15);
+  padding: 0.78rem 0.82rem;
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.contact-form .form-control:focus {
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+  border-color: #2d6a4f;
+}
+
+.contact-form .form-label {
+  color: #1f2937;
+  font-weight: 600;
+  margin-bottom: 0.38rem;
+}
+
+.contact-section .btn.whatsapp-btn {
+  --bs-btn-bg: #25d366;
+  --bs-btn-border-color: #25d366;
+  --bs-btn-hover-bg: #1ebe5d;
+  --bs-btn-hover-border-color: #1ebe5d;
+  --bs-btn-active-bg: #18a84f;
+  --bs-btn-active-border-color: #18a84f;
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-color: #ffffff;
+  border-radius: 999px;
+  padding: 0.68rem 1.15rem;
+  font-weight: 700;
+  border: 1px solid #25d366;
+  background: #25d366;
+  color: #ffffff;
+  transition: 0.3s ease;
+}
+
+.contact-section .btn.whatsapp-btn:hover,
+.contact-section .btn.whatsapp-btn:focus,
+.contact-section .btn.whatsapp-btn:active {
+  transform: translateY(-2px);
+  background: #1ebe5d;
+  color: #fff;
+  border-color: #1ebe5d;
+}
+
+.contact-section .btn.contact-submit-btn {
+  --bs-btn-color: #ffffff;
+  --bs-btn-hover-color: #ffffff;
+  --bs-btn-active-color: #ffffff;
+  border-radius: 10px;
+  min-height: 46px;
+  font-weight: 700;
+  border: 1px solid #1b4332;
+  background: linear-gradient(90deg, #1b4332, #2d6a4f);
+  color: #ffffff;
+}
+
+.contact-section .btn.contact-submit-btn:hover,
+.contact-section .btn.contact-submit-btn:focus,
+.contact-section .btn.contact-submit-btn:active {
+  background: linear-gradient(90deg, #163629, #24533d);
+  color: #ffffff;
+}
+
+.contact-form .alert-success {
+  border: 1px solid rgba(45, 106, 79, 0.28);
+  background: rgba(45, 106, 79, 0.1);
+  color: #1b4332;
+}
+
+@media (max-width: 767px) {
+  .contact-section {
+    padding-top: 1.8rem !important;
+    padding-bottom: 2rem !important;
+  }
+
+  .contact-section .container {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+
+  .contact-form {
+    border-radius: 10px;
+  }
+
+  .contact-form.p-4 {
+    padding: 1rem !important;
+  }
+
+  .contact-form .form-control {
+    min-height: 44px;
+    font-size: 0.96rem;
+  }
+
+  .contact-form textarea.form-control {
+    min-height: 120px;
+  }
+
+  .contact-form .btn {
+    min-height: 44px;
+  }
+
+  .whatsapp-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .contact-info-card h3 {
+    font-size: 1.28rem;
+  }
+
+  .contact-hours-card {
+    padding: 1rem;
+  }
+
+  .contact-hours-title {
+    font-size: 1.04rem;
+  }
+}

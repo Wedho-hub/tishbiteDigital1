@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: tishbite-backend
+    env: node
+    rootDir: backend
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: ALLOWED_ORIGINS
+        value: https://your-app.vercel.app
+      - key: COOKIE_SAMESITE
+        value: none

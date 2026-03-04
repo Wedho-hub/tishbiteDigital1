@@ -1,0 +1,77 @@
+/* Base */
+.page-header {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Light Version */
+.page-header-light {
+  background: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #f8f9fa 50%,
+    #eef5f2 100%
+  );
+}
+
+/* Dark Version */
+.page-header-dark {
+  background: linear-gradient(
+    135deg,
+    #1b4332 0%,
+    #2d6a4f 100%
+  );
+  color: white;
+}
+
+/* Typography */
+.page-header-title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -1px;
+}
+
+.page-header-subtitle {
+  font-family: "Inter", sans-serif;
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+  color: inherit;
+  opacity: 0.85;
+}
+
+/* Divider */
+.page-header-divider {
+  display: inline-block;
+  font-size: 1.3rem;
+  color: #2d6a4f;
+}
+
+.page-header-dark .page-header-divider {
+  color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding-top: 2.2rem !important;
+    padding-bottom: 2.2rem !important;
+  }
+
+  .page-header-title {
+    line-height: 1.2;
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+  }
+
+  .page-header-subtitle {
+    font-size: 0.98rem;
+    line-height: 1.58;
+    max-width: 100%;
+    padding: 0 0.35rem;
+  }
+
+  .page-header-divider {
+    margin-top: 0.9rem !important;
+    font-size: 1.05rem;
+  }
+}

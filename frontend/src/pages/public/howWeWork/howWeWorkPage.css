@@ -1,0 +1,111 @@
+.how-we-work-page {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2.5rem 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 50%, #eef5f2 100%);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.08);
+}
+
+.hww-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.hww-header h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #1b4332;
+  margin-bottom: 0.5rem;
+}
+
+.hww-subtitle {
+  font-size: 1.15rem;
+  color: #495057;
+}
+
+.hww-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.hww-step {
+  flex: 1 1 200px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.06);
+  padding: 2rem 1.2rem 1.5rem 1.2rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.2s;
+}
+
+.hww-step:hover {
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.12);
+}
+
+.hww-step-number {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem auto;
+  background: #1b4332;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+}
+
+.hww-step h2 {
+  font-size: 1.2rem;
+  color: #2d6a4f;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.hww-step p {
+  color: #495057;
+  font-size: 1rem;
+}
+
+@media (max-width: 900px) {
+  .how-we-work-page {
+    margin: 1.8rem auto;
+    padding: 1.3rem 0.95rem;
+    border-radius: 14px;
+  }
+
+  .hww-header {
+    margin-bottom: 1.4rem;
+  }
+
+  .hww-header h1 {
+    font-size: 1.85rem;
+    line-height: 1.2;
+  }
+
+  .hww-subtitle {
+    font-size: 1rem;
+  }
+
+  .hww-steps {
+    gap: 0.9rem;
+  }
+
+  .hww-step {
+    flex: 1 1 100%;
+    padding: 1.1rem 0.95rem;
+    margin-bottom: 0;
+  }
+
+  .hww-step-number {
+    width: 42px;
+    height: 42px;
+    font-size: 1.25rem;
+  }
+}
