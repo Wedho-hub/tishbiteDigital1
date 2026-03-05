@@ -11,26 +11,26 @@ const ManageBlogs = () => {
   const [image, setImage] = useState(null);
   const [editing, setEditing] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
   const fetchBlogs = async (pageNum = 1) => {
-    const res = await getBlogPosts(pageNum);
-    setBlogs(res.data || res);
-    setTotalPages(res.totalPages || 1);
+    setLoading(true);
+    setError("");
+    try {
+      const res = await getBlogPosts(pageNum);
+      setBlogs(res.data || []);
+      setTotalPages(res.totalPages || 1);
+    } catch (err) {
+      setError(err.message || "Failed to load blog posts");
+    } finally {
+      setLoading(false);
+    }
   };
 
   useEffect(() => {
-    let isMounted = true;
-    const fetchData = async () => {
-      const res = await getBlogPosts(page);
-      if (isMounted) {
-        setBlogs(res.data || res);
-        setTotalPages(res.totalPages || 1);
-      }
-    };
-    fetchData();
-    return () => { isMounted = false; };
+    fetchBlogs(page);
   }, [page]);
 
   const handleSubmit = async (e) => {
@@ -45,7 +45,15 @@ const ManageBlogs = () => {
     }
     try {
       if (editing) {
-        await updateBlogPost(editing, { title, content });
+        if (image) {
+          const formData = new FormData();
+          formData.append("title", title);
+          formData.append("content", content);
+          formData.append("image", image);
+          await updateBlogPost(editing, formData, true);
+        } else {
+          await updateBlogPost(editing, { title, content });
+        }
       } else {
         const formData = new FormData();
         formData.append("title", title);
@@ -55,8 +63,8 @@ const ManageBlogs = () => {
       }
       setTitle(""); setContent(""); setImage(null); setEditing(null); setError("");
       fetchBlogs(page);
-    } catch {
-      setError("Error saving blog post");
+    } catch (err) {
+      setError(err.message || "Error saving blog post");
     }
   };
 
@@ -67,8 +75,12 @@ const ManageBlogs = () => {
   };
 
   const handleDelete = async (id) => {
-    await deleteBlogPost(id);
-    fetchBlogs();
+    try {
+      await deleteBlogPost(id);
+      fetchBlogs(page);
+    } catch (err) {
+      setError(err.message || "Failed to delete blog post");
+    }
   };
 
   return (
@@ -79,11 +91,13 @@ const ManageBlogs = () => {
         <p className="markdown-hint">Markdown supported (example: `- bullet`, `**bold**`, blank line for new paragraph).</p>
         <textarea className="markdown-input" value={content} onChange={e => setContent(e.target.value)} placeholder="Content (Markdown supported)" required />
         <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0])} />
+        <p className="markdown-hint">Image upload limit: 5MB (configurable via backend `UPLOAD_MAX_SIZE_MB`).</p>
         <button type="submit">{editing ? "Update" : "Create"}</button>
         {editing && <button type="button" className="cancel-btn" onClick={() => { setEditing(null); setTitle(""); setContent(""); setImage(null); }}>Cancel</button>}
         {error && <div className="error">{error}</div>}
       </form>
       <ul className="admin-list">
+        {loading && <li>Loading blog posts...</li>}
         {blogs.map(blog => (
           <li key={blog._id}>
             <b>{blog.title}</b>

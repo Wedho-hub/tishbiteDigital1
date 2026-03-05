@@ -8,7 +8,20 @@ export const errorHandler = (err, req, res, next) => {
     return next(err);
   }
 
-  const statusCode = err.status || 500;
+  let statusCode = err.status || 500;
+  let message = err.message || "Internal Server Error";
+
+  if (err?.name === "MulterError") {
+    if (err.code === "LIMIT_FILE_SIZE") {
+      const maxSizeMB = Number(process.env.UPLOAD_MAX_SIZE_MB) || 5;
+      statusCode = 413;
+      message = `Image too large. Maximum allowed size is ${maxSizeMB}MB.`;
+    } else {
+      statusCode = 400;
+      message = "Invalid file upload request.";
+    }
+  }
+
   const isProduction = process.env.NODE_ENV === "production";
 
   console.error("[Error]", {
@@ -17,12 +30,12 @@ export const errorHandler = (err, req, res, next) => {
     method: req.method,
     path: req.originalUrl,
     errorType: err.name,
-    message: err.message,
+    message,
     stack: isProduction ? undefined : err.stack,
   });
 
   return res.status(statusCode).json({
-    message: err.message || "Internal Server Error",
+    message,
     errorType: err.name,
     path: req.originalUrl,
     method: req.method,

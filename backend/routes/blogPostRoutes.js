@@ -25,7 +25,7 @@ const router = express.Router();
 router.get("/", getBlogPosts);
 router.get("/:id", getBlogPostById);
 router.post("/", protectAdmin, upload.single("image"), createBlogPost);
-router.put("/:id", protectAdmin, updateBlogPost);
+router.put("/:id", protectAdmin, upload.single("image"), updateBlogPost);
 router.delete("/:id", protectAdmin, deleteBlogPost);
 
 export default router;

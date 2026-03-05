@@ -1,14 +1,22 @@
 import { apiUrl, fetchWithCsrf } from "./api";
 const API_BASE = "/api/blogposts";
 
+async function parseJsonResponse(res) {
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data?.message || "Blog request failed");
+  }
+  return data;
+}
+
 export async function getBlogPosts(page = 1) {
   const res = await fetch(apiUrl(`${API_BASE}?page=${page}`));
-  return res.json();
+  return parseJsonResponse(res);
 }
 
 export async function getBlogPostById(id) {
   const res = await fetch(apiUrl(`${API_BASE}/${id}`));
-  return res.json();
+  return parseJsonResponse(res);
 }
 
 export async function createBlogPost(data, isFormData = false) {
@@ -17,21 +25,21 @@ export async function createBlogPost(data, isFormData = false) {
     headers: isFormData ? undefined : { "Content-Type": "application/json" },
     body: isFormData ? data : JSON.stringify(data)
   });
-  return res.json();
+  return parseJsonResponse(res);
 }
 
-export async function updateBlogPost(id, data) {
+export async function updateBlogPost(id, data, isFormData = false) {
   const res = await fetchWithCsrf(apiUrl(`${API_BASE}/${id}`), {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    headers: isFormData ? undefined : { "Content-Type": "application/json" },
+    body: isFormData ? data : JSON.stringify(data)
   });
-  return res.json();
+  return parseJsonResponse(res);
 }
 
 export async function deleteBlogPost(id) {
   const res = await fetchWithCsrf(apiUrl(`${API_BASE}/${id}`), {
     method: "DELETE"
   });
-  return res.json();
+  return parseJsonResponse(res);
 }

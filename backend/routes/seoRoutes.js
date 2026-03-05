@@ -3,7 +3,7 @@
  * Serves sitemap.xml and robots.txt for search engines.
  */
 import express from "express";
-import BlogPost from "../models/blogpost.js";
+import BlogPost from "../models/blogPost.js";
 
 const router = express.Router();
 

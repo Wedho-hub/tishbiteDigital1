@@ -9,7 +9,28 @@
  *   - PUT /api/blogposts/:id     : Update a blog post
  *   - DELETE /api/blogposts/:id  : Delete a blog post
  */
-import BlogPost from "../models/blogpost.js";
+import BlogPost from "../models/blogPost.js";
+
+const pickBlogPayload = (body = {}) => {
+  const payload = {
+    title: body.title,
+    content: body.content,
+    author: body.author,
+    metaTitle: body.metaTitle,
+    metaDescription: body.metaDescription,
+  };
+
+  if (body.keywords !== undefined) {
+    payload.keywords = Array.isArray(body.keywords)
+      ? body.keywords
+      : String(body.keywords)
+          .split(",")
+          .map((keyword) => keyword.trim())
+          .filter(Boolean);
+  }
+
+  return payload;
+};
 
 // Get all blog posts (with pagination)
 export const getBlogPosts = async (req, res) => {
@@ -26,6 +47,9 @@ export const getBlogPosts = async (req, res) => {
       total
     });
   } catch (err) {
+    if (String(err?.message || "").toLowerCase().includes("buffering timed out")) {
+      return res.status(503).json({ message: "Database unavailable. Please try again shortly." });
+    }
     res.status(500).json({ message: err.message });
   }
 };
@@ -44,10 +68,16 @@ export const getBlogPostById = async (req, res) => {
 // Create a new blog post (with image upload)
 export const createBlogPost = async (req, res) => {
   try {
-    const data = req.body;
+    const data = pickBlogPayload(req.body);
+
+    if (!data.title || !data.content) {
+      return res.status(400).json({ message: "Title and content are required" });
+    }
+
     if (req.file) {
       data.image = req.file.filename;
     }
+
     const post = await BlogPost.create(data);
     res.status(201).json(post);
   } catch (err) {
@@ -58,7 +88,17 @@ export const createBlogPost = async (req, res) => {
 // Update a blog post
 export const updateBlogPost = async (req, res) => {
   try {
-    const post = await BlogPost.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const data = pickBlogPayload(req.body);
+
+    if (req.file) {
+      data.image = req.file.filename;
+    }
+
+    const post = await BlogPost.findByIdAndUpdate(req.params.id, data, {
+      new: true,
+      runValidators: true,
+    });
+
     if (!post) return res.status(404).json({ message: "Blog post not found" });
     res.json(post);
   } catch (err) {

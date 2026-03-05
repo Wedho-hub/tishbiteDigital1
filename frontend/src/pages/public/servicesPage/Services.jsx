@@ -104,11 +104,11 @@ const Services = () => {
       { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
 
-    const elements = document.querySelectorAll(".reveal-on-scroll");
+    const elements = document.querySelectorAll(".reveal-on-scroll:not(.is-visible)");
     elements.forEach((el) => observer.current.observe(el));
 
     return () => observer.current?.disconnect();
-  }, [services]);
+  }, [services, showAllGeneral, showAllBundles]);
 
   const toggleExpand = (id) => {
     setExpanded((prev) => ({

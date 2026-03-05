@@ -5,6 +5,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { csrfProtection, csrfCookie, csrfTokenEndpoint } from "./middleware/csrf.js";
 import authRoutes from "./routes/authRoutes.js";
@@ -77,6 +78,14 @@ app.use("/api", csrfProtection);
 
 // Expose CSRF token for frontend
 app.get("/api/csrf-token", csrfTokenEndpoint);
+
+// Fail fast when DB is not ready (prevents Mongoose buffering timeout 500s)
+app.use("/api", (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    return res.status(503).json({ message: "Database unavailable. Please try again shortly." });
+  }
+  next();
+});
 
 // API routes
 app.use("/api/auth", authRoutes);
