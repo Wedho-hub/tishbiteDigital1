@@ -23,6 +23,10 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    imagePublicId: {
+      type: String,
+      required: false,
+    },
     link: {
       type: String,
       required: false,

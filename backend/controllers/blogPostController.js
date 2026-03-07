@@ -10,6 +10,7 @@
  *   - DELETE /api/blogposts/:id  : Delete a blog post
  */
 import BlogPost from "../models/blogPost.js";
+import { deleteStoredImage, resolveUploadedImageData } from "../utils/uploadImage.js";
 
 const pickBlogPayload = (body = {}) => {
   const payload = {
@@ -75,7 +76,11 @@ export const createBlogPost = async (req, res) => {
     }
 
     if (req.file) {
-      data.image = req.file.filename;
+      const imageData = await resolveUploadedImageData(req.file, "tishbite-digital/blog-posts");
+      if (imageData?.image) {
+        data.image = imageData.image;
+        data.imagePublicId = imageData.imagePublicId;
+      }
     }
 
     const post = await BlogPost.create(data);
@@ -88,10 +93,17 @@ export const createBlogPost = async (req, res) => {
 // Update a blog post
 export const updateBlogPost = async (req, res) => {
   try {
+    const existingPost = await BlogPost.findById(req.params.id);
+    if (!existingPost) return res.status(404).json({ message: "Blog post not found" });
+
     const data = pickBlogPayload(req.body);
 
     if (req.file) {
-      data.image = req.file.filename;
+      const imageData = await resolveUploadedImageData(req.file, "tishbite-digital/blog-posts");
+      if (imageData?.image) {
+        data.image = imageData.image;
+        data.imagePublicId = imageData.imagePublicId;
+      }
     }
 
     const post = await BlogPost.findByIdAndUpdate(req.params.id, data, {
@@ -99,7 +111,13 @@ export const updateBlogPost = async (req, res) => {
       runValidators: true,
     });
 
-    if (!post) return res.status(404).json({ message: "Blog post not found" });
+    if (req.file) {
+      await deleteStoredImage({
+        image: existingPost.image,
+        imagePublicId: existingPost.imagePublicId,
+      });
+    }
+
     res.json(post);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -111,6 +129,9 @@ export const deleteBlogPost = async (req, res) => {
   try {
     const post = await BlogPost.findByIdAndDelete(req.params.id);
     if (!post) return res.status(404).json({ message: "Blog post not found" });
+
+    await deleteStoredImage({ image: post.image, imagePublicId: post.imagePublicId });
+
     res.json({ message: "Blog post deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });

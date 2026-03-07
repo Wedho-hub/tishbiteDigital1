@@ -6,10 +6,19 @@
 - Set secret env vars in Render dashboard:
   - `MONGO_URI`
   - `JWT_SECRET`
+  - `CLOUDINARY_CLOUD_NAME`
+  - `CLOUDINARY_API_KEY`
+  - `CLOUDINARY_API_SECRET`
 - Keep these values:
   - `NODE_ENV=production`
   - `COOKIE_SAMESITE=none`
   - `ALLOWED_ORIGINS=https://your-vercel-domain.vercel.app`
+
+### Media uploads (Cloudinary)
+
+- Blog, project, and service images are uploaded to Cloudinary when the 3 Cloudinary env vars are set.
+- If Cloudinary vars are missing, backend falls back to local `uploads/` storage (not persistent on Render).
+- Recommended Render setup is to always set Cloudinary vars in production.
 
 ## 2) Frontend on Vercel
 

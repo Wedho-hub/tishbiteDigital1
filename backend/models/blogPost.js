@@ -27,6 +27,10 @@ const blogPostSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    imagePublicId: {
+      type: String,
+      required: false,
+    },
     metaTitle: {
       type: String,
       required: false,

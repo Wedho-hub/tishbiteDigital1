@@ -10,6 +10,7 @@
  *   - DELETE /api/projects/:id  : Delete a project
  */
 import Project from "../models/project.js";
+import { deleteStoredImage, resolveUploadedImageData } from "../utils/uploadImage.js";
 
 // Get all projects (with pagination)
 export const getProjects = async (req, res) => {
@@ -45,9 +46,13 @@ export const getProjectById = async (req, res) => {
 // Create a new project (with image upload)
 export const createProject = async (req, res) => {
   try {
-    const data = req.body;
+    const data = { ...req.body };
     if (req.file) {
-      data.image = req.file.filename;
+      const imageData = await resolveUploadedImageData(req.file, "tishbite-digital/projects");
+      if (imageData?.image) {
+        data.image = imageData.image;
+        data.imagePublicId = imageData.imagePublicId;
+      }
     }
     const project = await Project.create(data);
     res.status(201).json(project);
@@ -59,8 +64,27 @@ export const createProject = async (req, res) => {
 // Update a project
 export const updateProject = async (req, res) => {
   try {
-    const project = await Project.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!project) return res.status(404).json({ message: "Project not found" });
+    const existingProject = await Project.findById(req.params.id);
+    if (!existingProject) return res.status(404).json({ message: "Project not found" });
+
+    const data = { ...req.body };
+    if (req.file) {
+      const imageData = await resolveUploadedImageData(req.file, "tishbite-digital/projects");
+      if (imageData?.image) {
+        data.image = imageData.image;
+        data.imagePublicId = imageData.imagePublicId;
+      }
+    }
+
+    const project = await Project.findByIdAndUpdate(req.params.id, data, { new: true });
+
+    if (req.file) {
+      await deleteStoredImage({
+        image: existingProject.image,
+        imagePublicId: existingProject.imagePublicId,
+      });
+    }
+
     res.json(project);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -72,6 +96,9 @@ export const deleteProject = async (req, res) => {
   try {
     const project = await Project.findByIdAndDelete(req.params.id);
     if (!project) return res.status(404).json({ message: "Project not found" });
+
+    await deleteStoredImage({ image: project.image, imagePublicId: project.imagePublicId });
+
     res.json({ message: "Project deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });

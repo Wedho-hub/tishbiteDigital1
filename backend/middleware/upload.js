@@ -5,6 +5,7 @@
  */
 import multer from "multer";
 import path from "path";
+import { isCloudinaryConfigured } from "../config/cloudinary.js";
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -14,6 +15,8 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + path.extname(file.originalname));
   },
 });
+
+const cloudinaryStorage = multer.memoryStorage();
 
 // File type and size validation
 const allowedTypes = ["image/jpeg", "image/png", "image/gif", "image/webp"];
@@ -28,7 +31,7 @@ function fileFilter(req, file, cb) {
 }
 
 export const upload = multer({
-  storage,
+  storage: isCloudinaryConfigured() ? cloudinaryStorage : storage,
   fileFilter,
   limits: { fileSize: maxSize }
 });

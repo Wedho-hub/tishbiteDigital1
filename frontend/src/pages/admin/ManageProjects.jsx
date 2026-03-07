@@ -51,7 +51,16 @@ const ManageProjects = () => {
     }
     try {
       if (editing) {
-        await updateProject(editing, { title, description, link: url });
+        if (image) {
+          const formData = new FormData();
+          formData.append("title", title);
+          formData.append("description", description);
+          if (url) formData.append("link", url);
+          formData.append("image", image);
+          await updateProject(editing, formData, true);
+        } else {
+          await updateProject(editing, { title, description, link: url });
+        }
       } else {
         const formData = new FormData();
         formData.append("title", title);

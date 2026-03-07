@@ -10,6 +10,7 @@
  *   - DELETE /api/services/:id  : Delete a service
  */
 import Service from "../models/service.js";
+import { deleteStoredImage, resolveUploadedImageData } from "../utils/uploadImage.js";
 
 const allowedCategories = new Set(["general", "bundle"]);
 
@@ -62,9 +63,15 @@ export const createService = async (req, res) => {
       return res.status(400).json({ message: "Invalid category. Use 'general' or 'bundle'." });
     }
 
+    const imageData = req.file
+      ? await resolveUploadedImageData(req.file, "tishbite-digital/services")
+      : null;
+
     const service = await Service.create({
       ...req.body,
       category: category || "general",
+      ...(imageData?.image ? { image: imageData.image } : {}),
+      ...(imageData?.imagePublicId ? { imagePublicId: imageData.imagePublicId } : {}),
     });
 
     return res.status(201).json(service);
@@ -76,7 +83,18 @@ export const createService = async (req, res) => {
 // Update a service
 export const updateService = async (req, res) => {
   try {
+    const existingService = await Service.findById(req.params.id);
+    if (!existingService) return res.status(404).json({ message: "Service not found" });
+
     const updateData = { ...req.body };
+
+    if (req.file) {
+      const imageData = await resolveUploadedImageData(req.file, "tishbite-digital/services");
+      if (imageData?.image) {
+        updateData.image = imageData.image;
+        updateData.imagePublicId = imageData.imagePublicId;
+      }
+    }
 
     if (Object.prototype.hasOwnProperty.call(updateData, "category")) {
       const category = normalizeCategory(updateData.category);
@@ -87,7 +105,13 @@ export const updateService = async (req, res) => {
     }
 
     const service = await Service.findByIdAndUpdate(req.params.id, updateData, { new: true, runValidators: true });
-    if (!service) return res.status(404).json({ message: "Service not found" });
+
+    if (req.file) {
+      await deleteStoredImage({
+        image: existingService.image,
+        imagePublicId: existingService.imagePublicId,
+      });
+    }
 
     return res.json({
       ...service.toObject(),
@@ -103,6 +127,9 @@ export const deleteService = async (req, res) => {
   try {
     const service = await Service.findByIdAndDelete(req.params.id);
     if (!service) return res.status(404).json({ message: "Service not found" });
+
+    await deleteStoredImage({ image: service.image, imagePublicId: service.imagePublicId });
+
     res.json({ message: "Service deleted" });
   } catch (err) {
     res.status(500).json({ message: err.message });

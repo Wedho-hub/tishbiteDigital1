@@ -20,11 +20,11 @@ export async function createProject(data, isFormData = false) {
   return res.json();
 }
 
-export async function updateProject(id, data) {
+export async function updateProject(id, data, isFormData = false) {
   const res = await fetchWithCsrf(apiUrl(`${API_BASE}/${id}`), {
     method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    headers: isFormData ? undefined : { "Content-Type": "application/json" },
+    body: isFormData ? data : JSON.stringify(data)
   });
   return res.json();
 }

@@ -29,6 +29,14 @@ const serviceSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    image: {
+      type: String,
+      required: false,
+    },
+    imagePublicId: {
+      type: String,
+      required: false,
+    },
   },
   { timestamps: true }
 );
