@@ -78,7 +78,10 @@ const Home = () => {
             viewport={{ once: true, amount: 0.3 }}
             className="row align-items-center"
           >
-            <MotionDiv className="col-lg-6" variants={fadeLeft}>
+            <MotionDiv className="col-lg-6 text-center mt-4 mt-lg-0 order-lg-1" variants={fadeRight}>
+              <FaLaptopCode size={120} className="about-icon" />
+            </MotionDiv>
+            <MotionDiv className="col-lg-6 order-lg-2" variants={fadeLeft}>
               <h2 className="section-title mb-4">
                 Building Systems, Not Just Websites
               </h2>
@@ -105,9 +108,6 @@ const Home = () => {
               >
                 {showMore ? "Show Less" : "Learn More"} <FaArrowRight />
               </button>
-            </MotionDiv>
-            <MotionDiv className="col-lg-6 text-center mt-4 mt-lg-0" variants={fadeRight}>
-              <FaLaptopCode size={120} className="about-icon" />
             </MotionDiv>
           </MotionDiv>
         </div>

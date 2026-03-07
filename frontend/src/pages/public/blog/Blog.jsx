@@ -3,7 +3,21 @@ import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { Link } from "react-router-dom";
 import { getBlogPosts } from "../../../services/blogService";
 import { resolveUploadUrl } from "../../../services/api";
+import { motion } from "framer-motion";
 import "./blog.css";
+
+const gridVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.09, delayChildren: 0.04 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+};
 
 const FALLBACK_IMAGE = "/assets/project-fallback.png";
 
@@ -53,11 +67,17 @@ const Blog = () => {
     <>
       <PageHeader title="Blog" subtitle="Read our latest articles and insights." background="light" />
       <section className="blog-page-wrap container">
-        {loading && <p>Loading blog posts...</p>}
-        {!loading && error && <p>{error}</p>}
-        <div className="blog-grid">
+        {loading && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Loading blog posts...</motion.p>}
+        {!loading && error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{error}</motion.p>}
+        <motion.div className="blog-grid" variants={gridVariants} initial="hidden" animate="visible">
           {!loading && !error && blogs.map((blog) => (
-            <article key={blog._id} className="blog-card">
+            <motion.article
+              key={blog._id}
+              className="blog-card"
+              variants={cardVariants}
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+            >
               <Link to={`/blog/${blog._id}`} className="blog-card-img-link" aria-label={`Read ${blog.title}`}>
                 <img
                   src={resolveBlogImage(blog.image)}
@@ -72,9 +92,9 @@ const Blog = () => {
                 <p className="blog-card-preview">{createPreview(blog.content || "")}</p>
                 <Link to={`/blog/${blog._id}`} className="blog-read-btn">Read Blog</Link>
               </div>
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
         {!loading && !error && blogs.length === 0 && <p>No blog posts available yet.</p>}
       </section>
     </>

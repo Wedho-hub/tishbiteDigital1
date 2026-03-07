@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.css";
 import { FaFacebookF, FaInstagram, FaPinterestP } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const socialLinks = [
   { href: "https://facebook.com", icon: <FaFacebookF />, label: "Facebook" },
@@ -19,26 +20,43 @@ const navLinks = [
 
 const Footer = () => {
   return (
-    <footer className="footer">
+    <motion.footer
+      className="footer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+    >
       <div className="container footer-container">
 
         {/* Top Section */}
-        <div className="footer-top row">
+        <motion.div
+          className="footer-top row"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.2 }}
+          transition={{ duration: 0.45, delay: 0.05 }}
+        >
 
           {/* Brand Column */}
-          <div className="col-lg-4 col-md-6 footer-brand">
+          <motion.div className="col-lg-4 col-md-6 footer-brand" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
             <Link to="/" className="footer-logo">
-              <span className="brand-name">Tishbite Digital</span>
+              <img
+                src="/assets/tishbite_digital_logo.svg"
+                alt="Tishbite Digital"
+                className="footer-logo-image"
+                loading="lazy"
+              />
               <span className="slogan">Growing Together</span>
             </Link>
             <p className="footer-description">
               We help businesses grow through strategic branding,
               web development and digital marketing solutions.
             </p>
-          </div>
+          </motion.div>
 
           {/* Navigation Column */}
-          <div className="col-lg-4 col-md-6 footer-links">
+          <motion.div className="col-lg-4 col-md-6 footer-links" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.06 }}>
             <h6 className="footer-heading">Quick Links</h6>
             <ul>
               {navLinks.map(link => (
@@ -47,10 +65,10 @@ const Footer = () => {
                 </li>
               ))}
             </ul>
-          </div>
+          </motion.div>
 
           {/* Contact Column */}
-          <div className="col-lg-4 col-md-12 footer-contact">
+          <motion.div className="col-lg-4 col-md-12 footer-contact" initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.4, delay: 0.12 }}>
             <h6 className="footer-heading">Contact</h6>
             <p>
               <a href="tel:+27791684548" className="footer-contact-link">📞 +27 79 168 4548</a>
@@ -73,9 +91,9 @@ const Footer = () => {
                 </a>
               ))}
             </div>
-          </div>
+          </motion.div>
 
-        </div>
+        </motion.div>
 
         {/* Bottom Section */}
         <div className="footer-bottom">
@@ -85,7 +103,7 @@ const Footer = () => {
         </div>
 
       </div>
-    </footer>
+    </motion.footer>
   );
 };
 

@@ -1,0 +1,37 @@
+
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="240" viewBox="0 0 800 240">
+  <rect width="100%" height="100%" fill="white"/>
+  
+  <!-- Abstract shape -->
+  <path d="M60 170 Q120 40 180 120 T300 90" 
+        fill="none" 
+        stroke="#2d6a4f" 
+        stroke-width="10" 
+        stroke-linecap="round"/>
+        
+  <path d="M70 185 Q140 80 210 150" 
+        fill="none" 
+        stroke="black" 
+        stroke-width="6" 
+        stroke-linecap="round"/>
+        
+  <!-- Small gold accent -->
+  <circle cx="305" cy="90" r="6" fill="#f4c95d"/>
+  
+  <!-- Text -->
+  <text x="340" y="120" 
+        font-family="Arial, Helvetica, sans-serif" 
+        font-size="54" 
+        fill="black"
+        letter-spacing="1">
+        Tishbite
+  </text>
+  
+  <text x="342" y="170" 
+        font-family="Arial, Helvetica, sans-serif" 
+        font-size="34" 
+        fill="#2d6a4f"
+        letter-spacing="6">
+        DIGITAL
+  </text>
+</svg>

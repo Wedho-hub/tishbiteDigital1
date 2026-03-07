@@ -33,11 +33,13 @@
   width: fit-content;
 }
 
-.footer-logo .brand-name {
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: #ffffff;
-  line-height: 1.2;
+.footer-logo-image {
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+  filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.2));
 }
 
 .footer-logo .slogan {

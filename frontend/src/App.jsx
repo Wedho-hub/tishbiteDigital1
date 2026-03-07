@@ -1,5 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ScrollToTop from "./components/common/ScrollToTop";
 import PublicLayout from "./components/layout/PublicLayout";
 import AdminRoutes from "./routes/AdminRoutes";
 import AdminLogin from "./pages/admin/AdminLogin.jsx";
@@ -44,6 +45,7 @@ function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/admin/*" element={<AdminRoutes />} />

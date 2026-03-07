@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { getBlogPostById } from "../../../services/blogService";
 import { resolveUploadUrl } from "../../../services/api";
 import ReactMarkdown from "react-markdown";
+import { motion } from "framer-motion";
 import "./blogDetails.css";
 
 const FALLBACK_IMAGE = "/assets/project-fallback.png";
@@ -48,22 +49,42 @@ const BlogDetails = () => {
     <>
       <PageHeader title={blog.title} subtitle={blog.subtitle || "Read the full article below."} background="light" />
       <section className="blog-details-wrap container">
-        <div className="blog-back-btn-wrap">
+        <motion.div
+          className="blog-back-btn-wrap"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.35 }}
+        >
           <Link to="/blog" className="blog-back-btn">← Back to Blogs</Link>
-        </div>
-        <article className="blog-details-card">
-          <div className="blog-details-image-wrap">
+        </motion.div>
+        <motion.article
+          className="blog-details-card"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.div
+            className="blog-details-image-wrap"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.06 }}
+          >
             <img
               src={resolveBlogImage(blog.image)}
               alt={blog.title}
               className="blog-details-image"
               loading="eager"
             />
-          </div>
-          <div className="blog-content markdown-render">
+          </motion.div>
+          <motion.div
+            className="blog-content markdown-render"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.45, delay: 0.14 }}
+          >
             <ReactMarkdown>{blog.content}</ReactMarkdown>
-          </div>
-        </article>
+          </motion.div>
+        </motion.article>
       </section>
     </>
   );

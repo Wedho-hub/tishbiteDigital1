@@ -59,9 +59,12 @@ const Navbar = () => {
           {/* Brand */}
           <div className="navbar-brand-col d-flex align-items-center">
             <Link className="navbar-brand" to="/">
-              Tishbite Digital
-              <br />
-              <span className="slogan">Growing Together</span>
+              <img
+                src="/assets/tishbite_digital_logo.svg"
+                alt="Tishbite Digital"
+                className="navbar-logo"
+                loading="eager"
+              />
             </Link>
           </div>
 
@@ -146,9 +149,16 @@ const Navbar = () => {
           {/* Brand + Toggler */}
           <div className="navbar-mobile-bottom d-flex align-items-center justify-content-between w-100">
             <Link className="navbar-brand" to="/">
-              Tishbite Digital
-              <br />
-              <span className="slogan">Growing Together</span>
+              <img
+                src="/assets/tishbite_digital_favicon.svg"
+                alt="Tishbite Digital"
+                className="navbar-logo-mark"
+                loading="eager"
+              />
+              <span className="navbar-brand-mobile-text">
+                Tishbite Digital
+                <span className="slogan">Growing Together</span>
+              </span>
             </Link>
 
             <button
