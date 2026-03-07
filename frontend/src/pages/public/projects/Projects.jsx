@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ReactMarkdown from "react-markdown";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { getProjects } from "../../../services/projectService";
+import { resolveUploadUrl } from "../../../services/api";
 import "./projects.css";
 
 const MotionSection = motion.section;
@@ -30,9 +31,7 @@ const cardVariants = {
 };
 
 function ProjectCard({ project }) {
-  const imageUrl = project.image
-    ? (project.image.startsWith("http") ? project.image : `/uploads/${project.image}`)
-    : "/assets/project-fallback.png";
+  const imageUrl = resolveUploadUrl(project.image) || "/assets/project-fallback.png";
 
   return (
     <MotionDiv

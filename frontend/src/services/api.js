@@ -6,6 +6,23 @@ export function apiUrl(path) {
   return `${API_BASE_URL}${path}`;
 }
 
+export function resolveUploadUrl(image) {
+  if (!image) return "";
+  if (image.startsWith("http://") || image.startsWith("https://")) return image;
+
+  let normalized = image.trim();
+  if (!normalized) return "";
+
+  if (!normalized.startsWith("/")) {
+    normalized = normalized.startsWith("uploads/")
+      ? `/${normalized}`
+      : `/uploads/${normalized}`;
+  }
+
+  if (!API_BASE_URL) return normalized;
+  return `${API_BASE_URL}${normalized}`;
+}
+
 export async function loginAdmin(email, password) {
   const res = await fetchWithCsrf(apiUrl("/api/auth/login"), {
     method: "POST",

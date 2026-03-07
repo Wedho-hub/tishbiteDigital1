@@ -2,16 +2,13 @@ import React, { useEffect, useState } from "react";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { Link } from "react-router-dom";
 import { getBlogPosts } from "../../../services/blogService";
+import { resolveUploadUrl } from "../../../services/api";
 import "./blog.css";
 
 const FALLBACK_IMAGE = "/assets/project-fallback.png";
 
 const resolveBlogImage = (image) => {
-  if (!image) return FALLBACK_IMAGE;
-  if (image.startsWith("http")) return image;
-  if (image.startsWith("/uploads/")) return image;
-  if (image.startsWith("uploads/")) return `/${image}`;
-  return `/uploads/${image}`;
+  return resolveUploadUrl(image) || FALLBACK_IMAGE;
 };
 
 const createPreview = (content = "") => {

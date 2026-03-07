@@ -2,14 +2,15 @@
 import React, { useState } from "react";
 import { motion as Motion } from "framer-motion";
 import { FaWhatsapp, FaPaperPlane, FaClock, FaCalendarAlt } from "react-icons/fa";
-import axios from "axios";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
+import { createEnquiry } from "../../../services/enquiryService";
 import "./contact.css";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,14 +20,16 @@ const Contact = () => {
     e.preventDefault();
     setLoading(true);
     setSuccess(false);
+    setError("");
     try {
-      // Replace with your backend endpoint
-      await axios.post("/api/enquiry", formData);
+      const result = await createEnquiry(formData);
+      if (result?.message && !result?._id) {
+        throw new Error(result.message);
+      }
       setSuccess(true);
       setFormData({ name: "", email: "", message: "" });
     } catch (err) {
-      // Log error for debugging, does not affect functionality
-      console.log("Contact form error:", err);
+      setError(err?.message || "Failed to submit enquiry. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -34,7 +37,11 @@ const Contact = () => {
 
   return (
     <>
-      <PageHeader title="Contact Us" subtitle="Let's build something great together" />
+      <PageHeader
+        title="Contact Us"
+        subtitle="Let's build something cool and stunning together"
+        background="dark"
+      />
       <section className="contact-section py-5">
         <div className="container">
           <div className="row align-items-start gy-5 gx-lg-5">
@@ -173,6 +180,16 @@ const Contact = () => {
                       transition={{ duration: 0.5 }}
                     >
                       Your enquiry has been submitted successfully.
+                    </Motion.div>
+                  )}
+                  {error && (
+                    <Motion.div
+                      className="alert alert-danger mt-3"
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {error}
                     </Motion.div>
                   )}
                 </Motion.form>

@@ -2,26 +2,79 @@
 .page-header {
   position: relative;
   overflow: hidden;
+  isolation: isolate;
 }
 
 /* Light Version */
 .page-header-light {
   background: linear-gradient(
     135deg,
-    #ffffff 0%,
-    #f8f9fa 50%,
-    #eef5f2 100%
+    #0b1f19 0%,
+    #163a2f 55%,
+    #1f4d3d 100%
   );
+  color: #ffffff;
+}
+
+.page-header-light::before,
+.page-header-light::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page-header-light::before {
+  width: 300px;
+  height: 300px;
+  top: -120px;
+  right: -80px;
+  background: radial-gradient(circle, rgba(116, 198, 157, 0.28) 0%, rgba(116, 198, 157, 0) 72%);
+}
+
+.page-header-light::after {
+  width: 240px;
+  height: 240px;
+  bottom: -100px;
+  left: -70px;
+  background: radial-gradient(circle, rgba(216, 243, 220, 0.18) 0%, rgba(216, 243, 220, 0) 72%);
 }
 
 /* Dark Version */
 .page-header-dark {
   background: linear-gradient(
     135deg,
-    #1b4332 0%,
+    #081c15 0%,
+    #1b4332 45%,
     #2d6a4f 100%
   );
   color: white;
+}
+
+.page-header-dark::before,
+.page-header-dark::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.page-header-dark::before {
+  width: 340px;
+  height: 340px;
+  top: -140px;
+  right: -90px;
+  background: radial-gradient(circle, rgba(64, 145, 108, 0.35) 0%, rgba(64, 145, 108, 0) 70%);
+}
+
+.page-header-dark::after {
+  width: 280px;
+  height: 280px;
+  bottom: -120px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(183, 228, 199, 0.2) 0%, rgba(183, 228, 199, 0) 72%);
 }
 
 /* Typography */
@@ -30,6 +83,7 @@
   font-weight: 700;
   font-size: clamp(2rem, 4vw, 3rem);
   letter-spacing: -1px;
+  text-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
 }
 
 .page-header-subtitle {
@@ -48,8 +102,14 @@
   color: #2d6a4f;
 }
 
+.page-header-light .page-header-divider {
+  color: #d8f3dc;
+  filter: drop-shadow(0 0 12px rgba(216, 243, 220, 0.3));
+}
+
 .page-header-dark .page-header-divider {
   color: #ffffff;
+  filter: drop-shadow(0 0 14px rgba(255, 255, 255, 0.35));
 }
 
 @media (max-width: 768px) {
