@@ -1,5 +1,6 @@
 import path from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 import express from "express";
@@ -110,10 +111,16 @@ app.use("/api", (req, res) => {
 // Error handler LAST
 app.use(errorHandler);
 
-// Serve frontend static files and index.html for unknown routes (for React Router)
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
-app.use((req, res, next) => {
-  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
-});
+// Serve frontend static files only when frontend build exists (single-service deployments)
+const frontendDistPath = path.join(__dirname, "../frontend/dist");
+const frontendIndexPath = path.join(frontendDistPath, "index.html");
+const hasFrontendBuild = fs.existsSync(frontendIndexPath);
+
+if (hasFrontendBuild) {
+  app.use(express.static(frontendDistPath));
+  app.use((req, res) => {
+    res.sendFile(frontendIndexPath);
+  });
+}
 
 export default app;
