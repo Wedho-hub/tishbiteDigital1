@@ -1,0 +1,172 @@
+/* ===================================================== */
+/* ABOUT PAGE STYLES */
+/* ===================================================== */
+
+.about-page {
+  min-height: 100vh;
+}
+
+/* Hero Section */
+.about-hero {
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+  color: white;
+  padding: 5rem 0 3rem;
+}
+
+.about-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+}
+
+.about-subtitle {
+  font-size: 1.25rem;
+  color: #f4f4f4 !important;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Mission Section */
+.about-mission {
+  background: white;
+}
+
+.about-mission .section-title {
+  color: #1b4332;
+  font-weight: 700;
+}
+
+.mission-copy {
+  padding: 1.2rem 1.1rem;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+  border-left: 4px solid #f4c95d;
+  box-shadow: 0 10px 24px rgba(27, 67, 50, 0.08);
+}
+
+.mission-paragraph {
+  color: #355446;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  margin: 0;
+}
+
+.mission-paragraph strong {
+  color: #1b4332;
+  font-weight: 700;
+}
+
+.about-page-icon {
+  opacity: 0.9;
+  filter: drop-shadow(0 4px 12px rgba(45, 106, 79, 0.2));
+}
+
+.about-profile-pic {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(27, 67, 50, 0.2);
+  border: 4px solid #f4c95d;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-profile-pic:hover {
+  transform: scale(1.03);
+  box-shadow: 0 12px 32px rgba(27, 67, 50, 0.3);
+}
+
+/* Values Section */
+.about-values {
+  background: #f8f9fa;
+}
+
+.value-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  height: 100%;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(45, 106, 79, 0.15);
+}
+
+.value-card h5 {
+  color: #1b4332;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+/* Services Section */
+.about-services {
+  background: white;
+}
+
+.service-item {
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #2d6a4f;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.service-item:hover {
+  background: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateX(5px);
+}
+
+.service-item h5 {
+  font-weight: 600;
+}
+
+/* CTA Section */
+.about-cta {
+  background: linear-gradient(135deg, #f4c95d 0%, #f4a460 100%);
+}
+
+.about-cta h2 {
+  color: #1b4332;
+  font-weight: 700;
+}
+
+.about-cta .btn-success {
+  background: #1b4332;
+  border: none;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.about-cta .btn-success:hover {
+  background: #2d6a4f;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(27, 67, 50, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about-title {
+    font-size: 2rem;
+  }
+
+  .about-subtitle {
+    font-size: 1rem;
+  }
+
+  .about-hero {
+    padding: 3rem 0 2rem;
+  }
+
+  .mission-copy {
+    padding: 1rem;
+  }
+
+  .mission-paragraph {
+    font-size: 0.99rem;
+    line-height: 1.7;
+  }
+}

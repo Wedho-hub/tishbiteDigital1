@@ -79,7 +79,10 @@ const Home = () => {
             className="row align-items-center"
           >
             <MotionDiv className="col-lg-6 text-center mt-4 mt-lg-0 order-lg-1" variants={fadeRight}>
-              <FaLaptopCode size={120} className="about-icon" />
+              <Link to="/about" className="about-link-wrapper">
+                <FaLaptopCode size={120} className="about-icon" />
+                <p className="about-caption mt-3">About Tishbite Digital?</p>
+              </Link>
             </MotionDiv>
             <MotionDiv className="col-lg-6 order-lg-2" variants={fadeLeft}>
               <h2 className="section-title mb-4">

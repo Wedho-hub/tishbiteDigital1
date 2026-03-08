@@ -13,6 +13,7 @@ import Contacts from "./pages/public/contact/Contact.jsx";
 import NotFound from "./pages/public/notFound/NotFound.jsx";
 import ErrorPage from "./pages/public/errorPage/ErrorPage.jsx";
 import HowWeWorkPage from "./pages/public/howWeWork/HowWeWorkPage.jsx";
+import About from "./components/common/about/About.jsx";
 
 // Error Boundary for catching React errors
 class ErrorBoundary extends React.Component {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/admin/*" element={<AdminRoutes />} />
           <Route element={<PublicLayout />}>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/blog/:id" element={<BlogDetails />} />
             <Route path="/projects" element={<Projects />} />
