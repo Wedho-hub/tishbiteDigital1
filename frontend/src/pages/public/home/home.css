@@ -110,11 +110,25 @@
 
 .about-link-wrapper {
   display: inline-block;
+  position: relative;
   text-decoration: none;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
   border-radius: 12px;
   padding: 1rem;
   outline: none;
+  animation: aboutLinkPulse 2.8s ease-in-out infinite;
+}
+
+.about-link-wrapper::before {
+  content: "";
+  position: absolute;
+  inset: -8px;
+  border-radius: 16px;
+  background: radial-gradient(circle, rgba(244, 201, 93, 0.28) 0%, rgba(244, 201, 93, 0) 70%);
+  opacity: 0;
+  transform: scale(0.92);
+  animation: aboutGlowPulse 2.8s ease-in-out infinite;
+  pointer-events: none;
 }
 
 .about-link-wrapper:hover,
@@ -130,6 +144,7 @@
 
 .about-link-wrapper .about-icon {
   transition: color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  animation: aboutIconFloat 2.8s ease-in-out infinite;
 }
 
 .about-link-wrapper:hover .about-icon,
@@ -151,6 +166,46 @@
 .about-link-wrapper:focus .about-caption {
   color: #2d6a4f;
   transform: translateY(-2px);
+}
+
+@keyframes aboutLinkPulse {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  45% {
+    transform: translateY(-3px) scale(1.02);
+  }
+}
+
+@keyframes aboutGlowPulse {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(0.92);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+}
+
+@keyframes aboutIconFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-link-wrapper,
+  .about-link-wrapper::before,
+  .about-link-wrapper .about-icon {
+    animation: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -181,6 +236,14 @@
   }
 
   .about-icon {
-    transform: scale(0.84);
+    transform: scale(0.96);
+  }
+
+  .about-link-wrapper {
+    padding: 1.15rem 1rem;
+  }
+
+  .about-caption {
+    font-size: 1.35rem;
   }
 }
