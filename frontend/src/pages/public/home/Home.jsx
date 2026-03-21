@@ -131,7 +131,7 @@ const Home = () => {
               <FaBullhorn size={50} className="mb-3 text-success" />
               <h4>Promotions</h4>
               <p className="text-muted">
-                Offering free consultations to the first 20 that send us a message in the next 30 days. Let's discuss how we can help your business grow online.
+                Offering free consultations to the first 10 businesses that send us a message via our website in the next 30 days.
               </p>
             </MotionDiv>
             <MotionDiv className="col-md-6 mb-4" variants={fadeRight}>
