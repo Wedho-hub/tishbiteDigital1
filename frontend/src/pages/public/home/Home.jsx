@@ -144,7 +144,7 @@ const Home = () => {
                 <p>
                   Sharing insights on digital growth, SEO, automation, and small business success.
                 </p>
-                <Link to="/blogs" className="promo-link">Read Latest Insights</Link>
+                <Link to="/blog" className="promo-link">Read Latest Insights</Link>
               </article>
             </MotionDiv>
           </MotionDiv>
