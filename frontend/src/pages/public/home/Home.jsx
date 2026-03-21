@@ -128,18 +128,24 @@ const Home = () => {
             className="row text-center"
           >
             <MotionDiv className="col-md-6 mb-4" variants={fadeLeft}>
-              <FaBullhorn size={50} className="mb-3 text-success" />
-              <h4>Promotions</h4>
-              <p className="text-muted">
-                Offering free consultations to the first 10 businesses that send us a message via our website in the next 30 days.
-              </p>
+              <article className="promo-card promo-card-highlight h-100">
+                <FaBullhorn size={50} className="mb-3 promo-icon" />
+                <h4>Promotions</h4>
+                <p>
+                  Offering free consultations to the first 10 businesses that send us a message via our website in the next 30 days.
+                </p>
+                <Link to="/contact" className="promo-link">Claim Your Spot</Link>
+              </article>
             </MotionDiv>
             <MotionDiv className="col-md-6 mb-4" variants={fadeRight}>
-              <FaBlog size={50} className="mb-3 text-success" />
-              <h4>In Our Blogs</h4>
-              <p className="text-muted">
-                Sharing insights on digital growth, SEO, automation, and small business success.
-              </p>
+              <article className="promo-card h-100">
+                <FaBlog size={50} className="mb-3 promo-icon" />
+                <h4>In Our Blogs</h4>
+                <p>
+                  Sharing insights on digital growth, SEO, automation, and small business success.
+                </p>
+                <Link to="/blogs" className="promo-link">Read Latest Insights</Link>
+              </article>
             </MotionDiv>
           </MotionDiv>
         </div>
