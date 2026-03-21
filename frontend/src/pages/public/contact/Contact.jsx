@@ -8,16 +8,68 @@ import "./contact.css";
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", message: "" });
+  const [touched, setTouched] = useState({ name: false, email: false, message: false });
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  const validateField = (name, value) => {
+    const trimmed = String(value || "").trim();
+
+    if (name === "name") {
+      if (!trimmed) return "Please enter your full name.";
+      return "";
+    }
+
+    if (name === "email") {
+      if (!trimmed) return "Please enter your email address.";
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(trimmed)) return "Enter a valid email address.";
+      return "";
+    }
+
+    if (name === "message") {
+      if (!trimmed) return "Please enter your message.";
+      if (trimmed.length < 10) return "Your message should be at least 10 characters.";
+      return "";
+    }
+
+    return "";
+  };
+
+  const validateAll = () => {
+    const nextErrors = {
+      name: validateField("name", formData.name),
+      email: validateField("email", formData.email),
+      message: validateField("message", formData.message),
+    };
+
+    setFieldErrors(nextErrors);
+    return !nextErrors.name && !nextErrors.email && !nextErrors.message;
+  };
+
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (touched[name]) {
+      setFieldErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched((prev) => ({ ...prev, [name]: true }));
+    setFieldErrors((prev) => ({ ...prev, [name]: validateField(name, value) }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    setTouched({ name: true, email: true, message: true });
+    if (!validateAll()) return;
+
     setLoading(true);
     setSuccess(false);
     setError("");
@@ -28,6 +80,8 @@ const Contact = () => {
       }
       setSuccess(true);
       setFormData({ name: "", email: "", message: "" });
+      setFieldErrors({ name: "", email: "", message: "" });
+      setTouched({ name: false, email: false, message: false });
     } catch (err) {
       setError(err?.message || "Failed to submit enquiry. Please try again.");
     } finally {
@@ -125,42 +179,73 @@ const Contact = () => {
                 <Motion.form
                   className="contact-form p-4"
                   onSubmit={handleSubmit}
+                  aria-labelledby="contact-form-title"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.7 }}
                 >
+                  <h3 id="contact-form-title" className="sr-only">Contact Form</h3>
                   <div className="mb-3">
-                    <label className="form-label">Full Name</label>
+                    <label className="form-label" htmlFor="contact-name">Full Name</label>
                     <input
+                      id="contact-name"
                       type="text"
                       name="name"
                       value={formData.name}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="name"
                       required
+                      aria-invalid={Boolean(fieldErrors.name)}
+                      aria-describedby={fieldErrors.name ? "contact-name-error" : undefined}
                       className="form-control"
                     />
+                    {fieldErrors.name && (
+                      <p id="contact-name-error" className="field-error-msg" role="alert">
+                        {fieldErrors.name}
+                      </p>
+                    )}
                   </div>
                   <div className="mb-3">
-                    <label className="form-label">Email Address</label>
+                    <label className="form-label" htmlFor="contact-email">Email Address</label>
                     <input
+                      id="contact-email"
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
+                      onBlur={handleBlur}
+                      autoComplete="email"
                       required
+                      aria-invalid={Boolean(fieldErrors.email)}
+                      aria-describedby={fieldErrors.email ? "contact-email-error" : undefined}
                       className="form-control"
                     />
+                    {fieldErrors.email && (
+                      <p id="contact-email-error" className="field-error-msg" role="alert">
+                        {fieldErrors.email}
+                      </p>
+                    )}
                   </div>
                   <div className="mb-3">
-                    <label className="form-label">Your Message</label>
+                    <label className="form-label" htmlFor="contact-message">Your Message</label>
                     <textarea
+                      id="contact-message"
                       name="message"
                       rows="5"
                       value={formData.message}
                       onChange={handleChange}
+                      onBlur={handleBlur}
                       required
+                      aria-invalid={Boolean(fieldErrors.message)}
+                      aria-describedby={fieldErrors.message ? "contact-message-error" : undefined}
                       className="form-control"
                     />
+                    {fieldErrors.message && (
+                      <p id="contact-message-error" className="field-error-msg" role="alert">
+                        {fieldErrors.message}
+                      </p>
+                    )}
                   </div>
                   <Motion.button
                     type="submit"
@@ -175,6 +260,8 @@ const Contact = () => {
                   {success && (
                     <Motion.div
                       className="alert alert-success mt-3"
+                      role="status"
+                      aria-live="polite"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5 }}
@@ -185,6 +272,8 @@ const Contact = () => {
                   {error && (
                     <Motion.div
                       className="alert alert-danger mt-3"
+                      role="alert"
+                      aria-live="assertive"
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5 }}

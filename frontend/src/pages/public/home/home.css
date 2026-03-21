@@ -113,10 +113,13 @@
   position: relative;
   text-decoration: none;
   transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 18px;
+  padding: 1.15rem 1.15rem 1rem;
+  background: linear-gradient(135deg, rgba(244, 201, 93, 0.2) 0%, rgba(45, 106, 79, 0.14) 100%);
+  border: 1px solid rgba(244, 201, 93, 0.55);
+  box-shadow: 0 12px 28px rgba(27, 67, 50, 0.16);
   outline: none;
-  animation: aboutLinkPulse 2.8s ease-in-out infinite;
+  animation: aboutLinkPulse 2.2s ease-in-out infinite;
 }
 
 .about-link-wrapper::before {
@@ -124,17 +127,33 @@
   position: absolute;
   inset: -8px;
   border-radius: 16px;
-  background: radial-gradient(circle, rgba(244, 201, 93, 0.28) 0%, rgba(244, 201, 93, 0) 70%);
+  background: radial-gradient(circle, rgba(244, 201, 93, 0.45) 0%, rgba(244, 201, 93, 0) 70%);
   opacity: 0;
   transform: scale(0.92);
-  animation: aboutGlowPulse 2.8s ease-in-out infinite;
+  animation: aboutGlowPulse 2.2s ease-in-out infinite;
   pointer-events: none;
+}
+
+.about-link-wrapper::after {
+  content: "Tap to explore";
+  position: absolute;
+  top: -12px;
+  right: -10px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #122820;
+  background: #f4c95d;
+  border-radius: 999px;
+  padding: 0.24rem 0.6rem;
+  box-shadow: 0 8px 14px rgba(27, 67, 50, 0.2);
+  animation: aboutBadgeBounce 1.4s ease-in-out infinite;
 }
 
 .about-link-wrapper:hover,
 .about-link-wrapper:focus {
-  transform: scale(1.08) translateY(-4px);
-  filter: drop-shadow(0 8px 16px rgba(45, 106, 79, 0.25));
+  transform: scale(1.1) translateY(-5px);
+  filter: drop-shadow(0 10px 18px rgba(45, 106, 79, 0.33));
 }
 
 .about-link-wrapper:focus {
@@ -143,29 +162,32 @@
 }
 
 .about-link-wrapper .about-icon {
-  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
   animation: aboutIconFloat 2.8s ease-in-out infinite;
 }
 
 .about-link-wrapper:hover .about-icon,
 .about-link-wrapper:focus .about-icon {
-  color: #1b4332;
-  transform: rotate(-5deg) scale(1.05);
+  color: #173828;
+  filter: drop-shadow(0 0 12px rgba(244, 201, 93, 0.8));
+  transform: rotate(-6deg) scale(1.08);
 }
 
 .about-caption {
-  color: #1b4332;
-  font-weight: 700;
-  font-size: 1.25rem;
+  color: #173828;
+  font-weight: 800;
+  font-size: 1.34rem;
   margin-top: 1rem;
-  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-  letter-spacing: 0.3px;
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), text-shadow 0.3s ease;
+  letter-spacing: 0.35px;
+  text-shadow: 0 2px 8px rgba(244, 201, 93, 0.35);
 }
 
 .about-link-wrapper:hover .about-caption,
 .about-link-wrapper:focus .about-caption {
   color: #2d6a4f;
-  transform: translateY(-2px);
+  transform: translateY(-3px);
+  text-shadow: 0 3px 12px rgba(244, 201, 93, 0.55);
 }
 
 @keyframes aboutLinkPulse {
@@ -173,8 +195,14 @@
   100% {
     transform: translateY(0) scale(1);
   }
-  45% {
-    transform: translateY(-3px) scale(1.02);
+  30% {
+    transform: translateY(-4px) scale(1.03);
+  }
+  55% {
+    transform: translateY(0) scale(0.985);
+  }
+  75% {
+    transform: translateY(-2px) scale(1.015);
   }
 }
 
@@ -196,7 +224,20 @@
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-6px);
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes aboutBadgeBounce {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    transform: translateY(-5px) scale(1.04);
+  }
+  65% {
+    transform: translateY(0) scale(0.98);
   }
 }
 
@@ -241,9 +282,18 @@
 
   .about-link-wrapper {
     padding: 1.15rem 1rem;
+    border-radius: 16px;
   }
 
   .about-caption {
-    font-size: 1.35rem;
+    font-size: 1.45rem;
+  }
+
+  .about-link-wrapper::after {
+    content: "Tap me";
+    top: -10px;
+    right: -6px;
+    font-size: 0.68rem;
+    padding: 0.22rem 0.5rem;
   }
 }

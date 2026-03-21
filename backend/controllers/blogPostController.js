@@ -39,8 +39,20 @@ export const getBlogPosts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const skip = (page - 1) * limit;
-    const total = await BlogPost.countDocuments();
-    const posts = await BlogPost.find().skip(skip).limit(limit).sort({ createdAt: -1 });
+
+    const [total, posts] = await Promise.all([
+      BlogPost.countDocuments(),
+      BlogPost.find()
+        .select("title content author image createdAt")
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+    ]);
+
+    // Short cache helps repeat navigations while keeping content reasonably fresh.
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
+
     res.json({
       data: posts,
       page,
@@ -58,8 +70,10 @@ export const getBlogPosts = async (req, res) => {
 // Get a single blog post by ID
 export const getBlogPostById = async (req, res) => {
   try {
-    const post = await BlogPost.findById(req.params.id);
+    const post = await BlogPost.findById(req.params.id).lean();
     if (!post) return res.status(404).json({ message: "Blog post not found" });
+
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
     res.json(post);
   } catch (err) {
     res.status(500).json({ message: err.message });

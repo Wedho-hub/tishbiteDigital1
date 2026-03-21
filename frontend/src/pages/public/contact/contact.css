@@ -115,6 +115,24 @@
   border-color: #2d6a4f;
 }
 
+.contact-form .form-control[aria-invalid="true"] {
+  border-color: #b91c1c;
+  background: #fff9f9;
+}
+
+.contact-form .form-control[aria-invalid="true"]:focus {
+  box-shadow: 0 0 0 3px rgba(185, 28, 28, 0.18);
+  border-color: #b91c1c;
+}
+
+.field-error-msg {
+  margin: 0.45rem 0 0;
+  color: #9f1239;
+  font-size: 0.86rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
 .contact-form .form-label {
   color: #1f2937;
   font-weight: 600;
@@ -166,6 +184,12 @@
 .contact-section .btn.contact-submit-btn:active {
   background: linear-gradient(90deg, #163629, #24533d);
   color: #ffffff;
+}
+
+.contact-section .btn.contact-submit-btn:focus-visible,
+.contact-section .btn.whatsapp-btn:focus-visible {
+  outline: 3px solid #f4c95d;
+  outline-offset: 2px;
 }
 
 .contact-form .alert-success {

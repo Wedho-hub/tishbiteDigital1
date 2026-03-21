@@ -168,14 +168,14 @@ const Services = () => {
         background="light"
       />
 
-      <div className="services-page-wrap container">
+      <div className="services-page-wrap container" role="region" aria-labelledby="services-overview-heading">
         {loading && <div className="loading-skeleton"></div>}
 
         {!loading && (
           <>
             <section className="services-hero-panel reveal-on-scroll" style={{ "--reveal-delay": "40ms" }}>
               <div className="services-hero-content">
-                <h2>Solutions Built for Growth</h2>
+                <h2 id="services-overview-heading">Solutions Built for Growth</h2>
                 <p>
                   From focused one-off execution to complete business growth packages,
                   our services are crafted to improve visibility, operations, and outcomes.

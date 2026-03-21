@@ -21,13 +21,15 @@ const itemVariants = {
 const HowWeWorkPage = () => (
   <motion.section
     className="how-we-work-page"
+    role="region"
+    aria-labelledby="how-we-work-heading"
     variants={containerVariants}
     initial="hidden"
     whileInView="visible"
     viewport={{ once: true, amount: 0.15 }}
   >
     <motion.div className="hww-header" variants={itemVariants}>
-      <h1>How We Work</h1>
+      <h1 id="how-we-work-heading">How We Work</h1>
       <p className="hww-subtitle">Our process is transparent, collaborative, and focused on your success.</p>
     </motion.div>
     <div className="hww-steps">

@@ -13,6 +13,19 @@ const resolveBlogImage = (image) => {
   return resolveUploadUrl(image) || FALLBACK_IMAGE;
 };
 
+const formatBlogDate = (value) => {
+  if (!value) return "Recent";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Recent";
+
+  return date.toLocaleDateString("en-ZA", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+};
+
 const BlogDetails = () => {
   const { id } = useParams();
   const [blog, setBlog] = useState(null);
@@ -48,7 +61,8 @@ const BlogDetails = () => {
   return (
     <>
       <PageHeader title={blog.title} subtitle={blog.subtitle || "Read the full article below."} background="light" />
-      <section className="blog-details-wrap container">
+      <section className="blog-details-wrap container" role="region" aria-labelledby="blog-details-content-heading">
+        <h2 id="blog-details-content-heading" className="sr-only">Blog article content</h2>
         <motion.div
           className="blog-back-btn-wrap"
           initial={{ opacity: 0, y: 8 }}
@@ -82,6 +96,11 @@ const BlogDetails = () => {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.45, delay: 0.14 }}
           >
+            <p className="blog-details-meta">
+              <span>By {blog.author?.trim() || "Tishbite Digital Team"}</span>
+              <span className="blog-details-meta-divider">•</span>
+              <span>{formatBlogDate(blog.createdAt)}</span>
+            </p>
             <ReactMarkdown>{blog.content}</ReactMarkdown>
           </motion.div>
         </motion.article>

@@ -18,8 +18,17 @@ export const getProjects = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const skip = (page - 1) * limit;
-    const total = await Project.countDocuments();
-    const projects = await Project.find().skip(skip).limit(limit).sort({ createdAt: -1 });
+
+    const [total, projects] = await Promise.all([
+      Project.countDocuments(),
+      Project.find()
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+    ]);
+
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
 
     return res.json({
       data: projects,
@@ -35,8 +44,10 @@ export const getProjects = async (req, res) => {
 // Get a single project by ID
 export const getProjectById = async (req, res) => {
   try {
-    const project = await Project.findById(req.params.id);
+    const project = await Project.findById(req.params.id).lean();
     if (!project) return res.status(404).json({ message: "Project not found" });
+
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
     res.json(project);
   } catch (err) {
     res.status(500).json({ message: err.message });

@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const socialLinks = [
   { href: "https://facebook.com", icon: <FaFacebookF />, label: "Facebook" },
   { href: "https://instagram.com", icon: <FaInstagram />, label: "Instagram" },
-  { href: "https://pinterest.com", icon: <FaPinterestP />, label: "Pinterest" },
+  { href: "https://za.pinterest.com/Tishbite_Digital/", icon: <FaPinterestP />, label: "Pinterest" },
 ];
 
 const navLinks = [
@@ -22,6 +22,7 @@ const Footer = () => {
   return (
     <motion.footer
       className="footer"
+      aria-label="Site footer"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
@@ -84,7 +85,7 @@ const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={link.label}
+                  aria-label={`${link.label} (opens in a new tab)`}
                   className="social-icon-link"
                 >
                   <span className="social-icon-bg">{link.icon}</span>

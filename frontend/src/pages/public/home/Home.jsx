@@ -69,7 +69,7 @@ const Home = () => {
       </MotionDiv>
 
       {/* ================= ABOUT SECTION ================= */}
-      <section className="about-section py-5" ref={aboutRef}>
+      <section className="about-section py-5" ref={aboutRef} role="region" aria-labelledby="home-about-heading">
         <div className="container">
           <MotionDiv
             variants={staggerContainer}
@@ -85,7 +85,7 @@ const Home = () => {
               </Link>
             </MotionDiv>
             <MotionDiv className="col-lg-6 order-lg-2" variants={fadeLeft}>
-              <h2 className="section-title mb-4">
+              <h2 id="home-about-heading" className="section-title mb-4">
                 Building Systems, Not Just Websites
               </h2>
               <p className="text-muted">
@@ -117,8 +117,9 @@ const Home = () => {
       </section>
 
       {/* ================= MARKETING & BLOG ================= */}
-      <section className="promo-section py-5">
+      <section className="promo-section py-5" role="region" aria-labelledby="home-promo-heading">
         <div className="container">
+          <h2 id="home-promo-heading" className="sr-only">Promotions and blog highlights</h2>
           <MotionDiv
             variants={staggerContainer}
             initial="hidden"
@@ -130,8 +131,7 @@ const Home = () => {
               <FaBullhorn size={50} className="mb-3 text-success" />
               <h4>Promotions</h4>
               <p className="text-muted">
-                Offering bundled services that combine company registration, branding, 
-                web development, SEO and digital marketing etc.
+                Offering free consultations to the first 20 that send us a message in the next 30 days. Let's discuss how we can help your business grow online.
               </p>
             </MotionDiv>
             <MotionDiv className="col-md-6 mb-4" variants={fadeRight}>
@@ -146,8 +146,9 @@ const Home = () => {
       </section>
 
       {/* ================= STATS SECTION ================= */}
-      <section className="stats-section py-5">
+      <section className="stats-section py-5" role="region" aria-labelledby="home-stats-heading">
         <div className="container text-center">
+          <h2 id="home-stats-heading" className="sr-only">Business results and metrics</h2>
           <MotionDiv
             ref={statsRef}
             variants={staggerContainer}
@@ -179,10 +180,11 @@ const Home = () => {
       </section>
 
       {/* ================= PROJECTS SECTION ================= */}
-      <section className="home-projects-section py-5">
+      <section className="home-projects-section py-5" role="region" aria-labelledby="home-projects-heading">
         <div className="container">
           <MotionDiv>
             <MotionH2
+              id="home-projects-heading"
               className="section-title text-center mb-5"
               variants={fadeUp}
               initial="hidden"

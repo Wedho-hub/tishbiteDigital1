@@ -105,6 +105,8 @@ const Projects = () => {
       <PageHeader title="Our Projects" subtitle="See some of the projects we've delivered for our clients." background="light" />
       <MotionSection
         className="projects-page-section"
+        role="region"
+        aria-labelledby="projects-work-heading"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true, amount: 0.2 }}
@@ -117,7 +119,7 @@ const Projects = () => {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.65 }}
           >
-            <h2>Selected Work</h2>
+            <h2 id="projects-work-heading">Selected Work</h2>
             <p>Each project is built to improve visibility, streamline operations, and support measurable business growth.</p>
           </MotionDiv>
 

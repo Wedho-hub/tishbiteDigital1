@@ -76,6 +76,27 @@
   box-shadow: 0 12px 32px rgba(27, 67, 50, 0.3);
 }
 
+.about-profile-caption {
+  display: inline-block;
+  margin-bottom: 0;
+  color: #1b4332;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  background: rgba(244, 201, 93, 0.22);
+  border: 1px solid rgba(244, 201, 93, 0.65);
+  border-radius: 999px;
+  padding: 0.4rem 0.95rem;
+}
+
+.about-profile-name {
+  margin-bottom: 0;
+  color: #355446;
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: 0.15px;
+}
+
 /* Values Section */
 .about-values {
   background: #f8f9fa;
@@ -168,5 +189,14 @@
   .mission-paragraph {
     font-size: 0.99rem;
     line-height: 1.7;
+  }
+
+  .about-profile-caption {
+    font-size: 0.94rem;
+    padding: 0.38rem 0.8rem;
+  }
+
+  .about-profile-name {
+    font-size: 0.9rem;
   }
 }

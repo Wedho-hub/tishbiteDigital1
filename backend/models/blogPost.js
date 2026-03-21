@@ -49,4 +49,6 @@ const blogPostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+blogPostSchema.index({ createdAt: -1 });
+
 export default mongoose.model("BlogPost", blogPostSchema);

@@ -36,6 +36,19 @@ const createPreview = (content = "") => {
   return `${plain.slice(0, 157)}...`;
 };
 
+const formatBlogDate = (value) => {
+  if (!value) return "Recent";
+
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Recent";
+
+  return date.toLocaleDateString("en-ZA", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+  });
+};
+
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -66,7 +79,8 @@ const Blog = () => {
   return (
     <>
       <PageHeader title="Blog" subtitle="Read our latest articles and insights." background="light" />
-      <section className="blog-page-wrap container">
+      <section className="blog-page-wrap container" role="region" aria-labelledby="blog-listing-heading">
+        <h2 id="blog-listing-heading" className="sr-only">Blog post listing</h2>
         {loading && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Loading blog posts...</motion.p>}
         {!loading && error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{error}</motion.p>}
         <motion.div className="blog-grid" variants={gridVariants} initial="hidden" animate="visible">
@@ -89,6 +103,11 @@ const Blog = () => {
 
               <div className="blog-card-body">
                 <h3 className="blog-card-title">{blog.title}</h3>
+                <p className="blog-card-meta">
+                  <span>By {blog.author?.trim() || "Tishbite Digital Team"}</span>
+                  <span className="blog-meta-divider">•</span>
+                  <span>{formatBlogDate(blog.createdAt)}</span>
+                </p>
                 <p className="blog-card-preview">{createPreview(blog.content || "")}</p>
                 <Link to={`/blog/${blog._id}`} className="blog-read-btn">Read Blog</Link>
               </div>

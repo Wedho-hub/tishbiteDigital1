@@ -61,6 +61,21 @@
 	line-height: 1.75;
 }
 
+.blog-details-meta {
+	margin: 0 0 0.9rem;
+	display: flex;
+	align-items: center;
+	gap: 0.45rem;
+	font-size: 0.86rem;
+	font-weight: 600;
+	color: #4f665a;
+	letter-spacing: 0.2px;
+}
+
+.blog-details-meta-divider {
+	color: #8aa394;
+}
+
 .blog-content h1,
 .blog-content h2,
 .blog-content h3 {
@@ -108,6 +123,11 @@
 		padding: 0 0.9rem;
 		font-size: 0.97rem;
 		line-height: 1.68;
+	}
+
+	.blog-details-meta {
+		font-size: 0.8rem;
+		margin-bottom: 0.75rem;
 	}
 
 	.blog-content h1,

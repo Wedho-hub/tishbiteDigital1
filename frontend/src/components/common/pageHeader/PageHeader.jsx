@@ -10,9 +10,13 @@ const PageHeader = ({
   background = "light",
 }) => {
   const bgClass = background === "dark" ? "page-header-dark" : "page-header-light";
+  const titleId = `page-header-${String(title || "title")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "")}`;
   // motion is used below, so ESLint should not report unused
   return (
-    <section className={`page-header ${bgClass} py-5`}>
+    <section className={`page-header ${bgClass} py-5`} role="region" aria-labelledby={titleId}>
       <div className="container">
         {/* motion.div is used here */}
         <motion.div
@@ -21,7 +25,7 @@ const PageHeader = ({
           transition={{ duration: 0.8 }}
           className={`text-${align}`}
         >
-          <h1 className="page-header-title">{title}</h1>
+          <h1 id={titleId} className="page-header-title">{title}</h1>
           {subtitle && (
             <motion.p
               className="page-header-subtitle mt-3"

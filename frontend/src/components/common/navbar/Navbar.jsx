@@ -6,7 +6,7 @@ import { FaFacebookF, FaInstagram, FaPinterestP, FaPhoneAlt } from "react-icons/
 const socialLinks = [
   { href: "https://facebook.com", icon: <FaFacebookF />, label: "Facebook" },
   { href: "https://instagram.com", icon: <FaInstagram />, label: "Instagram" },
-  { href: "https://pinterest.com", icon: <FaPinterestP />, label: "Pinterest" },
+  { href: "https://za.pinterest.com/Tishbite_Digital/", icon: <FaPinterestP />, label: "Pinterest" },
 ];
 
 const phone = {
@@ -50,7 +50,7 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg mb-4">
+    <nav className="navbar navbar-expand-lg mb-4" aria-label="Main navigation">
       <div className="container-fluid">
 
         {/* ================= DESKTOP ================= */}
@@ -96,7 +96,7 @@ const Navbar = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={link.label}
+                  aria-label={`${link.label} (opens in a new tab)`}
                   className="social-icon-link"
                 >
                   <span className="social-icon-bg">
@@ -107,7 +107,7 @@ const Navbar = () => {
             </div>
 
             <div className="phone-link ms-3">
-              <a href={phone.href} aria-label={phone.label}>
+              <a href={phone.href} aria-label={`Call Tishbite Digital on ${phone.number}`}>
                 {phone.number}
               </a>
             </div>
@@ -128,7 +128,7 @@ const Navbar = () => {
                   href={link.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={link.label}
+                  aria-label={`${link.label} (opens in a new tab)`}
                   className="social-icon-link"
                 >
                   <span className="social-icon-bg">
@@ -139,7 +139,7 @@ const Navbar = () => {
             </div>
 
             <div className="phone-link">
-              <a href={phone.href} aria-label={phone.label}>
+              <a href={phone.href} aria-label={`Call Tishbite Digital on ${phone.number}`}>
                 {phone.number}
               </a>
             </div>

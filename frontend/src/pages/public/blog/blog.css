@@ -58,6 +58,21 @@
 	color: #1b4332;
 }
 
+.blog-card-meta {
+	margin: -0.15rem 0 0;
+	display: flex;
+	align-items: center;
+	gap: 0.42rem;
+	font-size: 0.8rem;
+	font-weight: 600;
+	color: #4f665a;
+	letter-spacing: 0.2px;
+}
+
+.blog-meta-divider {
+	color: #8aa394;
+}
+
 .blog-card-preview {
 	margin: 0;
 	color: #475569;

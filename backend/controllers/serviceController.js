@@ -32,10 +32,15 @@ export const getServices = async (req, res) => {
 
     const filter = requestedCategory ? { category: requestedCategory } : {};
 
-    const services = await Service.find(filter).sort({ category: 1, createdAt: -1 });
+    const services = await Service.find(filter)
+      .sort({ category: 1, createdAt: -1 })
+      .lean();
+
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
+
     return res.json(
       services.map((service) => ({
-        ...service.toObject(),
+        ...service,
         category: service.category || "general",
       }))
     );
@@ -47,8 +52,10 @@ export const getServices = async (req, res) => {
 // Get a single service by ID
 export const getServiceById = async (req, res) => {
   try {
-    const service = await Service.findById(req.params.id);
+    const service = await Service.findById(req.params.id).lean();
     if (!service) return res.status(404).json({ message: "Service not found" });
+
+    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
     res.json(service);
   } catch (err) {
     res.status(500).json({ message: err.message });

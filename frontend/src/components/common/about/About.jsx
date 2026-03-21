@@ -87,6 +87,12 @@ const About = () => {
                 alt="Tishbite Digital Team" 
                 className="about-profile-pic"
               />
+              <p className="about-profile-caption mt-3">
+                Founder and Chief Digital Strategist
+              </p>
+              <p className="about-profile-name mt-2">
+                <em>Mr Wellington Dhliwayo (Wedho)</em>
+              </p>
             </motion.div>
           </motion.div>
         </div>

@@ -9,10 +9,13 @@ const NotFound = () => (
     <PageHeader title="404 - Page Not Found" subtitle="The page you are looking for does not exist." background="light" />
     <motion.section
       className="not-found-wrap container"
+      role="region"
+      aria-labelledby="not-found-content-heading"
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45 }}
     >
+      <h2 id="not-found-content-heading" className="sr-only">Not found guidance</h2>
       <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.08, duration: 0.35 }}>
         Try going back to the homepage or explore our services and projects.
       </motion.p>

@@ -41,4 +41,6 @@ const serviceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+serviceSchema.index({ category: 1, createdAt: -1 });
+
 export default mongoose.model("Service", serviceSchema);

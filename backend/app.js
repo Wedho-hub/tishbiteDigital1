@@ -8,6 +8,7 @@ import cors from "cors";
 import helmet from "helmet";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import compression from "compression";
 import { csrfProtection, csrfCookie, csrfTokenEndpoint } from "./middleware/csrf.js";
 import authRoutes from "./routes/authRoutes.js";
 import blogPostRoutes from "./routes/blogPostRoutes.js";
@@ -32,7 +33,10 @@ const envOrigins = (process.env.ALLOWED_ORIGINS || "")
 const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
 
 // Serve uploaded assets
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads"), {
+  maxAge: "1d",
+  etag: true,
+}));
 
 // Parse cookies FIRST
 app.use(cookieParser());
@@ -40,6 +44,9 @@ app.use(cookieParser());
 // Parse JSON and urlencoded bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Compress API and frontend responses to improve transfer performance.
+app.use(compression());
 
 // CORS MUST be before any route or CSRF middleware
 app.use(cors({
@@ -117,7 +124,10 @@ const frontendIndexPath = path.join(frontendDistPath, "index.html");
 const hasFrontendBuild = fs.existsSync(frontendIndexPath);
 
 if (hasFrontendBuild) {
-  app.use(express.static(frontendDistPath));
+  app.use(express.static(frontendDistPath, {
+    maxAge: "7d",
+    etag: true,
+  }));
   app.use((req, res) => {
     res.sendFile(frontendIndexPath);
   });
