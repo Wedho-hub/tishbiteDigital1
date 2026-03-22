@@ -319,12 +319,28 @@
     line-height: 1.28;
   }
 
+  .about-section .row {
+    row-gap: 1rem;
+  }
+
+  .about-section .about-link-wrapper {
+    margin-bottom: 1rem;
+  }
+
   .about-section,
   .promo-section,
   .stats-section,
   .home-projects-section {
     padding-top: 2.2rem !important;
     padding-bottom: 2.2rem !important;
+  }
+
+  .about-section {
+    padding-bottom: 3.1rem !important;
+  }
+
+  .promo-section {
+    padding-top: 2.8rem !important;
   }
 
   .stat-number {
