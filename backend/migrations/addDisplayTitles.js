@@ -42,8 +42,13 @@ function normalizeTitle(title = "") {
 
 async function migrate() {
   try {
+    const mongoUri = process.env.MONGODB_URI || process.env.MONGO_URI;
+    if (!mongoUri) {
+      throw new Error("Missing Mongo URI. Set MONGODB_URI or MONGO_URI in backend/.env");
+    }
+
     console.log("🔗 Connecting to MongoDB...");
-    await mongoose.connect(process.env.MONGODB_URI);
+    await mongoose.connect(mongoUri);
     console.log("✓ Connected to MongoDB");
 
     console.log("\n📊 Fetching all services...");
