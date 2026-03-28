@@ -228,6 +228,13 @@
   color: #1b4332;
 }
 
+.service-item.bundle-item .service-badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.75rem;
+}
+
 .bundle-item {
   background: #245641;
   border: 2px solid #1b4332;
