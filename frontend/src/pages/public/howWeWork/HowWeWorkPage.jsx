@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import "./howWeWorkPage.css";
 
@@ -19,15 +20,25 @@ const itemVariants = {
 };
 
 const HowWeWorkPage = () => (
-  <motion.section
-    className="how-we-work-page"
-    role="region"
-    aria-labelledby="how-we-work-heading"
-    variants={containerVariants}
-    initial="hidden"
-    whileInView="visible"
-    viewport={{ once: true, amount: 0.15 }}
-  >
+  <>
+    <Helmet>
+      <title>Our Process: How We Build Digital Growth Systems | Tishbite Digital</title>
+      <meta name="description" content="Discover our transparent, collaborative 4-step process: Discovery, Strategy, Development, and Launch. Built to deliver measurable results for your business." />
+      <meta name="keywords" content="our process, web design process, digital strategy, Cape Town, how we work" />
+      <link rel="canonical" href="https://tishbitedigital.co.za/how-we-work" />
+      <meta property="og:title" content="Our Process: How We Build Digital Growth Systems" />
+      <meta property="og:description" content="Transparent, collaborative, results-focused" />
+      <meta property="og:url" content="https://tishbitedigital.co.za/how-we-work" />
+    </Helmet>
+    <motion.section
+      className="how-we-work-page"
+      role="region"
+      aria-labelledby="how-we-work-heading"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.15 }}
+    >
     <motion.div className="hww-header" variants={itemVariants}>
       <h1 id="how-we-work-heading">How We Work</h1>
       <p className="hww-subtitle">Our process is transparent, collaborative, and focused on your success.</p>
@@ -55,6 +66,7 @@ const HowWeWorkPage = () => (
       </motion.div>
     </div>
   </motion.section>
+  </>
 );
 
 export default HowWeWorkPage;

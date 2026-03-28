@@ -4,8 +4,66 @@
   letter-spacing: -0.3px;
 }
 
+.section-title-light {
+  color: #ffffff;
+}
+
+.section-kicker {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  background: rgba(244, 201, 93, 0.16);
+  color: #173828;
+  border: 1px solid rgba(244, 201, 93, 0.45);
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.35px;
+  text-transform: uppercase;
+}
+
 .about-section {
   background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+}
+
+.about-copy {
+  color: #486154;
+  line-height: 1.75;
+  font-size: 1rem;
+}
+
+.about-results-list {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.about-results-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: #1f3a2e;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.about-results-list svg {
+  margin-top: 0.2rem;
+  color: #2d6a4f;
+  flex-shrink: 0;
+}
+
+.about-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.about-actions .btn {
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-weight: 700;
 }
 
 .about-section .btn-outline-success {
@@ -23,6 +81,12 @@
 
 .promo-section {
   background: linear-gradient(180deg, #f6faf7 0%, #edf6f0 100%);
+}
+
+.promo-section-intro {
+  max-width: 720px;
+  color: #4a6357;
+  line-height: 1.7;
 }
 
 .promo-section h4 {
@@ -66,8 +130,16 @@
   margin-bottom: 1rem;
 }
 
+.promo-meta {
+  margin-bottom: 1rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #587165;
+}
+
 .promo-card-highlight h4,
-.promo-card-highlight p {
+.promo-card-highlight p,
+.promo-card-highlight .promo-meta {
   color: #ffffff;
 }
 
@@ -94,6 +166,46 @@
   box-shadow: 0 8px 18px rgba(244, 201, 93, 0.25);
 }
 
+.growth-pillars-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fcfa 100%);
+}
+
+.growth-pillar-card {
+  padding: 1.45rem 1.3rem;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(27, 67, 50, 0.1);
+  box-shadow: 0 14px 28px rgba(27, 67, 50, 0.08);
+}
+
+.growth-pillar-icon-wrap {
+  width: 58px;
+  height: 58px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  background: rgba(244, 201, 93, 0.16);
+  margin-bottom: 1rem;
+}
+
+.growth-pillar-icon {
+  color: #1b4332;
+  font-size: 1.4rem;
+}
+
+.growth-pillar-card h3 {
+  color: #1b4332;
+  font-size: 1.12rem;
+  margin-bottom: 0.6rem;
+}
+
+.growth-pillar-card p {
+  margin: 0;
+  color: #4b6358;
+  line-height: 1.7;
+}
+
 .stats-section {
   background: linear-gradient(135deg, #1b4332, #2d6a4f);
   color: white;
@@ -102,6 +214,71 @@
 .stat-number {
   font-size: 2.5rem;
   font-weight: 700;
+}
+
+.stats-section p {
+  max-width: 250px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.local-seo-section {
+  background: linear-gradient(180deg, #f9fcfa 0%, #eef7f1 100%);
+}
+
+.local-seo-copy {
+  color: #486154;
+  line-height: 1.75;
+}
+
+.local-seo-points {
+  display: grid;
+  gap: 1rem;
+}
+
+.local-seo-point {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.1rem;
+  border-radius: 16px;
+  background: #ffffff;
+  border: 1px solid rgba(27, 67, 50, 0.1);
+  box-shadow: 0 12px 24px rgba(27, 67, 50, 0.07);
+  color: #1f3a2e;
+  line-height: 1.6;
+}
+
+.local-seo-point svg {
+  color: #2d6a4f;
+  margin-top: 0.15rem;
+  flex-shrink: 0;
+}
+
+.faq-section {
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbf9 100%);
+}
+
+.faq-card {
+  padding: 1.35rem 1.2rem;
+  border-radius: 18px;
+  background: #ffffff;
+  border: 1px solid rgba(27, 67, 50, 0.1);
+  box-shadow: 0 12px 24px rgba(27, 67, 50, 0.08);
+}
+
+.faq-card h3 {
+  color: #1b4332;
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin-bottom: 0.7rem;
+}
+
+.faq-card p {
+  margin: 0;
+  color: #4a6357;
+  line-height: 1.7;
 }
 
 .home-projects-section {
@@ -347,6 +524,15 @@
     font-size: 2rem;
   }
 
+  .about-actions {
+    flex-direction: column;
+  }
+
+  .about-actions .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
   .home-project-card img {
     height: 190px;
   }
@@ -387,6 +573,14 @@
     margin-bottom: 0.5rem;
   }
 
+  .promo-section-intro,
+  .growth-pillar-card p,
+  .local-seo-copy,
+  .faq-card p,
+  .about-copy {
+    font-size: 0.95rem;
+  }
+
   .promo-card p {
     font-size: 0.95rem;
     margin-bottom: 0.9rem;
@@ -395,5 +589,16 @@
   .promo-link {
     width: 100%;
     font-size: 0.84rem;
+  }
+
+  .growth-pillar-card,
+  .faq-card,
+  .local-seo-point {
+    padding: 1.15rem 1rem;
+    border-radius: 14px;
+  }
+
+  .section-kicker {
+    font-size: 0.72rem;
   }
 }

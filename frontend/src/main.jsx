@@ -43,10 +43,12 @@ const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
-    </ErrorBoundary>
+    <HelmetProvider>
+      <ErrorBoundary>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </ErrorBoundary>
+    </HelmetProvider>
   </React.StrictMode>
 );

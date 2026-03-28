@@ -2,6 +2,7 @@ import React from "react";
 import Navbar from "../common/navbar/Navbar";
 import Footer from "../common/footer/Footer";
 import { Outlet } from "react-router-dom";
+import WhatsAppFloat from "../common/whatsappFloat/WhatsAppFloat";
 
 const PublicLayout = () => (
   <>
@@ -10,6 +11,7 @@ const PublicLayout = () => (
     <main id="main-content" tabIndex="-1">
       <Outlet />
     </main>
+    <WhatsAppFloat />
     <Footer />
   </>
 );

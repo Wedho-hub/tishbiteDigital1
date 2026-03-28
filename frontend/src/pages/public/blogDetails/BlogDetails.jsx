@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { Link, useParams } from "react-router-dom";
 import { getBlogPostById } from "../../../services/blogService";
@@ -54,12 +55,108 @@ const BlogDetails = () => {
     };
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
-  if (!blog) return <div>Blog post not found.</div>;
+  if (loading) {
+    return (
+      <>
+        <Helmet>
+          <title>Loading Article | Tishbite Digital</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
+        <div className="container" style={{ padding: "4rem 1rem", textAlign: "center" }}>
+          <p>Loading article...</p>
+        </div>
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Helmet>
+          <title>Article Error | Tishbite Digital</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
+        <PageHeader
+          title="Error Loading Article"
+          subtitle="We encountered an issue."
+          background="light"
+        />
+        <div className="container" style={{ padding: "2rem 1rem", textAlign: "center" }}>
+          <p>{error}</p>
+          <Link to="/blog" style={{ color: "#1b4332", fontWeight: "700" }}>
+            ← Back to Blog
+          </Link>
+        </div>
+      </>
+    );
+  }
+
+  if (!blog) {
+    return (
+      <>
+        <Helmet>
+          <title>Article Not Found | Tishbite Digital</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
+        <PageHeader
+          title="Article Not Found"
+          subtitle="This post doesn't exist."
+          background="light"
+        />
+        <div className="container" style={{ padding: "2rem 1rem", textAlign: "center" }}>
+          <Link to="/blog" style={{ color: "#1b4332", fontWeight: "700" }}>
+            ← Back to Blog
+          </Link>
+        </div>
+      </>
+    );
+  }
+
+  // Generate BlogPosting schema
+  const blogPostingSchema = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": blog.title || "Article",
+    "description": blog.metaDescription || (blog.content && blog.content.substring(0, 160)) || "Read this article",
+    "image": resolveBlogImage(blog.image),
+    "datePublished": blog.createdAt || new Date().toISOString(),
+    "dateModified": blog.updatedAt || blog.createdAt || new Date().toISOString(),
+    "author": {
+      "@type": "Organization",
+      "name": "Tishbite Digital",
+      "url": "https://tishbitedigital.co.za"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tishbite Digital",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://tishbitedigital.co.za/logo.png",
+        "width": 250,
+        "height": 60
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `https://tishbitedigital.co.za/blog/${blog._id}`
+    }
+  };
 
   return (
     <>
+      <Helmet>
+        <title>{blog.metaTitle || blog.title || "Article"} | Tishbite Digital</title>
+        <meta name="description" content={blog.metaDescription || (blog.content && blog.content.substring(0, 160)) || "Read this article"} />
+        <meta name="keywords" content={blog.keywords || "digital marketing, Cape Town, business growth"} />
+        <link rel="canonical" href={`https://tishbitedigital.co.za/blog/${blog._id}`} />
+        <meta property="og:title" content={blog.title || "Article"} />
+        <meta property="og:description" content={blog.metaDescription || (blog.content && blog.content.substring(0, 160))} />
+        <meta property="og:image" content={resolveBlogImage(blog.image)} />
+        <meta property="og:url" content={`https://tishbitedigital.co.za/blog/${blog._id}`} />
+        <meta property="og:type" content="article" />
+        <meta name="author" content="Tishbite Digital" />
+        <script type="application/ld+json">{JSON.stringify(blogPostingSchema)}</script>
+      </Helmet>
       <PageHeader title={blog.title} subtitle={blog.subtitle || "Read the full article below."} background="light" />
       <section className="blog-details-wrap container" role="region" aria-labelledby="blog-details-content-heading">
         <h2 id="blog-details-content-heading" className="sr-only">Blog article content</h2>

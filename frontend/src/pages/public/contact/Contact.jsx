@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion as Motion } from "framer-motion";
 import { FaWhatsapp, FaPaperPlane, FaClock, FaCalendarAlt } from "react-icons/fa";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
@@ -91,6 +92,15 @@ const Contact = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Get Your Free Website & SEO Audit | Contact Tishbite Digital</title>
+        <meta name="description" content="Schedule your free website and SEO audit. Ask about our digital growth systems for Cape Town service businesses. Chat via WhatsApp or fill out our form." />
+        <meta name="keywords" content="contact us, free website audit, SEO audit, Cape Town, Tishbite Digital" />
+        <link rel="canonical" href="https://tishbitedigital.co.za/contact" />
+        <meta property="og:title" content="Get Your Free Website & SEO Audit" />
+        <meta property="og:description" content="Schedule your free audit today" />
+        <meta property="og:url" content="https://tishbitedigital.co.za/contact" />
+      </Helmet>
       <PageHeader
         title="Contact Us"
         subtitle="Let's build something cool and stunning together"

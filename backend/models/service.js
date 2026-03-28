@@ -15,6 +15,12 @@ const serviceSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    displayTitle: {
+      type: String,
+      required: false,
+      trim: true,
+      default: null,
+    },
     category: {
       type: String,
       enum: ["general", "bundle"],

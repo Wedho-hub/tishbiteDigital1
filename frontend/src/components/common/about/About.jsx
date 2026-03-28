@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { motion } from "framer-motion";
 import "./about.css";
 import { FaCheckCircle, FaLightbulb, FaRocket, FaUsers } from "react-icons/fa";
@@ -21,7 +22,17 @@ const MotionSection = motion.section;
 
 const About = () => {
   return (
-    <div className="about-page">
+    <>
+      <Helmet>
+        <title>About Tishbite Digital: Growing South African Businesses Online</title>
+        <meta name="description" content="Learn about Tishbite Digital's mission to help small and growing Cape Town businesses win market visibility through strategic web design, SEO, and digital marketing." />
+        <meta name="keywords" content="about us, Tishbite Digital, digital agency Cape Town, web design company, digital marketing" />
+        <link rel="canonical" href="https://tishbitedigital.co.za/about" />
+        <meta property="og:title" content="About Tishbite Digital" />
+        <meta property="og:description" content="Our mission to help Cape Town businesses grow online" />
+        <meta property="og:url" content="https://tishbitedigital.co.za/about" />
+      </Helmet>
+      <div className="about-page">
       {/* Hero Section */}
       <MotionSection
         className="about-hero py-5"
@@ -235,7 +246,8 @@ const About = () => {
           </motion.div>
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 };
 
