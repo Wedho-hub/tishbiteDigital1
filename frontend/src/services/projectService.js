@@ -1,4 +1,4 @@
-import { apiUrl, fetchWithCsrf } from "./api";
+import { apiUrl, fetchWithCsrf, fetchWithTimeoutRetry } from "./api";
 const API_BASE = "/api/projects";
 const CACHE_TTL_MS = 60 * 1000;
 const projectCache = new Map();
@@ -36,7 +36,7 @@ export async function getProjects(page = 1) {
   const cached = getCached(cacheKey);
   if (cached) return cached;
 
-  const res = await fetch(apiUrl(`${API_BASE}?page=${page}`));
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?page=${page}&summary=1`), {}, 12000, 1);
   const data = await parseJsonResponse(res);
   setCached(cacheKey, data);
   return data;
@@ -47,7 +47,7 @@ export async function getProjectById(id) {
   const cached = getCached(cacheKey);
   if (cached) return cached;
 
-  const res = await fetch(apiUrl(`${API_BASE}/${id}`));
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}/${id}`), {}, 12000, 1);
   const data = await parseJsonResponse(res);
   setCached(cacheKey, data);
   return data;

@@ -25,6 +25,17 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist',
       sourcemap: !isProduction,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (!id.includes('node_modules')) return;
+            if (id.includes('framer-motion')) return 'vendor-framer';
+            if (id.includes('react-router')) return 'vendor-router';
+            if (id.includes('react-dom')) return 'vendor-react';
+            return 'vendor';
+          },
+        },
+      },
     },
     define: {
       'process.env.NODE_ENV': JSON.stringify(mode),

@@ -18,20 +18,31 @@ export const getProjects = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const skip = (page - 1) * limit;
+    const summaryMode = String(req.query.summary || "") === "1";
+
+    const selectFields = summaryMode
+      ? "title description image link createdAt"
+      : "title description image imagePublicId link createdAt updatedAt";
 
     const [total, projects] = await Promise.all([
       Project.countDocuments(),
       Project.find()
+        .select(selectFields)
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
         .lean(),
     ]);
 
-    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
+    res.set("Cache-Control", "public, max-age=180, s-maxage=300, stale-while-revalidate=300");
 
     return res.json({
-      data: projects,
+      data: projects.map((project) => ({
+        ...project,
+        description: summaryMode
+          ? String(project.description || "").slice(0, 420)
+          : project.description,
+      })),
       page,
       totalPages: Math.ceil(total / limit),
       total

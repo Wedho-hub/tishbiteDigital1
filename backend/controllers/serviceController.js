@@ -25,23 +25,31 @@ export const getServices = async (req, res) => {
   try {
     const hasCategoryFilter = Object.prototype.hasOwnProperty.call(req.query, "category");
     const requestedCategory = hasCategoryFilter ? normalizeCategory(req.query.category) : null;
+    const summaryMode = String(req.query.summary || "") === "1";
 
     if (hasCategoryFilter && !requestedCategory) {
       return res.status(400).json({ message: "Invalid category. Use 'general' or 'bundle'." });
     }
 
     const filter = requestedCategory ? { category: requestedCategory } : {};
+    const selectFields = summaryMode
+      ? "title displayTitle category description image createdAt"
+      : "title displayTitle category description image imagePublicId icon createdAt updatedAt";
 
     const services = await Service.find(filter)
+      .select(selectFields)
       .sort({ category: 1, createdAt: -1 })
       .lean();
 
-    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
+    res.set("Cache-Control", "public, max-age=180, s-maxage=300, stale-while-revalidate=300");
 
     return res.json(
       services.map((service) => ({
         ...service,
         category: service.category || "general",
+        description: summaryMode
+          ? String(service.description || "").slice(0, 360)
+          : service.description,
       }))
     );
   } catch (err) {

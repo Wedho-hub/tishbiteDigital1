@@ -76,3 +76,41 @@ export async function fetchWithCsrf(url, options = {}) {
     credentials: "include"
   });
 }
+
+// Prevent indefinite loading in production when backend is slow/cold.
+export async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...options,
+      signal: controller.signal,
+      credentials: options.credentials || "include",
+    });
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      throw new Error("Request timed out. Please try again.");
+    }
+    throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+export async function fetchWithTimeoutRetry(url, options = {}, timeoutMs = 12000, retries = 1) {
+  let lastError;
+
+  for (let attempt = 0; attempt <= retries; attempt += 1) {
+    try {
+      return await fetchWithTimeout(url, options, timeoutMs);
+    } catch (error) {
+      lastError = error;
+      if (attempt < retries) {
+        await new Promise((resolve) => setTimeout(resolve, 350));
+      }
+    }
+  }
+
+  throw lastError;
+}

@@ -192,10 +192,25 @@ const Services = () => {
   const observer = useRef(null);
 
   useEffect(() => {
-    getServices().then((data) => {
-      setServices(data);
-      setLoading(false);
-    });
+    let mounted = true;
+
+    const loadServices = async () => {
+      try {
+        const data = await getServices();
+        if (!mounted) return;
+        setServices(Array.isArray(data) ? data : []);
+      } catch (_error) {
+        if (!mounted) return;
+        setServices([]);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+
+    loadServices();
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   useEffect(() => {

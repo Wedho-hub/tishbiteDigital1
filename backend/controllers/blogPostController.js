@@ -39,22 +39,30 @@ export const getBlogPosts = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const limit = 10;
     const skip = (page - 1) * limit;
+    const summaryMode = String(req.query.summary || "") === "1";
 
     const [total, posts] = await Promise.all([
       BlogPost.countDocuments(),
       BlogPost.find()
-        .select("title content author image createdAt")
+        .select(summaryMode
+          ? "title content author image createdAt"
+          : "title content author image metaTitle metaDescription keywords createdAt updatedAt")
         .sort({ createdAt: -1 })
         .skip(skip)
         .limit(limit)
         .lean(),
     ]);
 
-    // Short cache helps repeat navigations while keeping content reasonably fresh.
-    res.set("Cache-Control", "public, max-age=60, s-maxage=120");
+    // Longer cache for list pages reduces repeated expensive reads in production.
+    res.set("Cache-Control", "public, max-age=180, s-maxage=300, stale-while-revalidate=300");
 
     res.json({
-      data: posts,
+      data: posts.map((post) => ({
+        ...post,
+        content: summaryMode
+          ? String(post.content || "").slice(0, 600)
+          : post.content,
+      })),
       page,
       totalPages: Math.ceil(total / limit),
       total
