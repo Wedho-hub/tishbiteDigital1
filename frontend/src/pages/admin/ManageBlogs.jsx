@@ -12,16 +12,13 @@ const ManageBlogs = () => {
   const [editing, setEditing] = useState(null);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
 
-  const fetchBlogs = async (pageNum = 1) => {
+  const fetchBlogs = async () => {
     setLoading(true);
     setError("");
     try {
-      const res = await getBlogPosts(pageNum);
+      const res = await getBlogPosts(1, { summary: false, all: true, admin: true });
       setBlogs(res.data || []);
-      setTotalPages(res.totalPages || 1);
     } catch (err) {
       setError(err.message || "Failed to load blog posts");
     } finally {
@@ -30,8 +27,8 @@ const ManageBlogs = () => {
   };
 
   useEffect(() => {
-    fetchBlogs(page);
-  }, [page]);
+    fetchBlogs();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -62,7 +59,7 @@ const ManageBlogs = () => {
         await createBlogPost(formData, true);
       }
       setTitle(""); setContent(""); setImage(null); setEditing(null); setError("");
-      fetchBlogs(page);
+      fetchBlogs();
     } catch (err) {
       setError(err.message || "Error saving blog post");
     }
@@ -77,7 +74,7 @@ const ManageBlogs = () => {
   const handleDelete = async (id) => {
     try {
       await deleteBlogPost(id);
-      fetchBlogs(page);
+      fetchBlogs();
     } catch (err) {
       setError(err.message || "Failed to delete blog post");
     }
@@ -98,6 +95,7 @@ const ManageBlogs = () => {
       </form>
       <ul className="admin-list">
         {loading && <li>Loading blog posts...</li>}
+        {!loading && blogs.length === 0 && <li>No blog posts found.</li>}
         {blogs.map(blog => (
           <li key={blog._id}>
             <b>{blog.title}</b>
@@ -108,11 +106,6 @@ const ManageBlogs = () => {
           </li>
         ))}
       </ul>
-      <div className="pagination mt-3">
-        <button className="pagination-btn" disabled={page <= 1} onClick={() => setPage(page - 1)}>Prev</button>
-        <span className="mx-2">Page {page} of {totalPages}</span>
-        <button className="pagination-btn" disabled={page >= totalPages} onClick={() => setPage(page + 1)}>Next</button>
-      </div>
     </div>
   );
 };

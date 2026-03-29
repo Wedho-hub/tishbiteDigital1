@@ -36,25 +36,38 @@ const pickBlogPayload = (body = {}) => {
 // Get all blog posts (with pagination)
 export const getBlogPosts = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 10;
-    const skip = (page - 1) * limit;
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const requestedLimit = parseInt(req.query.limit, 10);
+    const limit = Number.isFinite(requestedLimit)
+      ? Math.min(Math.max(requestedLimit, 1), 100)
+      : 10;
+    const allMode = String(req.query.all || "") === "1";
+    const adminMode = String(req.query.admin || "") === "1";
+    const skip = allMode ? 0 : (page - 1) * limit;
     const summaryMode = String(req.query.summary || "") === "1";
+
+    const query = BlogPost.find()
+      .select(summaryMode
+        ? "title content author image createdAt"
+        : "title content author image metaTitle metaDescription keywords createdAt updatedAt")
+      .sort({ createdAt: -1 })
+      .skip(skip);
+
+    if (!allMode) {
+      query.limit(limit);
+    }
 
     const [total, posts] = await Promise.all([
       BlogPost.countDocuments(),
-      BlogPost.find()
-        .select(summaryMode
-          ? "title content author image createdAt"
-          : "title content author image metaTitle metaDescription keywords createdAt updatedAt")
-        .sort({ createdAt: -1 })
-        .skip(skip)
-        .limit(limit)
-        .lean(),
+      query.lean(),
     ]);
 
-    // Longer cache for list pages reduces repeated expensive reads in production.
-    res.set("Cache-Control", "public, max-age=180, s-maxage=300, stale-while-revalidate=300");
+    if (adminMode) {
+      res.set("Cache-Control", "private, no-store, no-cache, must-revalidate");
+    } else {
+      // Longer cache for public list pages reduces repeated expensive reads in production.
+      res.set("Cache-Control", "public, max-age=180, s-maxage=300, stale-while-revalidate=300");
+    }
 
     res.json({
       data: posts.map((post) => ({
@@ -64,7 +77,7 @@ export const getBlogPosts = async (req, res) => {
           : post.content,
       })),
       page,
-      totalPages: Math.ceil(total / limit),
+      totalPages: allMode ? 1 : Math.ceil(total / limit),
       total
     });
   } catch (err) {

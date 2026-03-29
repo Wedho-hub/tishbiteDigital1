@@ -31,14 +31,46 @@ async function parseJsonResponse(res) {
   return data;
 }
 
-export async function getBlogPosts(page = 1) {
-  const cacheKey = `list:${page}`;
-  const cached = getCached(cacheKey);
-  if (cached) return cached;
+export async function getBlogPosts(page = 1, options = {}) {
+  const {
+    summary = true,
+    all = false,
+    admin = false,
+    limit,
+  } = options;
 
-  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?page=${page}&summary=1`), {}, 12000, 1);
+  const params = new URLSearchParams();
+  params.set("summary", summary ? "1" : "0");
+
+  if (all) {
+    params.set("all", "1");
+  } else {
+    params.set("page", String(page));
+  }
+
+  if (typeof limit === "number" && Number.isFinite(limit)) {
+    params.set("limit", String(limit));
+  }
+
+  if (admin) {
+    params.set("admin", "1");
+  }
+
+  const queryString = params.toString();
+  const cacheKey = `list:${queryString}`;
+
+  if (!admin) {
+    const cached = getCached(cacheKey);
+    if (cached) return cached;
+  }
+
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?${queryString}`), {}, 12000, 1);
   const data = await parseJsonResponse(res);
-  setCached(cacheKey, data);
+
+  if (!admin) {
+    setCached(cacheKey, data);
+  }
+
   return data;
 }
 
