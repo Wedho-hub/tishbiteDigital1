@@ -5,7 +5,7 @@
 .navbar {
   position: sticky;
   top: 0;
-  height: var(--nav-height);
+  min-height: var(--nav-height);
   display: flex;
   align-items: center;
 
@@ -14,7 +14,7 @@
   backdrop-filter: var(--nav-blur);
 
   border-bottom: 1px solid transparent;
-  transition: all 0.35s ease;
+  transition: background-color 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
   z-index: 1000;
 }
 
@@ -36,7 +36,6 @@
 }
 
 .navbar.navbar-scrolled {
-  height: var(--nav-height-scrolled);
   background: var(--nav-bg-scrolled);
   box-shadow: 0 14px 36px rgba(8, 28, 21, 0.12);
 }
@@ -120,7 +119,7 @@
 }
 
 /* Remove any Bootstrap card feel */
-.navbar .navbar-collapse {
+.navbar .mobile-nav-menu {
   box-shadow: none !important;
 }
 
@@ -315,6 +314,10 @@
   transform: rotate(-45deg);
 }
 
+.mobile-nav-menu {
+  display: none;
+}
+
 @keyframes dropdownFade {
   from {
     opacity: 0;
@@ -332,7 +335,7 @@
 
 @media (max-width: 991px) {
   .navbar {
-    height: auto;
+    min-height: 82px;
     min-height: 82px;
   }
 
@@ -378,19 +381,37 @@
     margin-top: 3px;
   }
 
-  .navbar-collapse {
+  .mobile-nav-menu {
+    display: block;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
     background: rgba(255, 255, 255, 0.96);
     -webkit-backdrop-filter: blur(22px);
     backdrop-filter: blur(22px);
     border-top: 1px solid rgba(27, 67, 50, 0.12);
     border-radius: 12px;
     margin-top: 0.6rem;
+    padding: 0 0.9rem;
+    transition: max-height 0.32s ease, opacity 0.24s ease, transform 0.24s ease, padding 0.24s ease;
+  }
+
+  .mobile-nav-menu.show {
+    max-height: 380px;
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
     padding: 0.7rem 0.9rem;
-    animation: dropdownFade 0.35s ease forwards;
   }
 
   .navbar .navbar-nav {
     gap: 0;
+  }
+
+  .mobile-nav-menu .navbar-nav {
+    margin-top: 0 !important;
   }
 
   .navbar .navbar-nav .main-nav-link {

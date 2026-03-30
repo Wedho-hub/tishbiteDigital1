@@ -27,30 +27,65 @@ const navLinks = [
 const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleNavLinkClick = () => {
     setMenuOpen(false);
   };
 
-  // Scroll shrink effect
+  // Keep navbar stable by only changing visual style (not layout height) with hysteresis.
   useEffect(() => {
-    const handleScroll = () => {
-      const navbar = document.querySelector(".navbar");
-      if (!navbar) return;
+    let ticking = false;
 
-      if (window.scrollY > 30) {
-        navbar.classList.add("navbar-scrolled");
-      } else {
-        navbar.classList.remove("navbar-scrolled");
-      }
+    const updateScrolledState = () => {
+      const y = window.scrollY || window.pageYOffset || 0;
+      const isDesktop = window.innerWidth >= 992;
+
+      setIsScrolled((prev) => {
+        if (!isDesktop) return false;
+
+        const next = prev ? y > 20 : y > 72;
+        return next === prev ? prev : next;
+      });
+
+      ticking = false;
     };
 
+    const handleScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(updateScrolledState);
+    };
+
+    const handleResize = () => {
+      updateScrolledState();
+    };
+
+    updateScrolledState();
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === "Escape") setMenuOpen(false);
+    };
+
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
   return (
-    <nav className="navbar navbar-expand-lg mb-4" aria-label="Main navigation">
+    <nav className={`navbar navbar-expand-lg${isScrolled ? " navbar-scrolled" : ""}`} aria-label="Main navigation">
       <div className="container-fluid">
 
         {/* ================= DESKTOP ================= */}
@@ -165,6 +200,7 @@ const Navbar = () => {
               className={`navbar-toggler${menuOpen ? " open" : ""}`}
               type="button"
               aria-label="Toggle navigation"
+              aria-controls="mobile-nav-menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(prev => !prev)}
             >
@@ -177,7 +213,7 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu */}
-          <div className={`collapse navbar-collapse${menuOpen ? " show" : ""}`}>
+          <div id="mobile-nav-menu" className={`mobile-nav-menu${menuOpen ? " show" : ""}`}>
             <ul className="navbar-nav mt-3">
               {navLinks.map(link => (
                 <li className="nav-item" key={link.to}>
