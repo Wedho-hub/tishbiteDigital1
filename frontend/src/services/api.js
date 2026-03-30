@@ -8,15 +8,40 @@ export function apiUrl(path) {
 
 export function resolveUploadUrl(image) {
   if (!image) return "";
-  if (image.startsWith("http://") || image.startsWith("https://")) return image;
+  const raw = String(image).trim();
+  if (!raw) return "";
 
-  let normalized = image.trim();
-  if (!normalized) return "";
+  const normalizedSlashes = raw.replace(/\\/g, "/");
+
+  // Keep absolute URLs, but rewrite localhost upload URLs to current API base in production.
+  if (normalizedSlashes.startsWith("http://") || normalizedSlashes.startsWith("https://")) {
+    try {
+      const parsed = new URL(normalizedSlashes);
+      if ((parsed.hostname === "localhost" || parsed.hostname === "127.0.0.1") && parsed.pathname.startsWith("/uploads/")) {
+        if (API_BASE_URL) return `${API_BASE_URL}${parsed.pathname}`;
+        return parsed.pathname;
+      }
+    } catch {
+      // If URL parsing fails, return raw value below via relative resolver.
+    }
+
+    return normalizedSlashes;
+  }
+
+  let normalized = normalizedSlashes;
+
+  // Normalize absolute filesystem paths that contain an uploads segment.
+  const uploadsIndex = normalized.toLowerCase().lastIndexOf("/uploads/");
+  if (uploadsIndex >= 0) {
+    normalized = normalized.slice(uploadsIndex + 1);
+  }
+
+  if (normalized.toLowerCase().startsWith("uploads/")) {
+    normalized = `/${normalized}`;
+  }
 
   if (!normalized.startsWith("/")) {
-    normalized = normalized.startsWith("uploads/")
-      ? `/${normalized}`
-      : `/uploads/${normalized}`;
+    normalized = `/uploads/${normalized}`;
   }
 
   if (!API_BASE_URL) return normalized;

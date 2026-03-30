@@ -129,7 +129,8 @@ const getCollapsedDescription = (description) => {
 };
 
 function ProjectCard({ project, isExpanded, onToggleExpand }) {
-  const imageUrl = resolveUploadUrl(project.image) || "/assets/project-fallback.png";
+  const fallbackImage = "/assets/tishbiteHero.png";
+  const imageUrl = resolveUploadUrl(project.image) || fallbackImage;
   const fullDescription = getOptimizedDescription(project);
   const collapsedDescription = getCollapsedDescription(fullDescription);
   const canExpand = fullDescription !== collapsedDescription;
@@ -146,6 +147,11 @@ function ProjectCard({ project, isExpanded, onToggleExpand }) {
           alt={project.title}
           className="projects-page-img"
           loading="lazy"
+          onError={(event) => {
+            if (event.currentTarget.src !== window.location.origin + fallbackImage) {
+              event.currentTarget.src = fallbackImage;
+            }
+          }}
         />
       </div>
       <div className="projects-page-card-header">

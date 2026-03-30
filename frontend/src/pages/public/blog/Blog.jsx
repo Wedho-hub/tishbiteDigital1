@@ -20,7 +20,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
 };
 
-const FALLBACK_IMAGE = "/assets/project-fallback.png";
+const FALLBACK_IMAGE = "/assets/tishbiteHero.png";
 
 const resolveBlogImage = (image) => {
   return resolveUploadUrl(image) || FALLBACK_IMAGE;
@@ -164,6 +164,11 @@ const Blog = () => {
                   alt={blog.title}
                   className="blog-card-img"
                   loading="lazy"
+                  onError={(event) => {
+                    if (event.currentTarget.src !== window.location.origin + FALLBACK_IMAGE) {
+                      event.currentTarget.src = FALLBACK_IMAGE;
+                    }
+                  }}
                 />
               </Link>
 

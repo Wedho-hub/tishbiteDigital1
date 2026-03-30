@@ -8,7 +8,7 @@ import ReactMarkdown from "react-markdown";
 import { motion } from "framer-motion";
 import "./blogDetails.css";
 
-const FALLBACK_IMAGE = "/assets/project-fallback.png";
+const FALLBACK_IMAGE = "/assets/tishbiteHero.png";
 
 const resolveBlogImage = (image) => {
   return resolveUploadUrl(image) || FALLBACK_IMAGE;
@@ -185,6 +185,11 @@ const BlogDetails = () => {
               alt={blog.title}
               className="blog-details-image"
               loading="eager"
+              onError={(event) => {
+                if (event.currentTarget.src !== window.location.origin + FALLBACK_IMAGE) {
+                  event.currentTarget.src = FALLBACK_IMAGE;
+                }
+              }}
             />
           </motion.div>
           <motion.div
