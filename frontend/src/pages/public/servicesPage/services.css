@@ -8,6 +8,20 @@
   background: linear-gradient(180deg, #f6faf7, #eef7f1 50%, #f8fbf9);
 }
 
+.services-loading-prompt {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-weight: 700;
+  color: #1b4332;
+  letter-spacing: 0.2px;
+  animation: loadingPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes loadingPulse {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
 /* =========================
    SCROLL ANIMATION
 ========================= */

@@ -137,6 +137,13 @@ const getOutcomeDescription = (service) => {
 
 const INITIAL_VISIBLE_SERVICES = 4;
 
+const loadingPrompts = [
+  "Loading your growth-ready service options...",
+  "Tishbite Digital builds websites that turn visits into enquiries.",
+  "From SEO to ads and automation, your full growth stack is on the way.",
+  "Helping Cape Town businesses grow online with measurable results.",
+];
+
 const pricingPolicyRows = [
   {
     service: "General Services",
@@ -186,6 +193,7 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [expanded, setExpanded] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadingPromptIndex, setLoadingPromptIndex] = useState(0);
   const [showAllGeneral, setShowAllGeneral] = useState(false);
   const [showAllBundles, setShowAllBundles] = useState(false);
 
@@ -212,6 +220,16 @@ const Services = () => {
       mounted = false;
     };
   }, []);
+
+  useEffect(() => {
+    if (!loading) return undefined;
+
+    const interval = setInterval(() => {
+      setLoadingPromptIndex((prev) => (prev + 1) % loadingPrompts.length);
+    }, 2200);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   useEffect(() => {
     observer.current = new IntersectionObserver(
@@ -301,7 +319,14 @@ const Services = () => {
       />
 
       <div className="services-page-wrap container" role="region" aria-labelledby="services-overview-heading">
-        {loading && <div className="loading-skeleton"></div>}
+        {loading && (
+          <>
+            <div className="loading-skeleton"></div>
+            <p className="services-loading-prompt" aria-live="polite">
+              {loadingPrompts[loadingPromptIndex]}
+            </p>
+          </>
+        )}
 
         {!loading && (
           <>

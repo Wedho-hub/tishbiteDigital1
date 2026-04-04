@@ -65,6 +65,13 @@ const cardVariants = {
   },
 };
 
+const loadingPrompts = [
+  "Loading selected work from Tishbite Digital...",
+  "Websites, SEO systems, and digital solutions built for measurable growth.",
+  "Helping brands improve visibility, trust, and conversion pathways.",
+  "Your next high-impact project could be featured here.",
+];
+
 const optimizedDescriptionByProject = [
   {
     matcher: /maffy/i,
@@ -190,6 +197,17 @@ const Projects = () => {
   const [loading, setLoading] = useState(true);
   const [usedFallback, setUsedFallback] = useState(false);
   const [expandedCards, setExpandedCards] = useState({});
+  const [loadingPromptIndex, setLoadingPromptIndex] = useState(0);
+
+  useEffect(() => {
+    if (!loading) return undefined;
+
+    const interval = setInterval(() => {
+      setLoadingPromptIndex((prev) => (prev + 1) % loadingPrompts.length);
+    }, 2200);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   useEffect(() => {
     let isMounted = true;
@@ -262,7 +280,7 @@ const Projects = () => {
             <p>Each project is built to improve visibility, streamline operations, and support measurable business growth.</p>
           </MotionDiv>
 
-          {loading && <p className="projects-page-status">Loading projects...</p>}
+          {loading && <p className="projects-page-status projects-loading-prompt" aria-live="polite">{loadingPrompts[loadingPromptIndex]}</p>}
 
           {!loading && usedFallback && (
             <p className="projects-page-status">

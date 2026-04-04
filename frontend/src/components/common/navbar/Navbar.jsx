@@ -4,8 +4,8 @@ import { Link, useLocation } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaPinterestP, FaPhoneAlt } from "react-icons/fa";
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: <FaFacebookF />, label: "Facebook" },
-  { href: "https://instagram.com", icon: <FaInstagram />, label: "Instagram" },
+  { href: "https://web.facebook.com/profile.php?id=61584656188539", icon: <FaFacebookF />, label: "Facebook" },
+  { href: "https://www.instagram.com/tishbitedigital/", icon: <FaInstagram />, label: "Instagram" },
   { href: "https://za.pinterest.com/Tishbite_Digital/", icon: <FaPinterestP />, label: "Pinterest" },
 ];
 

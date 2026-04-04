@@ -201,6 +201,23 @@
   margin-top: 1.25rem;
 }
 
+.projects-loading-prompt {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0.7rem 0.9rem;
+  border-radius: 10px;
+  background: rgba(45, 106, 79, 0.1);
+  color: #1b4332;
+  font-weight: 700;
+  animation: projectsLoadingPulse 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes projectsLoadingPulse {
+  from { opacity: 0.55; }
+  to { opacity: 1; }
+}
+
 @media (max-width: 991px) {
   .projects-page-section {
     padding: 3rem 0 3.6rem;

@@ -22,6 +22,13 @@ const cardVariants = {
 
 const FALLBACK_IMAGE = "/assets/tishbiteHero.png";
 
+const loadingPrompts = [
+  "Loading the latest growth insights...",
+  "Tishbite Digital helps businesses turn strategy into qualified leads.",
+  "Practical SEO, website, and marketing guidance is almost ready.",
+  "Building better visibility for Cape Town businesses, one article at a time.",
+];
+
 const resolveBlogImage = (image) => {
   return resolveUploadUrl(image) || FALLBACK_IMAGE;
 };
@@ -104,6 +111,17 @@ const Blog = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [expandedSnippets, setExpandedSnippets] = useState({});
+  const [loadingPromptIndex, setLoadingPromptIndex] = useState(0);
+
+  useEffect(() => {
+    if (!loading) return undefined;
+
+    const interval = setInterval(() => {
+      setLoadingPromptIndex((prev) => (prev + 1) % loadingPrompts.length);
+    }, 2200);
+
+    return () => clearInterval(interval);
+  }, [loading]);
 
   useEffect(() => {
     let mounted = true;
@@ -141,7 +159,11 @@ const Blog = () => {
       <PageHeader title="Blog" subtitle="Read our latest articles and insights." background="light" />
       <section className="blog-page-wrap container" role="region" aria-labelledby="blog-listing-heading">
         <h2 id="blog-listing-heading" className="sr-only">Blog post listing</h2>
-        {loading && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>Loading blog posts...</motion.p>}
+        {loading && (
+          <motion.p className="blog-loading-prompt" initial={{ opacity: 0 }} animate={{ opacity: 1 }} aria-live="polite">
+            {loadingPrompts[loadingPromptIndex]}
+          </motion.p>
+        )}
         {!loading && error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{error}</motion.p>}
         <motion.div className="blog-grid" variants={gridVariants} initial="hidden" animate="visible">
           {!loading && !error && blogs.map((blog) => (
