@@ -30,11 +30,12 @@ const Hero = () => {
       aria-label="Tishbite Digital helping Cape Town businesses get more clients online"
     >
       <div className="container">
-        <div className="row align-items-center">
+        <div className="row hero-row align-items-stretch g-4 g-lg-5">
 
           {/* TEXT CONTENT */}
-          <div className="col-lg-6 order-1 order-lg-1">
+          <div className="col-lg-6 order-2 order-lg-1 d-flex">
             <motion.div
+              className="hero-content-shell"
               variants={containerVariants}
               initial="hidden"
               animate="visible"
@@ -54,11 +55,6 @@ const Hero = () => {
                 Google visibility, and turn digital traffic into real client
                 opportunities.
               </motion.p>
-
-              <motion.div variants={itemVariants} className="hero-offer-card mb-4">
-                <strong>Get a FREE Website &amp; SEO Audit</strong>
-                <span>Worth R500. Includes conversion, speed, search visibility, and lead-capture feedback.</span>
-              </motion.div>
 
               <motion.div variants={itemVariants} className="hero-proof-list mb-4" aria-label="Business growth benefits">
                 <span className="hero-proof-item"><FaCheckCircle aria-hidden="true" /> More qualified leads</span>
@@ -94,17 +90,19 @@ const Hero = () => {
 
           {/* IMAGE CONTENT */}
           <motion.div
-            className="col-lg-6 order-2 order-lg-2 text-center mt-4 mt-lg-0"
+            className="col-lg-6 order-1 order-lg-2 d-flex"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.6, delay: 0.02, ease: [0.22, 1, 0.36, 1] }}
           >
-            <img
-              src="/assets/tishbiteHero.png"
-              alt="Tishbite Digital leading small businesses from struggle to sustainable digital growth"
-              className="img-fluid hero-image"
-              loading="lazy"
-            />
+            <div className="hero-media-shell text-center w-100">
+              <img
+                src="/assets/tishbiteHero.png"
+                alt="Tishbite Digital leading small businesses from struggle to sustainable digital growth"
+                className="img-fluid hero-image"
+                loading="lazy"
+              />
+            </div>
           </motion.div>
         </div>
       </div>
