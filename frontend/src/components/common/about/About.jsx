@@ -90,6 +90,13 @@ const About = () => {
                   to stand alongside established brands while reaching the audiences
                   that matter most.
                 </p>
+                <p className="mission-paragraph mb-0">
+                  We also lead with humility and a strong learning mindset. Technology
+                  evolves fast, and we are committed to continuously learning the tools,
+                  frameworks, and best practices needed to deliver the highest standard
+                  of service, so every client benefits from solutions that are modern,
+                  relevant, and built for long-term performance.
+                </p>
               </div>
             </motion.div>
             <motion.div className="col-lg-6 text-center mt-4 mt-lg-0" variants={fadeUp}>

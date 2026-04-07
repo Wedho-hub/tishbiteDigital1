@@ -28,6 +28,8 @@ const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [navOpacity, setNavOpacity] = useState(0.82);
+  const [footerVisible, setFooterVisible] = useState(false);
 
   const handleNavLinkClick = () => {
     setMenuOpen(false);
@@ -39,12 +41,13 @@ const Navbar = () => {
 
     const updateScrolledState = () => {
       const y = window.scrollY || window.pageYOffset || 0;
-      const isDesktop = window.innerWidth >= 992;
+      const maxDistance = 170;
+      const progress = Math.min(y / maxDistance, 1);
+      const nextOpacity = 0.78 + progress * 0.2;
 
+      setNavOpacity(nextOpacity);
       setIsScrolled((prev) => {
-        if (!isDesktop) return false;
-
-        const next = prev ? y > 20 : y > 72;
+        const next = prev ? y > 12 : y > 40;
         return next === prev ? prev : next;
       });
 
@@ -84,8 +87,42 @@ const Navbar = () => {
     return () => window.removeEventListener("keydown", handleEscape);
   }, []);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return undefined;
+
+    document.body.classList.toggle("mobile-nav-open", menuOpen);
+    return () => {
+      document.body.classList.remove("mobile-nav-open");
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      return undefined;
+    }
+
+    const footer = document.querySelector("footer.footer");
+    if (!footer) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setFooterVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0,
+      }
+    );
+
+    observer.observe(footer);
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
   return (
-    <nav className={`navbar navbar-expand-lg${isScrolled ? " navbar-scrolled" : ""}`} aria-label="Main navigation">
+    <nav
+      className={`navbar navbar-expand-lg${isScrolled ? " navbar-scrolled" : ""}${footerVisible && !menuOpen ? " navbar-hidden" : ""}`}
+      style={{ "--nav-current-opacity": navOpacity.toFixed(3) }}
+      aria-label="Main navigation"
+    >
       <div className="container-fluid">
 
         {/* ================= DESKTOP ================= */}
@@ -175,6 +212,7 @@ const Navbar = () => {
 
             <div className="phone-link">
               <a href={phone.href} aria-label={`Call Tishbite Digital on ${phone.number}`}>
+                <FaPhoneAlt aria-hidden="true" />
                 {phone.number}
               </a>
             </div>
@@ -199,7 +237,7 @@ const Navbar = () => {
             <button
               className={`navbar-toggler${menuOpen ? " open" : ""}`}
               type="button"
-              aria-label="Toggle navigation"
+              aria-label={menuOpen ? "Close navigation" : "Open navigation"}
               aria-controls="mobile-nav-menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(prev => !prev)}
@@ -229,6 +267,13 @@ const Navbar = () => {
               ))}
             </ul>
           </div>
+
+          <button
+            type="button"
+            className={`mobile-nav-backdrop${menuOpen ? " show" : ""}`}
+            aria-label="Close menu"
+            onClick={() => setMenuOpen(false)}
+          />
 
         </div>
       </div>

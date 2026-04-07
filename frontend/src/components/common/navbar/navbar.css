@@ -6,16 +6,23 @@
   position: sticky;
   top: 0;
   min-height: var(--nav-height);
+  --nav-current-opacity: 0.82;
   display: flex;
   align-items: center;
 
-  background: var(--nav-bg);
+  background: rgba(255, 255, 255, var(--nav-current-opacity));
   -webkit-backdrop-filter: var(--nav-blur);
   backdrop-filter: var(--nav-blur);
 
   border-bottom: 1px solid transparent;
-  transition: background-color 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  transition: background-color 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease, transform 0.3s ease, opacity 0.22s ease;
   z-index: 1000;
+}
+
+.navbar.navbar-hidden {
+  opacity: 0;
+  transform: translateY(calc(-100% - 8px));
+  pointer-events: none;
 }
 
 .navbar::after {
@@ -36,8 +43,7 @@
 }
 
 .navbar.navbar-scrolled {
-  background: var(--nav-bg-scrolled);
-  box-shadow: 0 14px 36px rgba(8, 28, 21, 0.12);
+  box-shadow: 0 12px 30px rgba(8, 28, 21, 0.12);
 }
 
 .navbar.navbar-scrolled::after {
@@ -336,7 +342,11 @@
 @media (max-width: 991px) {
   .navbar {
     min-height: 82px;
-    min-height: 82px;
+    border-bottom-color: rgba(27, 67, 50, 0.08);
+  }
+
+  .navbar.navbar-scrolled {
+    box-shadow: 0 10px 24px rgba(8, 28, 21, 0.12);
   }
 
   .navbar .container-fluid {
@@ -345,6 +355,7 @@
   }
 
   .navbar-mobile-layout {
+    position: relative;
     gap: 0.35rem;
     padding: 0.5rem 0;
   }
@@ -352,6 +363,8 @@
   .navbar-mobile-top {
     gap: 0.7rem;
     margin-bottom: 0.2rem !important;
+    padding-bottom: 0.15rem;
+    border-bottom: 1px dashed rgba(27, 67, 50, 0.15);
   }
 
   .navbar .navbar-social {
@@ -360,6 +373,10 @@
 
   .navbar .navbar-brand {
     gap: 0.55rem;
+  }
+
+  .navbar-mobile-bottom {
+    min-height: 46px;
   }
 
   .navbar-logo {
@@ -382,6 +399,11 @@
   }
 
   .mobile-nav-menu {
+    position: absolute;
+    top: calc(100% + 0.25rem);
+    left: 0;
+    right: 0;
+    z-index: 1205;
     display: block;
     overflow: hidden;
     max-height: 0;
@@ -391,9 +413,10 @@
     background: rgba(255, 255, 255, 0.96);
     -webkit-backdrop-filter: blur(22px);
     backdrop-filter: blur(22px);
-    border-top: 1px solid rgba(27, 67, 50, 0.12);
-    border-radius: 12px;
-    margin-top: 0.6rem;
+    border: 1px solid rgba(27, 67, 50, 0.12);
+    border-radius: 14px;
+    margin-top: 0;
+    box-shadow: 0 20px 40px rgba(8, 28, 21, 0.14);
     padding: 0 0.9rem;
     transition: max-height 0.32s ease, opacity 0.24s ease, transform 0.24s ease, padding 0.24s ease;
   }
@@ -415,17 +438,22 @@
   }
 
   .navbar .navbar-nav .main-nav-link {
-    padding: 0.78rem 0.2rem !important;
+    margin: 0.2rem 0;
+    padding: 0.75rem 0.85rem !important;
     font-size: 1rem;
-    border-bottom: 1px solid rgba(27, 67, 50, 0.1);
+    border-bottom: none;
+    border-radius: 10px;
+    background: rgba(45, 106, 79, 0.04);
   }
 
-  .navbar .navbar-nav .nav-item:last-child .main-nav-link {
-    border-bottom: none;
+  .navbar .navbar-nav .main-nav-link.active {
+    background: rgba(45, 106, 79, 0.14);
   }
 
   .navbar .main-nav-link::after {
-    height: 1.5px;
+    left: 0.85rem;
+    width: calc(100% - 1.7rem);
+    height: 2px;
   }
 
   .navbar .social-icon-bg {
@@ -435,9 +463,28 @@
   }
 
   .navbar .phone-link a {
+    gap: 0.38rem;
     font-size: 0.73rem;
-    padding: 0.43rem 0.72rem;
+    padding: 0.44rem 0.7rem;
     white-space: nowrap;
+  }
+
+  .mobile-nav-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: rgba(6, 20, 14, 0.32);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.24s ease;
+  }
+
+  .mobile-nav-backdrop.show {
+    opacity: 1;
+    pointer-events: auto;
   }
 }
 
@@ -458,7 +505,7 @@
 
   .navbar .phone-link a {
     font-size: 0.67rem;
-    padding: 0.38rem 0.56rem;
+    padding: 0.36rem 0.54rem;
   }
 
   .navbar-toggler {
@@ -481,4 +528,8 @@
     box-shadow: none !important;
   }
 
+}
+
+body.mobile-nav-open {
+  overflow: hidden;
 }
