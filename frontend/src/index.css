@@ -186,6 +186,20 @@ body {
 /* ==============================================
    BUTTON SHARED STYLES
 =============================================== */
+/* Page loader — Suspense fallback spinner */
+.page-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid rgba(45, 106, 79, 0.15);
+  border-top-color: #2d6a4f;
+  animation: page-spin 0.7s linear infinite;
+}
+
+@keyframes page-spin {
+  to { transform: rotate(360deg); }
+}
+
 .btn-primary {
   display: inline-flex;
   align-items: center;
