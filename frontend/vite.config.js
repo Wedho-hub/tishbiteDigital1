@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
     build: {
       outDir: 'dist',
       sourcemap: !isProduction,
+      chunkSizeWarningLimit: 600,
       rollupOptions: {
         output: {
           manualChunks(id) {
@@ -32,6 +33,11 @@ export default defineConfig(({ mode }) => {
             if (id.includes('framer-motion')) return 'vendor-framer';
             if (id.includes('react-router')) return 'vendor-router';
             if (id.includes('react-dom')) return 'vendor-react';
+            // react-icons ships thousands of SVG paths — isolate it
+            if (id.includes('react-icons')) return 'vendor-icons';
+            // markdown renderer is only needed on blog detail pages
+            if (id.includes('react-markdown') || id.includes('remark') || id.includes('rehype')) return 'vendor-markdown';
+            if (id.includes('@sentry')) return 'vendor-sentry';
             return 'vendor';
           },
         },

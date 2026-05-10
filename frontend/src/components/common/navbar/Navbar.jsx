@@ -97,6 +97,9 @@ const Navbar = () => {
   }, [menuOpen]);
 
   useEffect(() => {
+    // Reset immediately so the navbar is never stale-hidden on a fresh page
+    setFooterVisible(false);
+
     if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
       return undefined;
     }
@@ -108,9 +111,7 @@ const Navbar = () => {
       ([entry]) => {
         setFooterVisible(entry.isIntersecting);
       },
-      {
-        threshold: 0,
-      }
+      { threshold: 0, rootMargin: "0px" }
     );
 
     observer.observe(footer);

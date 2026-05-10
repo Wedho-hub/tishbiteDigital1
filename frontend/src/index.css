@@ -9,6 +9,7 @@
   -moz-osx-font-smoothing: grayscale;
 
     --nav-height: 96px;
+  --nav-height-mobile: 102px;
   --nav-height-scrolled: 72px;
 
   --nav-bg: rgba(255, 255, 255, 0.78);
@@ -47,6 +48,17 @@ body {
   min-height: 100vh;
   background: #f5faf7;
   color: #122820;
+}
+
+/* Fixed navbar offset — keeps content below the navbar */
+.public-main {
+  padding-top: var(--nav-height);
+}
+
+@media (max-width: 991px) {
+  .public-main {
+    padding-top: var(--nav-height-mobile);
+  }
 }
 
 .skip-link {
@@ -97,4 +109,124 @@ body {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* ==============================================
+   PAGE TRANSITION
+   Triggered by keying the wrapper on route path
+=============================================== */
+.page-transition-wrap {
+  will-change: opacity, transform;
+  animation: pageFadeUp 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes pageFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==============================================
+   SECTION DIVIDERS
+   Add class="section-wave-divider" between sections
+=============================================== */
+.section-divider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  margin: -1px 0;
+}
+
+.section-divider svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Subtle gradient line divider */
+.divider-gradient {
+  height: 2px;
+  border: none;
+  margin: 3rem auto;
+  max-width: 200px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, #2d6a4f 40%, #f4c95d 60%, transparent);
+  opacity: 0.55;
+}
+
+/* ==============================================
+   SCROLL ANIMATIONS (global, reusable)
+=============================================== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+
+.fade-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+.fade-in.in-view {
+  opacity: 1;
+}
+
+/* ==============================================
+   BUTTON SHARED STYLES
+=============================================== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #1b4332, #2d6a4f, #40916c);
+  color: #ffffff;
+  text-decoration: none;
+  transition: all 0.28s ease;
+  box-shadow: 0 8px 24px rgba(27, 67, 50, 0.25);
+  letter-spacing: 0.3px;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(27, 67, 50, 0.35);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.8rem;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f4c95d, #ffe08a);
+  color: #1b4332;
+  text-decoration: none;
+  transition: all 0.28s ease;
+  box-shadow: 0 8px 24px rgba(244, 201, 93, 0.3);
+}
+
+.btn-accent:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 36px rgba(244, 201, 93, 0.45);
 }

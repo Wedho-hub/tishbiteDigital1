@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import ReactMarkdown from "react-markdown";
 import CountUp from "react-countup";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { getServices } from "../../../services/serviceService";
 import {
@@ -11,6 +12,11 @@ import {
   FaCogs,
   FaLayerGroup,
   FaRocket,
+  FaArrowRight,
+  FaCheckCircle,
+  FaMapMarkerAlt,
+  FaCalendarCheck,
+  FaShieldAlt,
 } from "react-icons/fa";
 import "./services.css";
 
@@ -35,6 +41,27 @@ const normalizeServiceTitle = (title = "") =>
     .replace(/^the\s+/i, "")
     .replace(/\s+/g, " ")
     .trim();
+
+const BUNDLE_PRICE_MAP = {
+  "business launch suite":            "From R8,500",
+  "digital foundation suite":         "From R10,000",
+  "growth acceleration suite":        "From R12,500",
+  "revenue automation suite":         "From R15,000",
+  "tishbite enterprise growth system": "From R28,000+",
+};
+
+const getServicePrice = (service, isBundle) => {
+  if (!isBundle) return "From R2,500";
+  const key = normalizeServiceTitle(service?.title || "");
+  return BUNDLE_PRICE_MAP[key] || "Custom pricing";
+};
+
+const HERO_FEATURES = [
+  { icon: FaMapMarkerAlt,   label: "Cape Town Based" },
+  { icon: FaCalendarCheck,  label: "Installment Plans" },
+  { icon: FaShieldAlt,      label: "1 Month Free Support" },
+  { icon: FaCheckCircle,    label: "Results Focused" },
+];
 
 const serviceBlueprintByTitle = {
   "company registration & compliance setup": {
@@ -151,6 +178,8 @@ const pricingPolicyRows = [
     subscription: "Monthly installments available",
     maintenance: "Optional: R500/month",
     notes: "Ideal for individual service needs",
+    checkoutService: null,
+    price: null,
   },
   {
     service: "Business Launch Suite",
@@ -158,6 +187,8 @@ const pricingPolicyRows = [
     subscription: "3 monthly installments (R2,900 each)",
     maintenance: "1 month free maintenance included",
     notes: "Company registration + branding bundle",
+    checkoutService: "Business Launch Suite",
+    price: 8500,
   },
   {
     service: "Digital Foundation Suite",
@@ -165,6 +196,8 @@ const pricingPolicyRows = [
     subscription: "3–4 monthly installments",
     maintenance: "1 month free website & social setup support",
     notes: "Website + Google Business + Meta Suite setup",
+    checkoutService: "Digital Foundation Suite",
+    price: 10000,
   },
   {
     service: "Growth Acceleration Suite",
@@ -172,6 +205,8 @@ const pricingPolicyRows = [
     subscription: "3–6 monthly installments",
     maintenance: "1 month free social media support",
     notes: "Social media growth + lead generation",
+    checkoutService: "Growth Acceleration Suite",
+    price: 12500,
   },
   {
     service: "Revenue Automation Suite",
@@ -179,6 +214,8 @@ const pricingPolicyRows = [
     subscription: "3–6 monthly installments",
     maintenance: "1 month free automation & CRM support",
     notes: "CRM, automation & conversion optimization",
+    checkoutService: "Revenue Automation Suite",
+    price: 15000,
   },
   {
     service: "Tishbite Enterprise Growth System",
@@ -186,10 +223,15 @@ const pricingPolicyRows = [
     subscription: "Custom subscription or installments available",
     maintenance: "2 months free maintenance & support",
     notes: "All 8 services included, enterprise-grade",
+    checkoutService: "Tishbite Enterprise Growth System",
+    price: 28000,
   },
 ];
 
+const GENERAL_SERVICE_PRICE = 3500;
+
 const Services = () => {
+  const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [expanded, setExpanded] = useState({});
   const [loading, setLoading] = useState(true);
@@ -198,6 +240,10 @@ const Services = () => {
   const [showAllBundles, setShowAllBundles] = useState(false);
 
   const observer = useRef(null);
+
+  const goToCheckout = (serviceName, price) => {
+    navigate(`/checkout?service=${encodeURIComponent(serviceName)}&price=${price}`);
+  };
 
   useEffect(() => {
     let mounted = true;
@@ -281,6 +327,9 @@ const Services = () => {
           </span>
           <span className="service-badge">{isBundle ? "Bundle" : "General"}</span>
         </div>
+        <div className="service-price-tag" aria-label={`Starting price: ${getServicePrice(service, isBundle)}`}>
+          {getServicePrice(service, isBundle)}
+        </div>
         <h3>{getDisplayTitle(service)}</h3>
 
         <div
@@ -291,12 +340,24 @@ const Services = () => {
           <ReactMarkdown>{getOutcomeDescription(service)}</ReactMarkdown>
         </div>
 
-        <button
-          className="read-more-btn"
-          onClick={() => toggleExpand(service._id)}
-        >
-          {isExpanded ? "Show Less" : "Read More"}
-        </button>
+        <div className="service-card-actions">
+          <button
+            className="read-more-btn"
+            onClick={() => toggleExpand(service._id)}
+          >
+            {isExpanded ? "Show Less" : "Read More"}
+          </button>
+
+          <button
+            className="service-cta-btn"
+            onClick={() =>
+              goToCheckout(getDisplayTitle(service), GENERAL_SERVICE_PRICE)
+            }
+            aria-label={`Get started with ${getDisplayTitle(service)}`}
+          >
+            Get Started <FaArrowRight aria-hidden="true" />
+          </button>
+        </div>
       </li>
     );
   };
@@ -321,42 +382,63 @@ const Services = () => {
       <div className="services-page-wrap container" role="region" aria-labelledby="services-overview-heading">
         {loading && (
           <>
-            <div className="loading-skeleton"></div>
             <p className="services-loading-prompt" aria-live="polite">
               {loadingPrompts[loadingPromptIndex]}
             </p>
+            <div className="services-skeleton-grid" aria-hidden="true">
+              {Array.from({ length: 4 }, (_, i) => (
+                <div key={i} className="services-skeleton-card">
+                  <div className="skel skel-icon" />
+                  <div className="skel skel-title" />
+                  <div className="skel skel-line" />
+                  <div className="skel skel-line skel-line--short" />
+                </div>
+              ))}
+            </div>
           </>
         )}
 
         {!loading && (
           <>
             <section className="services-hero-panel reveal-on-scroll" style={{ "--reveal-delay": "40ms" }}>
-              <div className="services-hero-content">
-                <h2 id="services-overview-heading">Solutions Built for Growth</h2>
-                <p>
-                  From focused one-off execution to complete business growth packages,
-                  our services are crafted to improve visibility, operations, and outcomes.
-                </p>
+              <div className="services-hero-top">
+                <div className="services-hero-content">
+                  <p className="services-hero-eyebrow">Cape Town Digital Agency</p>
+                  <h2 id="services-overview-heading">Solutions Built for Growth</h2>
+                  <p className="services-hero-sub">
+                    From focused one-off execution to complete business growth packages,
+                    every service is engineered to generate real leads and measurable outcomes.
+                  </p>
+                </div>
+                <div className="services-metrics">
+                  <div>
+                    <span>
+                      <CountUp end={generalServices.length} duration={1.6} enableScrollSpy scrollSpyOnce />
+                    </span>
+                    <small>Individual<br />Services</small>
+                  </div>
+                  <div>
+                    <span>
+                      <CountUp end={bundledServices.length} duration={1.7} enableScrollSpy scrollSpyOnce />
+                    </span>
+                    <small>Growth<br />Packages</small>
+                  </div>
+                  <div>
+                    <span>
+                      <CountUp end={services.length} duration={1.8} enableScrollSpy scrollSpyOnce />
+                    </span>
+                    <small>Total<br />Solutions</small>
+                  </div>
+                </div>
               </div>
-              <div className="services-metrics">
-                <div>
-                  <span>
-                    <CountUp end={generalServices.length} duration={1.6} enableScrollSpy scrollSpyOnce />
-                  </span>
-                  <small>General Services</small>
-                </div>
-                <div>
-                  <span>
-                    <CountUp end={bundledServices.length} duration={1.7} enableScrollSpy scrollSpyOnce />
-                  </span>
-                  <small>Bundled Services</small>
-                </div>
-                <div>
-                  <span>
-                    <CountUp end={services.length} duration={1.8} enableScrollSpy scrollSpyOnce />
-                  </span>
-                  <small>Total Services</small>
-                </div>
+
+              <div className="services-hero-features" aria-label="Key service benefits">
+                {HERO_FEATURES.map(({ icon: Icon, label }) => (
+                  <div key={label} className="services-hero-feature">
+                    <Icon className="services-hero-feature-icon" aria-hidden="true" />
+                    <span>{label}</span>
+                  </div>
+                ))}
               </div>
             </section>
 
@@ -374,6 +456,7 @@ const Services = () => {
                       <th>Subscription / Installments</th>
                       <th>Maintenance / Support</th>
                       <th>Notes</th>
+                      <th aria-label="Action"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -384,6 +467,27 @@ const Services = () => {
                         <td>{row.subscription}</td>
                         <td>{row.maintenance}</td>
                         <td>{row.notes}</td>
+                        <td>
+                          {row.checkoutService ? (
+                            <button
+                              className="pricing-table-cta"
+                              onClick={() =>
+                                goToCheckout(row.checkoutService, row.price)
+                              }
+                              aria-label={`Get started with ${row.service}`}
+                            >
+                              Get Started <FaArrowRight aria-hidden="true" />
+                            </button>
+                          ) : (
+                            <button
+                              className="pricing-table-cta pricing-table-cta--contact"
+                              onClick={() => navigate("/contact")}
+                              aria-label="Contact us for general services"
+                            >
+                              Enquire <FaArrowRight aria-hidden="true" />
+                            </button>
+                          )}
+                        </td>
                       </tr>
                     ))}
                   </tbody>

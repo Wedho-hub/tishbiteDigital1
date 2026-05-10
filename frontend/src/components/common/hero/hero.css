@@ -2,6 +2,8 @@
   position: relative;
   overflow: hidden;
   background: linear-gradient(135deg, #f3f9f5 0%, #ffffff 42%, #e6f2eb 100%);
+  padding-top: 0.25rem;
+  padding-bottom: 3rem;
 }
 
 .hero-section::before {

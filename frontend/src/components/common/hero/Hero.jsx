@@ -26,7 +26,7 @@ const itemVariants = {
 const Hero = () => {
   return (
     <section
-      className="hero-section py-5"
+      className="hero-section"
       aria-label="Tishbite Digital helping Cape Town businesses get more clients online"
     >
       <div className="container">

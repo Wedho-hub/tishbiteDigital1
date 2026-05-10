@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./footer.css";
-import { FaFacebookF, FaInstagram, FaPinterestP } from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaPinterestP, FaCreditCard, FaArrowRight, FaShieldAlt, FaLock } from "react-icons/fa";
 import { motion } from "framer-motion";
 
 const socialLinks = [
@@ -29,6 +29,26 @@ const Footer = () => {
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
     >
       <div className="container footer-container">
+
+        {/* Pay Online strip */}
+        <div className="footer-pay-strip">
+          <div className="footer-pay-strip-left">
+            <FaCreditCard className="footer-pay-icon" aria-hidden="true" />
+            <div>
+              <p className="footer-pay-title">Pay for services securely online</p>
+              <p className="footer-pay-trust">
+                <FaLock aria-hidden="true" /> SSL Encrypted
+                <span className="footer-pay-dot" aria-hidden="true" />
+                <FaShieldAlt aria-hidden="true" /> Secured by PayFast
+                <span className="footer-pay-dot" aria-hidden="true" />
+                ZAR · Instant confirmation
+              </p>
+            </div>
+          </div>
+          <Link to="/checkout" className="footer-pay-btn">
+            Pay Online <FaArrowRight aria-hidden="true" />
+          </Link>
+        </div>
 
         {/* Top Section */}
         <motion.div

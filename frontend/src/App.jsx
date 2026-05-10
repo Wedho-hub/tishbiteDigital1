@@ -14,6 +14,9 @@ import NotFound from "./pages/public/notFound/NotFound.jsx";
 import ErrorPage from "./pages/public/errorPage/ErrorPage.jsx";
 import HowWeWorkPage from "./pages/public/howWeWork/HowWeWorkPage.jsx";
 import About from "./components/common/about/About.jsx";
+import Checkout from "./pages/public/checkout/Checkout.jsx";
+import PaymentSuccess from "./pages/public/payment/PaymentSuccess.jsx";
+import PaymentCancel from "./pages/public/payment/PaymentCancel.jsx";
 
 // Error Boundary for catching React errors
 class ErrorBoundary extends React.Component {
@@ -59,6 +62,9 @@ function App() {
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contacts />} />
             <Route path="/how-we-work" element={<HowWeWorkPage />} />
+            <Route path="/checkout" element={<Checkout />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/cancel" element={<PaymentCancel />} />
             <Route path="/error" element={<ErrorPage />} />
             <Route path="*" element={<NotFound />} />
           </Route>

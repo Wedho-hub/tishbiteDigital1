@@ -1,236 +1,270 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
-import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import { FaArrowRight, FaClock, FaCalendarAlt, FaUser } from "react-icons/fa";
+import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { getBlogPosts } from "../../../services/blogService";
 import { resolveUploadUrl } from "../../../services/api";
-import { motion } from "framer-motion";
 import "./blog.css";
 
+/* ── Animation variants ──────────────────────────────── */
 const gridVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.09, delayChildren: 0.04 },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
 };
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.45 } },
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
 };
 
+/* ── Constants ───────────────────────────────────────── */
 const FALLBACK_IMAGE = "/assets/tishbiteHero.png";
 
-const loadingPrompts = [
-  "Loading the latest growth insights...",
-  "Tishbite Digital helps businesses turn strategy into qualified leads.",
-  "Practical SEO, website, and marketing guidance is almost ready.",
-  "Building better visibility for Cape Town businesses, one article at a time.",
+const CATEGORY_MAP = [
+  { test: /(seo|search|google|ranking|traffic|visibility)/i, label: "SEO", color: "cat-seo" },
+  { test: /(social|facebook|instagram|meta|twitter)/i,       label: "Social Media", color: "cat-social" },
+  { test: /(website|web design|landing page|ux|ui|develop)/i, label: "Web Design", color: "cat-web" },
+  { test: /(crm|automation|workflow|whatsapp|follow.?up)/i,  label: "Automation", color: "cat-auto" },
+  { test: /(ads|paid|campaign|meta ads|google ads)/i,        label: "Paid Ads", color: "cat-ads" },
+  { test: /(brand|identity|logo|design)/i,                   label: "Branding", color: "cat-brand" },
 ];
 
-const resolveBlogImage = (image) => {
-  return resolveUploadUrl(image) || FALLBACK_IMAGE;
-};
+const LOADING_PROMPTS = [
+  "Loading the latest growth insights...",
+  "Practical SEO and marketing guidance is on the way.",
+  "Building better visibility for Cape Town businesses.",
+];
 
-const sanitizeToPlain = (content = "") => {
-  const plain = content
-    .replace(/[#>*_`-]/g, "")
+/* ── Helpers ─────────────────────────────────────────── */
+const resolveBlogImage = (image) => resolveUploadUrl(image) || FALLBACK_IMAGE;
+
+const sanitizePlain = (content = "") =>
+  content
+    .replace(/[#>*_`]/g, "")
     .replace(/\[(.*?)\]\((.*?)\)/g, "$1")
     .replace(/\s+/g, " ")
     .trim();
 
-  return plain;
+const getExcerpt = (content, max = 155) => {
+  const plain = sanitizePlain(content || "");
+  return plain.length <= max ? plain : `${plain.slice(0, max).trimEnd()}…`;
 };
 
-const trimText = (text, length = 180) => {
-  if (text.length <= length) return text;
-  return `${text.slice(0, length - 3)}...`;
+const getReadingTime = (content) => {
+  const words = sanitizePlain(content || "").split(/\s+/).filter(Boolean).length;
+  const mins = Math.max(1, Math.round(words / 200));
+  return `${mins} min read`;
 };
 
-const snippetIntentLibrary = [
-  {
-    matcher: /(seo|search|google|ranking|traffic|discoverability)/i,
-    keywordIntent: "Cape Town SEO services for businesses that want local visibility and qualified inbound leads",
-  },
-  {
-    matcher: /(website|web design|landing page|conversion|ux|ui)/i,
-    keywordIntent: "high-converting website design for Cape Town service businesses",
-  },
-  {
-    matcher: /(ads|meta|facebook|instagram|campaign|paid)/i,
-    keywordIntent: "performance marketing and paid ads focused on lead generation in South Africa",
-  },
-  {
-    matcher: /(crm|automation|workflow|whatsapp|follow-up)/i,
-    keywordIntent: "automation and WhatsApp follow-up systems to convert leads faster",
-  },
-];
+const getCategory = (blog) => {
+  const haystack = `${blog.title || ""} ${blog.content || ""}`;
+  const match = CATEGORY_MAP.find(({ test }) => test.test(haystack));
+  return match || { label: "Digital Marketing", color: "cat-default" };
+};
 
-const buildSnippet = (blog) => {
-  const plain = sanitizeToPlain(blog?.content || "");
-  const topic = `${blog?.title || ""} ${plain}`;
-  const keywordMatch = snippetIntentLibrary.find(({ matcher }) => matcher.test(topic));
+const formatDate = (value) => {
+  if (!value) return "";
+  const d = new Date(value);
+  if (isNaN(d.getTime())) return "";
+  return d.toLocaleDateString("en-ZA", { day: "2-digit", month: "short", year: "numeric" });
+};
 
-  const problem = trimText(
-    plain ||
-      "Many businesses publish content but struggle to turn visibility into qualified leads and direct enquiries."
+/* ── Skeleton card ───────────────────────────────────── */
+const BlogSkeleton = ({ count = 5 }) => (
+  <div className="blog-grid" aria-hidden="true">
+    {Array.from({ length: count }, (_, i) => (
+      <div key={i} className={`blog-card-skeleton ${i === 0 ? "blog-card-skeleton--featured" : ""}`}>
+        <div className="skeleton-img" />
+        <div className="skeleton-body">
+          <div className="skeleton-line skeleton-line--short" />
+          <div className="skeleton-line" />
+          <div className="skeleton-line skeleton-line--medium" />
+          <div className="skeleton-line skeleton-line--short" />
+        </div>
+      </div>
+    ))}
+  </div>
+);
+
+/* ── Featured card (first post) ─────────────────────── */
+const FeaturedCard = ({ blog }) => {
+  const cat = getCategory(blog);
+  return (
+    <motion.article className="blog-card blog-card--featured" variants={cardVariants}>
+      <Link
+        to={`/blog/${blog._id}`}
+        className="blog-card-img-link"
+        aria-label={`Read featured article: ${blog.title}`}
+        tabIndex={-1}
+      >
+        <span className="blog-featured-badge" aria-label="Featured article">Featured</span>
+        <span className={`blog-cat-pill ${cat.color}`}>{cat.label}</span>
+        <img
+          src={resolveBlogImage(blog.image)}
+          alt={blog.title}
+          className="blog-card-img"
+          width="800"
+          height="450"
+          decoding="async"
+          fetchpriority="high"
+          onError={(e) => {
+            if (e.currentTarget.src !== window.location.origin + FALLBACK_IMAGE)
+              e.currentTarget.src = FALLBACK_IMAGE;
+          }}
+        />
+      </Link>
+      <div className="blog-card-body">
+        <span className={`blog-cat-pill blog-cat-pill--inline ${cat.color}`}>{cat.label}</span>
+        <Link to={`/blog/${blog._id}`} className="blog-title-link">
+          <h2 className="blog-card-title blog-card-title--featured">{blog.title}</h2>
+        </Link>
+        <p className="blog-card-excerpt">{getExcerpt(blog.content, 220)}</p>
+        <div className="blog-card-meta">
+          <span><FaUser aria-hidden="true" /> {blog.author?.trim() || "Tishbite Digital"}</span>
+          <span><FaCalendarAlt aria-hidden="true" /> {formatDate(blog.createdAt)}</span>
+          <span><FaClock aria-hidden="true" /> {getReadingTime(blog.content)}</span>
+        </div>
+        <Link to={`/blog/${blog._id}`} className="blog-read-btn blog-read-btn--featured">
+          Read Article <FaArrowRight aria-hidden="true" />
+        </Link>
+      </div>
+    </motion.article>
   );
-
-  const solution = trimText(
-    `This article explains a practical strategy to solve that challenge using clearer messaging, stronger conversion flow, and focused digital execution.`
-  );
-
-  const result = trimText(
-    `Apply these steps to improve trust, attract better-fit prospects, and increase enquiry quality from search and social channels.`
-  );
-
-  const keywordIntent = keywordMatch?.keywordIntent ||
-    "digital growth strategy for Cape Town and South African service businesses";
-
-  const geoIntent = "Cape Town, Western Cape, and South Africa market relevance";
-
-  return { problem, solution, result, keywordIntent, geoIntent };
 };
 
-const formatBlogDate = (value) => {
-  if (!value) return "Recent";
-
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return "Recent";
-
-  return date.toLocaleDateString("en-ZA", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-  });
+/* ── Regular card ────────────────────────────────────── */
+const BlogCard = ({ blog }) => {
+  const cat = getCategory(blog);
+  return (
+    <motion.article className="blog-card" variants={cardVariants} whileHover={{ y: -4 }} transition={{ duration: 0.2 }}>
+      <Link
+        to={`/blog/${blog._id}`}
+        className="blog-card-img-link"
+        aria-label={`Read: ${blog.title}`}
+        tabIndex={-1}
+      >
+        <span className={`blog-cat-pill ${cat.color}`}>{cat.label}</span>
+        <img
+          src={resolveBlogImage(blog.image)}
+          alt={blog.title}
+          className="blog-card-img"
+          width="600"
+          height="338"
+          loading="lazy"
+          decoding="async"
+          onError={(e) => {
+            if (e.currentTarget.src !== window.location.origin + FALLBACK_IMAGE)
+              e.currentTarget.src = FALLBACK_IMAGE;
+          }}
+        />
+      </Link>
+      <div className="blog-card-body">
+        <Link to={`/blog/${blog._id}`} className="blog-title-link">
+          <h3 className="blog-card-title">{blog.title}</h3>
+        </Link>
+        <p className="blog-card-excerpt">{getExcerpt(blog.content)}</p>
+        <div className="blog-card-meta">
+          <span><FaCalendarAlt aria-hidden="true" /> {formatDate(blog.createdAt)}</span>
+          <span><FaClock aria-hidden="true" /> {getReadingTime(blog.content)}</span>
+        </div>
+        <Link to={`/blog/${blog._id}`} className="blog-read-btn">
+          Read Article <FaArrowRight aria-hidden="true" />
+        </Link>
+      </div>
+    </motion.article>
+  );
 };
 
+/* ── Page ────────────────────────────────────────────── */
 const Blog = () => {
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState("");
-  const [expandedSnippets, setExpandedSnippets] = useState({});
-  const [loadingPromptIndex, setLoadingPromptIndex] = useState(0);
+  const [blogs, setBlogs]       = useState([]);
+  const [loading, setLoading]   = useState(true);
+  const [error, setError]       = useState("");
+  const [promptIdx, setPromptIdx] = useState(0);
 
   useEffect(() => {
-    if (!loading) return undefined;
-
-    const interval = setInterval(() => {
-      setLoadingPromptIndex((prev) => (prev + 1) % loadingPrompts.length);
-    }, 2200);
-
-    return () => clearInterval(interval);
+    if (!loading) return;
+    const id = setInterval(() => setPromptIdx((p) => (p + 1) % LOADING_PROMPTS.length), 2200);
+    return () => clearInterval(id);
   }, [loading]);
 
   useEffect(() => {
-    let mounted = true;
-
-    const fetchBlogs = async () => {
-      try {
-        const res = await getBlogPosts(1);
-        if (!mounted) return;
-        setBlogs(res.data || []);
-      } catch (err) {
-        if (!mounted) return;
-        setError(err.message || "Blog service is temporarily unavailable.");
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    };
-
-    fetchBlogs();
-    return () => {
-      mounted = false;
-    };
+    let active = true;
+    getBlogPosts(1, { summary: true, limit: 9 })
+      .then((res) => { if (active) setBlogs(res.data || []); })
+      .catch((err) => { if (active) setError(err.message || "Could not load articles."); })
+      .finally(() => { if (active) setLoading(false); });
+    return () => { active = false; };
   }, []);
+
+  const [featured, ...rest] = blogs;
 
   return (
     <>
       <Helmet>
-        <title>Digital Marketing & SEO Blog | Cape Town Business Growth Articles</title>
-        <meta name="description" content="Read practical articles on website design, SEO, lead generation, and digital marketing systems for Cape Town service businesses." />
-        <meta name="keywords" content="SEO blog, digital marketing tips, web design best practices, lead generation, Cape Town business" />
+        <title>Digital Marketing &amp; SEO Blog | Cape Town Business Growth | Tishbite Digital</title>
+        <meta name="description" content="Read practical articles on website design, SEO, lead generation, and digital marketing for Cape Town service businesses. Real strategies, real results." />
+        <meta name="keywords" content="SEO blog, digital marketing tips, web design, lead generation, Cape Town business growth" />
         <link rel="canonical" href="https://tishbitedigital.co.za/blog" />
-        <meta property="og:title" content="Digital Marketing & SEO Blog" />
-        <meta property="og:description" content="Growth-focused insights for Cape Town businesses" />
+        <meta property="og:title" content="Digital Marketing &amp; SEO Blog | Tishbite Digital" />
+        <meta property="og:description" content="Growth-focused insights for Cape Town businesses." />
         <meta property="og:url" content="https://tishbitedigital.co.za/blog" />
       </Helmet>
-      <PageHeader title="Blog" subtitle="Read our latest articles and insights." background="light" />
-      <section className="blog-page-wrap container" role="region" aria-labelledby="blog-listing-heading">
+
+      <PageHeader
+        title="Blog"
+        subtitle="Practical digital growth insights for South African businesses."
+        background="light"
+      />
+
+      <section
+        className="blog-page-wrap container"
+        role="region"
+        aria-labelledby="blog-listing-heading"
+      >
         <h2 id="blog-listing-heading" className="sr-only">Blog post listing</h2>
+
         {loading && (
-          <motion.p className="blog-loading-prompt" initial={{ opacity: 0 }} animate={{ opacity: 1 }} aria-live="polite">
-            {loadingPrompts[loadingPromptIndex]}
-          </motion.p>
+          <>
+            <p className="blog-loading-prompt" aria-live="polite">
+              {LOADING_PROMPTS[promptIdx]}
+            </p>
+            <BlogSkeleton count={5} />
+          </>
         )}
-        {!loading && error && <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }}>{error}</motion.p>}
-        <motion.div className="blog-grid" variants={gridVariants} initial="hidden" animate="visible">
-          {!loading && !error && blogs.map((blog) => (
-            (() => {
-              const snippet = buildSnippet(blog);
-              const snippetKey = blog._id || blog.title;
-              const isExpanded = Boolean(expandedSnippets[snippetKey]);
 
-              return (
-            <motion.article
-              key={blog._id}
-              className="blog-card"
-              variants={cardVariants}
-              whileHover={{ y: -4 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Link to={`/blog/${blog._id}`} className="blog-card-img-link" aria-label={`Read ${blog.title}`}>
-                <img
-                  src={resolveBlogImage(blog.image)}
-                  alt={blog.title}
-                  className="blog-card-img"
-                  loading="lazy"
-                  onError={(event) => {
-                    if (event.currentTarget.src !== window.location.origin + FALLBACK_IMAGE) {
-                      event.currentTarget.src = FALLBACK_IMAGE;
-                    }
-                  }}
-                />
-              </Link>
+        {!loading && error && (
+          <motion.div
+            className="blog-error"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+          >
+            <p>{error}</p>
+            <button className="blog-retry-btn" onClick={() => window.location.reload()}>
+              Retry
+            </button>
+          </motion.div>
+        )}
 
-              <div className="blog-card-body">
-                <h3 className="blog-card-title">{blog.title}</h3>
-                <p className="blog-card-meta">
-                  <span>By {blog.author?.trim() || "Tishbite Digital Team"}</span>
-                  <span className="blog-meta-divider">•</span>
-                  <span>{formatBlogDate(blog.createdAt)}</span>
-                </p>
-                <div className="blog-card-snippet" aria-label="Problem solution summary">
-                  <p><strong>Problem:</strong> {snippet.problem}</p>
-                  <p><strong>Solution:</strong> {snippet.solution}</p>
-                  <p><strong>Keyword Intent:</strong> {snippet.keywordIntent}</p>
-                  {isExpanded && (
-                    <>
-                      <p><strong>Result Focus:</strong> {snippet.result}</p>
-                      <p><strong>GEO Intent:</strong> {snippet.geoIntent}</p>
-                    </>
-                  )}
-                </div>
-                <button
-                  type="button"
-                  className="blog-snippet-toggle"
-                  onClick={() => setExpandedSnippets((prev) => ({
-                    ...prev,
-                    [snippetKey]: !prev[snippetKey],
-                  }))}
-                  aria-expanded={isExpanded}
-                >
-                  {isExpanded ? "Hide Details" : "Read More Summary"}
-                </button>
-                <Link to={`/blog/${blog._id}`} className="blog-read-btn">Read Blog</Link>
-              </div>
-            </motion.article>
-              );
-            })()
-          ))}
-        </motion.div>
-        {!loading && !error && blogs.length === 0 && <p>No blog posts available yet.</p>}
+        {!loading && !error && blogs.length === 0 && (
+          <p className="blog-empty">No articles published yet — check back soon.</p>
+        )}
+
+        {!loading && !error && blogs.length > 0 && (
+          <motion.div
+            className="blog-grid"
+            variants={gridVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            {featured && <FeaturedCard blog={featured} />}
+            {rest.map((blog) => (
+              <BlogCard key={blog._id} blog={blog} />
+            ))}
+          </motion.div>
+        )}
       </section>
     </>
   );

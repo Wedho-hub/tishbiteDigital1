@@ -16,6 +16,9 @@ import {
   FaSearch,
   FaWhatsapp,
   FaGlobeAfrica,
+  FaCreditCard,
+  FaLock,
+  FaShieldAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -83,6 +86,51 @@ const growthPillars = [
   },
 ];
 
+
+const PAY_PACKAGES = [
+  {
+    icon: FaLaptopCode,
+    name: "Starter Website",
+    price: "R3,500",
+    sub: "once-off",
+    perks: [
+      "Mobile-first, conversion-focused design",
+      "SEO-ready page structure",
+      "WhatsApp & contact lead integration",
+    ],
+    service: "Starter Website",
+    rawPrice: 3500,
+    highlight: false,
+  },
+  {
+    icon: FaBullhorn,
+    name: "Growth Bundle",
+    price: "R8,500",
+    sub: "or from R2,950/mo",
+    perks: [
+      "Website + SEO + Google Business setup",
+      "Lead capture & WhatsApp automation",
+      "Monthly performance review",
+    ],
+    service: "Growth Bundle",
+    rawPrice: 8500,
+    highlight: true,
+  },
+  {
+    icon: FaSearch,
+    name: "Local SEO",
+    price: "R2,200",
+    sub: "per month",
+    perks: [
+      "Cape Town keyword targeting",
+      "Google Business optimisation",
+      "Monthly rankings & traffic report",
+    ],
+    service: "Local SEO",
+    rawPrice: 2200,
+    highlight: false,
+  },
+];
 
 const Home = () => {
   const heroControls = useAnimation();

@@ -15,6 +15,8 @@ import blogPostRoutes from "./routes/blogPostRoutes.js";
 import serviceRoutes from "./routes/serviceRoutes.js";
 import enquiryRoutes from "./routes/enquiryRoutes.js";
 import projectRoutes from "./routes/projectRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
+import { handleItn } from "./controllers/paymentController.js";
 import seoRoutes from "./routes/seoRoutes.js";
 import { errorHandler } from "./middleware/errorHandler.js";
 
@@ -72,6 +74,9 @@ if (isProduction) {
   app.set("trust proxy", 1);
 }
 
+// PayFast ITN is a server-to-server POST — register it BEFORE CSRF middleware
+app.post("/api/payments/notify", handleItn);
+
 // Set CSRF cookie only for API GET/HEAD/OPTIONS requests (after CORS)
 app.use("/api", csrfCookie);
 
@@ -101,6 +106,7 @@ app.use("/api/blogposts", blogPostRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/enquiries", enquiryRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/payments", paymentRoutes);
 
 // Ops endpoints
 app.get("/api/health", (req, res) => {
