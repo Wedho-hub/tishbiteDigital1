@@ -64,7 +64,7 @@ export async function getBlogPosts(page = 1, options = {}) {
     if (cached) return cached;
   }
 
-  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?${queryString}`), {}, 12000, 1);
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?${queryString}`), {}, 30000, 2);
   const data = await parseJsonResponse(res);
 
   if (!admin) {
@@ -79,7 +79,7 @@ export async function getBlogPostById(id) {
   const cached = getCached(cacheKey);
   if (cached) return cached;
 
-  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}/${id}`), {}, 12000, 1);
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}/${id}`), {}, 30000, 2);
   const data = await parseJsonResponse(res);
   setCached(cacheKey, data);
   return data;

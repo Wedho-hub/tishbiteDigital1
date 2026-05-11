@@ -36,7 +36,7 @@ export async function getServices() {
   const cached = getCached(cacheKey);
   if (cached) return cached;
 
-  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?summary=1`), {}, 12000, 1);
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}?summary=1`), {}, 30000, 2);
   const data = await parseJsonResponse(res);
   setCached(cacheKey, data);
   return data;
@@ -47,7 +47,7 @@ export async function getServiceById(id) {
   const cached = getCached(cacheKey);
   if (cached) return cached;
 
-  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}/${id}`), {}, 12000, 1);
+  const res = await fetchWithTimeoutRetry(apiUrl(`${API_BASE}/${id}`), {}, 30000, 2);
   const data = await parseJsonResponse(res);
   setCached(cacheKey, data);
   return data;

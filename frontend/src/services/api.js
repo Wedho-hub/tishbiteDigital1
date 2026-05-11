@@ -103,7 +103,7 @@ export async function fetchWithCsrf(url, options = {}) {
 }
 
 // Prevent indefinite loading in production when backend is slow/cold.
-export async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
+export async function fetchWithTimeout(url, options = {}, timeoutMs = 30000) {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), timeoutMs);
 
@@ -123,7 +123,7 @@ export async function fetchWithTimeout(url, options = {}, timeoutMs = 12000) {
   }
 }
 
-export async function fetchWithTimeoutRetry(url, options = {}, timeoutMs = 12000, retries = 1) {
+export async function fetchWithTimeoutRetry(url, options = {}, timeoutMs = 30000, retries = 2) {
   let lastError;
 
   for (let attempt = 0; attempt <= retries; attempt += 1) {

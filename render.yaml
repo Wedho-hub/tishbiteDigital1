@@ -24,6 +24,10 @@ services:
       - key: CLOUDINARY_API_SECRET
         sync: false
       - key: ALLOWED_ORIGINS
-        value: https://your-app.vercel.app
+        value: https://tishbitedigital.co.za
+      - key: FRONTEND_URL
+        value: https://tishbitedigital.co.za
+      - key: BACKEND_URL
+        value: https://tishbitedigital1.onrender.com
       - key: COOKIE_SAMESITE
         value: none

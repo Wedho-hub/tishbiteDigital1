@@ -28,10 +28,16 @@ const defaultOrigins = [
   "http://localhost:3000",
   "http://localhost:5173",
 ].map(normalizeOrigin);
-const envOrigins = (process.env.ALLOWED_ORIGINS || "")
-  .split(",")
-  .map((origin) => normalizeOrigin(origin.trim()))
-  .filter(Boolean);
+const envOrigins = [
+  // Explicit comma-separated list (optional)
+  ...(process.env.ALLOWED_ORIGINS || "")
+    .split(",")
+    .map((o) => normalizeOrigin(o.trim()))
+    .filter(Boolean),
+  // FRONTEND_URL and BACKEND_URL are always trusted if set
+  process.env.FRONTEND_URL ? normalizeOrigin(process.env.FRONTEND_URL) : null,
+  process.env.BACKEND_URL ? normalizeOrigin(process.env.BACKEND_URL) : null,
+].filter(Boolean);
 const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
 
 // Serve uploaded assets
