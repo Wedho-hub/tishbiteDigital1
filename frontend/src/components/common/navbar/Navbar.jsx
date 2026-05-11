@@ -18,10 +18,11 @@ const phone = {
 
 const navLinks = [
   { to: "/", label: "Home" },
-  { to: "/projects", label: "Projects" },
   { to: "/services", label: "Services" },
-  { to: "/contact", label: "Contact" },
+  { to: "/projects", label: "Projects" },
+  { to: "/about", label: "About" },
   { to: "/blog", label: "Blog" },
+  { to: "/contact", label: "Contact" },
 ];
 
 const Navbar = () => {
@@ -158,6 +159,7 @@ const Navbar = () => {
 
             <div className="phone-link ms-3">
               <a href={phone.href} aria-label={`Call Tishbite Digital on ${phone.number}`}>
+                <FaPhoneAlt aria-hidden="true" />
                 {phone.number}
               </a>
             </div>

@@ -10,7 +10,6 @@ import {
   FaUsers,
   FaReact,
   FaNodeJs,
-  FaPython,
   FaGitAlt,
   FaHtml5,
   FaCss3Alt,
@@ -47,11 +46,6 @@ const CORE_SKILLS = [
   { icon: FaGitAlt,   label: "Git & GitHub",  color: "#f05032", bg: "#fdf0ee" },
 ];
 
-const LEARNING_SKILLS = [
-  { icon: FaPython,   label: "Python",        color: "#3776ab", bg: "#eef4fa" },
-  { icon: FaCode,     label: "Next.js",       color: "#000000", bg: "#f3f3f3" },
-];
-
 /* ── Structured data (JSON-LD) ───────────────────── */
 const personSchema = JSON.stringify({
   "@context": "https://schema.org",
@@ -63,7 +57,7 @@ const personSchema = JSON.stringify({
   sameAs: ["https://www.hyperiondev.com/portfolio/WD24080015372/"],
   knowsAbout: [
     "Web Development", "React", "Node.js", "MongoDB", "Express.js",
-    "JavaScript", "SEO", "Digital Marketing", "Python", "Next.js",
+    "JavaScript", "SEO", "Digital Marketing", "Lead Generation", "CRM Automation",
   ],
   alumniOf: {
     "@type": "EducationalOrganization",
@@ -90,11 +84,11 @@ const About = () => {
         <title>Wellington Dhliwayo — Full-Stack Web Developer & Founder | Tishbite Digital</title>
         <meta
           name="description"
-          content="Wellington Dhliwayo (Wedho) — HyperionDev Top Student, MERN stack web developer, and founder of Tishbite Digital in Cape Town. Skilled in React, Node.js, MongoDB, and expanding into Python and Next.js."
+          content="Wellington Dhliwayo (Wedho) — HyperionDev Top Student, MERN stack web developer, and founder of Tishbite Digital in Cape Town. Skilled in React, Node.js, MongoDB, and delivering measurable results for Cape Town businesses."
         />
         <meta
           name="keywords"
-          content="web developer Cape Town, MERN stack developer, React developer South Africa, HyperionDev graduate, full stack developer, Wellington Dhliwayo, Tishbite Digital, digital agency Cape Town, Node.js developer, Python developer"
+          content="web developer Cape Town, MERN stack developer, React developer South Africa, HyperionDev graduate, full stack developer, Wellington Dhliwayo, Tishbite Digital, digital agency Cape Town, Node.js developer"
         />
         <link rel="canonical" href="https://tishbitedigital.co.za/about" />
         <meta property="og:title" content="Wellington Dhliwayo — Web Developer & Founder | Tishbite Digital" />
@@ -174,9 +168,8 @@ const About = () => {
                   <p className="mission-paragraph mb-0">
                     Inspired by the story of Elijah from the small town of Tishbe, I believe
                     <strong> great voices can rise from unexpected places</strong>. Technology and
-                    continuous learning are the tools. My current focus is expanding my stack
-                    into <strong>Python</strong> and <strong>Next.js</strong> to deliver
-                    even more powerful, scalable solutions.
+                    a commitment to continuous learning are the tools that make this possible —
+                    and every system I build is designed to produce results that last.
                   </p>
                 </div>
               </motion.div>
@@ -261,34 +254,6 @@ const About = () => {
               ))}
             </motion.div>
 
-            {/* Currently Learning */}
-            <motion.div
-              variants={fadeUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={viewport}
-              className="about-learning-wrap"
-            >
-              <p className="about-learning-label">
-                Currently Expanding Into
-              </p>
-              <div className="about-learning-grid" role="list" aria-label="Skills currently being learned">
-                {LEARNING_SKILLS.map(({ icon: Icon, label, color, bg }) => (
-                  <div
-                    key={label}
-                    className="about-stack-item about-stack-item--learning"
-                    role="listitem"
-                    style={{ "--skill-bg": bg, "--skill-color": color }}
-                  >
-                    <span className="about-stack-icon-wrap" aria-hidden="true">
-                      <Icon style={{ color }} />
-                    </span>
-                    <span className="about-stack-label">{label}</span>
-                    <span className="about-stack-learning-tag">Learning</span>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
           </div>
         </section>
 
@@ -398,7 +363,7 @@ const About = () => {
                 {
                   icon: FaLightbulb,
                   title: "Continuous Learning",
-                  body: "Technology moves fast. Staying current — from HyperionDev to Python and Next.js — keeps every client's solution relevant.",
+                  body: "Technology moves fast. Staying current with best practices and emerging tools keeps every client's solution modern and effective.",
                 },
                 {
                   icon: FaUsers,

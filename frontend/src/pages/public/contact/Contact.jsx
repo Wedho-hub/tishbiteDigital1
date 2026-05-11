@@ -8,7 +8,7 @@ import { createEnquiry } from "../../../services/enquiryService";
 import "./contact.css";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [formData, setFormData] = useState({ name: "", email: "", service: "", message: "" });
   const [fieldErrors, setFieldErrors] = useState({ name: "", email: "", message: "" });
   const [touched, setTouched] = useState({ name: false, email: false, message: false });
   const [loading, setLoading] = useState(false);
@@ -80,7 +80,7 @@ const Contact = () => {
         throw new Error(result.message);
       }
       setSuccess(true);
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", service: "", message: "" });
       setFieldErrors({ name: "", email: "", message: "" });
       setTouched({ name: false, email: false, message: false });
     } catch (err) {
@@ -103,7 +103,7 @@ const Contact = () => {
       </Helmet>
       <PageHeader
         title="Contact Us"
-        subtitle="Let's build something cool and stunning together"
+        subtitle="Tell us what your business needs — we'll map out the best path forward"
         background="dark"
       />
       <section className="contact-section py-5">
@@ -215,6 +215,31 @@ const Contact = () => {
                         {fieldErrors.name}
                       </p>
                     )}
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label" htmlFor="contact-service">
+                      What are you interested in?
+                    </label>
+                    <select
+                      id="contact-service"
+                      name="service"
+                      value={formData.service}
+                      onChange={handleChange}
+                      className="form-control"
+                    >
+                      <option value="">— Select a service (optional) —</option>
+                      <option value="Lead-Generating Website Development">Lead-Generating Website Development</option>
+                      <option value="Google Business Profile & Local SEO">Google Business Profile &amp; Local SEO</option>
+                      <option value="Brand Identity & Market Positioning">Brand Identity &amp; Market Positioning</option>
+                      <option value="Meta Suite Setup & Social Integration">Meta Suite Setup &amp; Social Integration</option>
+                      <option value="Paid Ads & Lead Generation Campaigns">Paid Ads &amp; Lead Generation Campaigns</option>
+                      <option value="CRM, Automation & Conversion Systems">CRM, Automation &amp; Conversion Systems</option>
+                      <option value="Business Registration & Compliance Setup">Business Registration &amp; Compliance Setup</option>
+                      <option value="Social Media Growth Strategy & Execution">Social Media Growth Strategy &amp; Execution</option>
+                      <option value="Growth Bundle / Full Package">Growth Bundle / Full Package</option>
+                      <option value="Free Website & SEO Audit">Free Website &amp; SEO Audit</option>
+                      <option value="Other / Not Sure Yet">Other / Not Sure Yet</option>
+                    </select>
                   </div>
                   <div className="mb-3">
                     <label className="form-label" htmlFor="contact-email">Email Address</label>

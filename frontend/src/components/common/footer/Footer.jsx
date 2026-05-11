@@ -5,16 +5,18 @@ import { FaFacebookF, FaInstagram, FaPinterestP, FaCreditCard, FaArrowRight, FaS
 import { motion } from "framer-motion";
 
 const socialLinks = [
-  { href: "https://facebook.com", icon: <FaFacebookF />, label: "Facebook" },
-  { href: "https://instagram.com", icon: <FaInstagram />, label: "Instagram" },
+  { href: "https://web.facebook.com/profile.php?id=61584656188539", icon: <FaFacebookF />, label: "Facebook" },
+  { href: "https://www.instagram.com/tishbitedigital/", icon: <FaInstagram />, label: "Instagram" },
   { href: "https://za.pinterest.com/Tishbite_Digital/", icon: <FaPinterestP />, label: "Pinterest" },
 ];
 
 const navLinks = [
   { to: "/", label: "Home" },
-  { to: "/blog", label: "Blog" },
-  { to: "/projects", label: "Projects" },
+  { to: "/about", label: "About" },
   { to: "/services", label: "Services" },
+  { to: "/projects", label: "Projects" },
+  { to: "/how-we-work", label: "How We Work" },
+  { to: "/blog", label: "Blog" },
   { to: "/contact", label: "Contact" },
 ];
 

@@ -132,7 +132,7 @@
 
 /* Force UL to blend in */
 .navbar .navbar-nav {
-  gap: 2.5rem;
+  gap: 1.8rem;
   background: transparent !important;
   box-shadow: none !important;
 }
@@ -252,6 +252,7 @@
 .navbar .phone-link a {
   display: inline-flex;
   align-items: center;
+  gap: 0.42rem;
   padding: 0.55rem 1.1rem;
   border-radius: 999px;
   background: rgba(244, 201, 93, 0.14);

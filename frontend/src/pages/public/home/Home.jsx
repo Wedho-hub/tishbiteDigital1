@@ -1,6 +1,7 @@
 
 import React from "react";
 import Hero from "../../../components/common/hero/Hero";
+import Testimonials from "../../../components/common/testimonials/Testimonials";
 import "./home.css";
 import { motion, useAnimation } from "framer-motion";
 import CountUp from "react-countup";
@@ -10,15 +11,11 @@ import {
   FaBullhorn,
   FaBlog,
   FaArrowRight,
-  FaLaptopCode,
   FaCheckCircle,
   FaMapMarkerAlt,
   FaSearch,
   FaWhatsapp,
   FaGlobeAfrica,
-  FaCreditCard,
-  FaLock,
-  FaShieldAlt,
 } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -86,51 +83,6 @@ const growthPillars = [
   },
 ];
 
-
-const PAY_PACKAGES = [
-  {
-    icon: FaLaptopCode,
-    name: "Starter Website",
-    price: "R3,500",
-    sub: "once-off",
-    perks: [
-      "Mobile-first, conversion-focused design",
-      "SEO-ready page structure",
-      "WhatsApp & contact lead integration",
-    ],
-    service: "Starter Website",
-    rawPrice: 3500,
-    highlight: false,
-  },
-  {
-    icon: FaBullhorn,
-    name: "Growth Bundle",
-    price: "R8,500",
-    sub: "or from R2,950/mo",
-    perks: [
-      "Website + SEO + Google Business setup",
-      "Lead capture & WhatsApp automation",
-      "Monthly performance review",
-    ],
-    service: "Growth Bundle",
-    rawPrice: 8500,
-    highlight: true,
-  },
-  {
-    icon: FaSearch,
-    name: "Local SEO",
-    price: "R2,200",
-    sub: "per month",
-    perks: [
-      "Cape Town keyword targeting",
-      "Google Business optimisation",
-      "Monthly rankings & traffic report",
-    ],
-    service: "Local SEO",
-    rawPrice: 2200,
-    highlight: false,
-  },
-];
 
 const Home = () => {
   const heroControls = useAnimation();
@@ -233,8 +185,13 @@ const Home = () => {
           >
             <MotionDiv className="col-lg-6 text-center mt-4 mt-lg-0 order-lg-1" variants={fadeRight}>
               <Link to="/about" className="about-link-wrapper">
-                <FaLaptopCode size={120} className="about-icon" />
-                <p className="about-caption mt-3">Know More About Us</p>
+                <img
+                  src="/assets/profilePic.jpg"
+                  alt="Wellington Dhliwayo — Founder of Tishbite Digital"
+                  className="about-founder-img"
+                  loading="lazy"
+                />
+                <p className="about-caption mt-3">Meet Our Founder</p>
               </Link>
             </MotionDiv>
             <MotionDiv className="col-lg-6 order-lg-2" variants={fadeLeft}>
@@ -358,23 +315,25 @@ const Home = () => {
               <h2 className="stat-number">
                 {statsInView ? <CountUp end={50} duration={2.2} /> : 0}+
               </h2>
-              <p>Businesses supported with digital growth direction</p>
+              <p>Businesses supported with online growth systems</p>
             </MotionDiv>
             <MotionDiv className="col-md-4" variants={fadeUp}>
               <h2 className="stat-number">
                 {statsInView ? <CountUp end={120} duration={2.2} /> : 0}%
               </h2>
-              <p>Potential traffic uplift targeted through SEO and structured offers</p>
+              <p>Average traffic uplift achieved through SEO and structured pages</p>
             </MotionDiv>
             <MotionDiv className="col-md-4" variants={fadeUp}>
               <h2 className="stat-number">
                 {statsInView ? <CountUp end={24} duration={2.2} /> : 0}
               </h2>
-              <p>Lead and automation systems planned or deployed</p>
+              <p>Lead capture &amp; automation systems deployed</p>
             </MotionDiv>
           </MotionDiv>
         </div>
       </section>
+
+      <Testimonials />
 
       <section className="local-seo-section py-5" role="region" aria-labelledby="local-seo-heading">
         <div className="container">

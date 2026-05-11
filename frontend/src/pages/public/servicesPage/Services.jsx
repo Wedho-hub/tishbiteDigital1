@@ -442,10 +442,60 @@ const Services = () => {
               </div>
             </section>
 
+            <section className="service-group general-group reveal-on-scroll" style={{ "--reveal-delay": "80ms" }}>
+              <div className="service-group-head">
+                <h2>General Services</h2>
+                <p>Flexible individual services tailored to your business needs.</p>
+              </div>
+              <ul className="services-list">
+                {(showAllGeneral
+                  ? generalServices
+                  : generalServices.slice(0, INITIAL_VISIBLE_SERVICES)
+                ).map((service, index) =>
+                  renderService(service, index)
+                )}
+              </ul>
+              {generalServices.length > INITIAL_VISIBLE_SERVICES && (
+                <div className="services-see-more-wrap">
+                  <button
+                    className="services-see-more-btn"
+                    onClick={() => setShowAllGeneral((prev) => !prev)}
+                  >
+                    {showAllGeneral ? "Show Less General Services" : "See More General Services"}
+                  </button>
+                </div>
+              )}
+            </section>
+
+            <section className="service-group bundle-group reveal-on-scroll" style={{ "--reveal-delay": "130ms" }}>
+              <div className="service-group-head">
+                <h2>Bundled Services</h2>
+                <p>Strategic packages designed for end-to-end growth and execution.</p>
+              </div>
+              <ul className="services-list">
+                {(showAllBundles
+                  ? bundledServices
+                  : bundledServices.slice(0, INITIAL_VISIBLE_SERVICES)
+                ).map((service, index) =>
+                  renderService(service, index, true)
+                )}
+              </ul>
+              {bundledServices.length > INITIAL_VISIBLE_SERVICES && (
+                <div className="services-see-more-wrap">
+                  <button
+                    className="services-see-more-btn"
+                    onClick={() => setShowAllBundles((prev) => !prev)}
+                  >
+                    {showAllBundles ? "Show Less Bundled Services" : "See More Bundled Services"}
+                  </button>
+                </div>
+              )}
+            </section>
+
             <section className="pricing-policy reveal-on-scroll" style={{ "--reveal-delay": "65ms" }}>
               <div className="pricing-policy-head">
-                <h3>Pricing Policy</h3>
-                <p>Starting prices and payment flexibility for services and bundled solutions.</p>
+                <h3>Pricing &amp; Payment Options</h3>
+                <p>Starting prices and flexible payment plans for all services and bundles.</p>
               </div>
               <div className="pricing-table-wrap">
                 <table className="pricing-table">
@@ -495,54 +545,19 @@ const Services = () => {
               </div>
             </section>
 
-            <section className="service-group general-group reveal-on-scroll" style={{ "--reveal-delay": "80ms" }}>
-              <div className="service-group-head">
-                <h2>General Services</h2>
-                <p>Flexible individual services tailored to your business needs.</p>
-              </div>
-              <ul className="services-list">
-                {(showAllGeneral
-                  ? generalServices
-                  : generalServices.slice(0, INITIAL_VISIBLE_SERVICES)
-                ).map((service, index) =>
-                  renderService(service, index)
-                )}
-              </ul>
-              {generalServices.length > INITIAL_VISIBLE_SERVICES && (
-                <div className="services-see-more-wrap">
-                  <button
-                    className="services-see-more-btn"
-                    onClick={() => setShowAllGeneral((prev) => !prev)}
-                  >
-                    {showAllGeneral ? "Show Less General Services" : "See More General Services"}
-                  </button>
+            <section className="services-process-cta reveal-on-scroll" style={{ "--reveal-delay": "150ms" }}>
+              <div className="services-process-cta-inner">
+                <div>
+                  <h3>Not sure where to start?</h3>
+                  <p>See exactly how we turn your goals into a clear growth plan — step by step.</p>
                 </div>
-              )}
-            </section>
-
-            <section className="service-group bundle-group reveal-on-scroll" style={{ "--reveal-delay": "130ms" }}>
-              <div className="service-group-head">
-                <h2>Bundled Services</h2>
-                <p>Strategic packages designed for end-to-end growth and execution.</p>
+                <button
+                  className="services-process-cta-btn"
+                  onClick={() => navigate("/how-we-work")}
+                >
+                  See How We Work <FaArrowRight aria-hidden="true" />
+                </button>
               </div>
-              <ul className="services-list">
-                {(showAllBundles
-                  ? bundledServices
-                  : bundledServices.slice(0, INITIAL_VISIBLE_SERVICES)
-                ).map((service, index) =>
-                  renderService(service, index, true)
-                )}
-              </ul>
-              {bundledServices.length > INITIAL_VISIBLE_SERVICES && (
-                <div className="services-see-more-wrap">
-                  <button
-                    className="services-see-more-btn"
-                    onClick={() => setShowAllBundles((prev) => !prev)}
-                  >
-                    {showAllBundles ? "Show Less Bundled Services" : "See More Bundled Services"}
-                  </button>
-                </div>
-              )}
             </section>
           </>
         )}
