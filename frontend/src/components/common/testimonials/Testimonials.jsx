@@ -1,7 +1,7 @@
 import React from "react";
 import "./testimonials.css";
 import { FaStar, FaGoogle } from "react-icons/fa";
-import { motion } from "framer-motion";
+import { motion as Motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 
 const reviews = [
@@ -110,7 +110,7 @@ const Testimonials = () => (
         </p>
       </div>
 
-      <motion.div
+      <Motion.div
         className="row g-4"
         variants={stagger}
         initial="hidden"
@@ -118,7 +118,7 @@ const Testimonials = () => (
         viewport={{ once: true, amount: 0.2 }}
       >
         {reviews.map((review) => (
-          <motion.div key={review.name} className="col-md-4" variants={fadeUp}>
+          <Motion.div key={review.name} className="col-md-4" variants={fadeUp}>
             <article className="testimonial-card h-100">
               <div className="testimonial-card-top">
                 <div className="testimonial-avatar" aria-hidden="true">
@@ -141,9 +141,9 @@ const Testimonials = () => (
                 <span>Google Review</span>
               </div>
             </article>
-          </motion.div>
+          </Motion.div>
         ))}
-      </motion.div>
+      </Motion.div>
 
       <div className="testimonials-cta-wrap text-center mt-5">
         <p className="testimonials-cta-label">
