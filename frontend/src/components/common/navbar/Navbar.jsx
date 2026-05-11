@@ -28,8 +28,7 @@ const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [navOpacity, setNavOpacity] = useState(0.82);
-  const [footerVisible, setFooterVisible] = useState(false);
+  const [navOpacity, setNavOpacity] = useState(0.88);
 
   const handleNavLinkClick = () => {
     setMenuOpen(false);
@@ -43,7 +42,7 @@ const Navbar = () => {
       const y = window.scrollY || window.pageYOffset || 0;
       const maxDistance = 170;
       const progress = Math.min(y / maxDistance, 1);
-      const nextOpacity = 0.78 + progress * 0.2;
+      const nextOpacity = 0.88 + progress * 0.1;
 
       setNavOpacity(nextOpacity);
       setIsScrolled((prev) => {
@@ -96,31 +95,9 @@ const Navbar = () => {
     };
   }, [menuOpen]);
 
-  useEffect(() => {
-    // Reset immediately so the navbar is never stale-hidden on a fresh page
-    setFooterVisible(false);
-
-    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
-      return undefined;
-    }
-
-    const footer = document.querySelector("footer.footer");
-    if (!footer) return undefined;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setFooterVisible(entry.isIntersecting);
-      },
-      { threshold: 0, rootMargin: "0px" }
-    );
-
-    observer.observe(footer);
-    return () => observer.disconnect();
-  }, [location.pathname]);
-
   return (
     <nav
-      className={`navbar navbar-expand-lg${isScrolled ? " navbar-scrolled" : ""}${footerVisible && !menuOpen ? " navbar-hidden" : ""}`}
+      className={`navbar navbar-expand-lg${isScrolled ? " navbar-scrolled" : ""}`}
       style={{ "--nav-current-opacity": navOpacity.toFixed(3) }}
       aria-label="Main navigation"
     >

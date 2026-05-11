@@ -20,7 +20,7 @@
   content: "";
   position: absolute;
   right: -140px;
-  top: -140px;
+  top: -120px;
   width: 420px;
   height: 420px;
   border-radius: 50%;
@@ -34,7 +34,7 @@
 }
 
 .hero-row {
-  min-height: clamp(500px, 68vh, 720px);
+  min-height: clamp(440px, 60vh, 680px);
 }
 
 .hero-content-shell,

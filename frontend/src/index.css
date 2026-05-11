@@ -8,12 +8,12 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-    --nav-height: 96px;
-  --nav-height-mobile: 102px;
-  --nav-height-scrolled: 72px;
+    --nav-height: 76px;
+  --nav-height-mobile: 96px;
+  --nav-height-scrolled: 66px;
 
-  --nav-bg: rgba(255, 255, 255, 0.78);
-  --nav-bg-scrolled: rgba(255, 255, 255, 0.96);
+  --nav-bg: rgba(15, 32, 22, 0.88);
+  --nav-bg-scrolled: rgba(12, 26, 18, 0.97);
 
   --nav-blur: blur(20px);
 
