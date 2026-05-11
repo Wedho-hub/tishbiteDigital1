@@ -93,13 +93,13 @@
   width: 220px;
   max-width: 100%;
   height: auto;
-  filter: brightness(0) invert(1) drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+  filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
   transition: transform 0.28s ease, filter 0.28s ease;
 }
 
 .navbar-brand:hover .navbar-logo {
   transform: translateY(-1px);
-  filter: brightness(0) invert(1) drop-shadow(0 8px 20px rgba(244, 201, 93, 0.4));
+  filter: drop-shadow(0 8px 22px rgba(244, 201, 93, 0.4));
 }
 
 .navbar-logo-mark {
@@ -107,7 +107,6 @@
   height: 38px;
   border-radius: 10px;
   display: block;
-  filter: brightness(0) invert(1);
 }
 
 .navbar-brand-mobile-text {
