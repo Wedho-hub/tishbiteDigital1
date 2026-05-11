@@ -39,7 +39,7 @@ const reviews = [
 
 // Update with your actual Google Business Profile review link from Google Maps
 const GOOGLE_REVIEW_URL =
-  "https://www.google.com/search?q=Tishbite+Digital+Cape+Town#lrd=,1";
+  "https://g.page/r/CcbaVAYMBDDAEBM/review";
 
 const aggregateRatingSchema = {
   "@context": "https://schema.org",
