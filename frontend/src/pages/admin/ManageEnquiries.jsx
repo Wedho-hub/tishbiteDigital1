@@ -7,14 +7,22 @@ const ManageEnquiries = () => {
   const [error, setError] = useState("");
 
   const fetchEnquiries = async () => {
-    setEnquiries(await getEnquiries());
+    try {
+      setEnquiries(await getEnquiries());
+    } catch (err) {
+      setError(err.message || "Error loading enquiries");
+    }
   };
 
   useEffect(() => {
     let isMounted = true;
     const fetchData = async () => {
-      const data = await getEnquiries();
-      if (isMounted) setEnquiries(data);
+      try {
+        const data = await getEnquiries();
+        if (isMounted) setEnquiries(data);
+      } catch (err) {
+        if (isMounted) setError(err.message || "Error loading enquiries");
+      }
     };
     fetchData();
     return () => { isMounted = false; };

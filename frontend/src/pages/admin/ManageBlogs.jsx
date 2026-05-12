@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isNotEmpty } from "../../utils/validate";
 import { getBlogPosts, createBlogPost, updateBlogPost, deleteBlogPost } from "../../services/blogService";
+import { resolveUploadUrl } from "../../services/api";
 import "./admin.css";
 
 
@@ -9,6 +10,8 @@ const ManageBlogs = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState(null);
+  const [imagePreview, setImagePreview] = useState("");
+  const [currentImageUrl, setCurrentImageUrl] = useState("");
   const [editing, setEditing] = useState(null);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -31,6 +34,12 @@ const ManageBlogs = () => {
   useEffect(() => {
     fetchBlogs();
   }, []);
+
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setImage(file || null);
+    setImagePreview(file ? URL.createObjectURL(file) : "");
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -66,6 +75,8 @@ const ManageBlogs = () => {
       setTitle("");
       setContent("");
       setImage(null);
+      setImagePreview("");
+      setCurrentImageUrl("");
       setEditing(null);
       setError("");
       setSuccessMessage(editing ? "Blog post updated successfully." : "Blog post created successfully.");
@@ -82,6 +93,11 @@ const ManageBlogs = () => {
     setEditing(blog._id);
     setTitle(blog.title);
     setContent(blog.content);
+    setCurrentImageUrl(resolveUploadUrl(blog.image) || "");
+    setImage(null);
+    setImagePreview("");
+    setSuccessMessage("");
+    setError("");
   };
 
   const handleDelete = async (id) => {
@@ -93,6 +109,17 @@ const ManageBlogs = () => {
     }
   };
 
+  const handleCancel = () => {
+    setEditing(null);
+    setTitle("");
+    setContent("");
+    setImage(null);
+    setImagePreview("");
+    setCurrentImageUrl("");
+    setSuccessMessage("");
+    setError("");
+  };
+
   return (
     <div className="admin-page-card">
       <h2>Manage Blogs</h2>
@@ -100,12 +127,26 @@ const ManageBlogs = () => {
         <input value={title} onChange={e => setTitle(e.target.value)} placeholder="Title" required disabled={isSubmitting} />
         <p className="markdown-hint">Markdown supported (example: `- bullet`, `**bold**`, blank line for new paragraph).</p>
         <textarea className="markdown-input" value={content} onChange={e => setContent(e.target.value)} placeholder="Content (Markdown supported)" required disabled={isSubmitting} />
-        <input type="file" accept="image/*" onChange={e => setImage(e.target.files[0])} disabled={isSubmitting} />
-        <p className="markdown-hint">Image upload limit: 5MB (configurable via backend `UPLOAD_MAX_SIZE_MB`).</p>
+
+        {editing && currentImageUrl && !imagePreview && (
+          <div className="admin-img-preview">
+            <p className="markdown-hint">Current image:</p>
+            <img src={currentImageUrl} alt="Current blog" className="admin-thumb" />
+          </div>
+        )}
+        {imagePreview && (
+          <div className="admin-img-preview">
+            <p className="markdown-hint">New image preview:</p>
+            <img src={imagePreview} alt="New upload preview" className="admin-thumb" />
+          </div>
+        )}
+
+        <input type="file" accept="image/*" onChange={handleImageChange} disabled={isSubmitting} />
+        <p className="markdown-hint">Image upload limit: 5MB. Accepted: JPEG, PNG, GIF, WebP.</p>
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? (editing ? "Updating..." : "Creating...") : (editing ? "Update" : "Create")}
         </button>
-        {editing && <button type="button" className="cancel-btn" disabled={isSubmitting} onClick={() => { setEditing(null); setTitle(""); setContent(""); setImage(null); setSuccessMessage(""); }}>Cancel</button>}
+        {editing && <button type="button" className="cancel-btn" disabled={isSubmitting} onClick={handleCancel}>Cancel</button>}
         {error && <div className="error">{error}</div>}
         {successMessage && <div className="success">{successMessage}</div>}
       </form>
@@ -114,7 +155,12 @@ const ManageBlogs = () => {
         {!loading && blogs.length === 0 && <li>No blog posts found.</li>}
         {blogs.map(blog => (
           <li key={blog._id}>
-            <b>{blog.title}</b>
+            <div className="admin-blog-info">
+              {blog.image && (
+                <img src={resolveUploadUrl(blog.image)} alt={blog.title} className="admin-blog-thumb" />
+              )}
+              <b>{blog.title}</b>
+            </div>
             <div className="admin-list-actions">
               <button className="edit-btn" onClick={() => handleEdit(blog)}>Edit</button>
               <button className="delete-btn" onClick={() => handleDelete(blog._id)}>Delete</button>

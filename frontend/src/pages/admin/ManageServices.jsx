@@ -44,8 +44,8 @@ const ManageServices = () => {
       }
       setTitle(""); setCategory("general"); setDescription(""); setEditing(null); setError("");
       fetchServices();
-    } catch {
-      setError("Error saving service");
+    } catch (err) {
+      setError(err.message || "Error saving service");
     }
   };
 
@@ -57,8 +57,12 @@ const ManageServices = () => {
   };
 
   const handleDelete = async (id) => {
-    await deleteService(id);
-    fetchServices();
+    try {
+      await deleteService(id);
+      fetchServices();
+    } catch (err) {
+      setError(err.message || "Error deleting service");
+    }
   };
 
   return (

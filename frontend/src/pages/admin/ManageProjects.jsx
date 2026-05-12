@@ -71,8 +71,8 @@ const ManageProjects = () => {
       }
       setTitle(""); setDescription(""); setUrl(""); setImage(null); setEditing(null); setError("");
       fetchProjects(page);
-    } catch {
-      setError("Error saving project");
+    } catch (err) {
+      setError(err.message || "Error saving project");
     }
   };
 
@@ -84,8 +84,12 @@ const ManageProjects = () => {
   };
 
   const handleDelete = async (id) => {
-    await deleteProject(id);
-    fetchProjects();
+    try {
+      await deleteProject(id);
+      fetchProjects(page);
+    } catch (err) {
+      setError(err.message || "Error deleting project");
+    }
   };
 
   return (

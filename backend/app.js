@@ -40,8 +40,14 @@ const envOrigins = [
 ].filter(Boolean);
 const allowedOrigins = [...new Set([...defaultOrigins, ...envOrigins])];
 
+// Ensure uploads directory exists (disk storage fallback when Cloudinary is not configured)
+const uploadsDir = path.join(__dirname, "uploads");
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
 // Serve uploaded assets
-app.use("/uploads", express.static(path.join(__dirname, "uploads"), {
+app.use("/uploads", express.static(uploadsDir, {
   maxAge: "1d",
   etag: true,
 }));
