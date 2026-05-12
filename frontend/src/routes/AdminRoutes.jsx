@@ -10,7 +10,13 @@ import AdminLayout from "../components/layout/AdminLayout.jsx";
 
 const RequireAuth = ({ children }) => {
   const { admin, loading } = useAuth();
-  if (loading) return <div>Loading...</div>;
+  if (loading) {
+    return (
+      <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <div className="page-spinner" role="status" aria-label="Verifying session" />
+      </div>
+    );
+  }
   return admin ? children : <Navigate to="/admin/login" />;
 };
 

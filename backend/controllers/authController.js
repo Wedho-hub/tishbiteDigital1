@@ -1,5 +1,6 @@
 import Admin from "../models/admin.js";
 import { generateToken } from "../utils/generateToken.js";
+import jwt from "jsonwebtoken";
 
 const isProduction = process.env.NODE_ENV === "production";
 const allowCrossSiteCookies = process.env.COOKIE_SAMESITE === "none";
@@ -41,6 +42,20 @@ export const loginAdmin = async (req, res) => {
     email: admin.email
   }
 });
+};
+
+export const verifyAdmin = async (req, res) => {
+  const token = req.cookies?.token;
+  if (!token) return res.status(401).json({ success: false });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const admin = await Admin.findById(decoded.id).select("email");
+    if (!admin) return res.status(401).json({ success: false });
+    res.json({ success: true, admin: { id: admin._id, email: admin.email } });
+  } catch {
+    res.status(401).json({ success: false });
+  }
 };
 
 export const logoutAdmin = (req, res) => {

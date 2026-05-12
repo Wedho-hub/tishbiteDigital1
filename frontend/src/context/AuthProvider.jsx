@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState } from "react";
-import { loginAdmin, logoutAdmin, fetchCsrfToken } from "../services/api";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { loginAdmin, logoutAdmin, fetchCsrfToken, fetchWithTimeout, apiUrl } from "../services/api";
 
 // Create AuthContext
 const AuthContext = createContext(null);
@@ -7,13 +7,34 @@ const AuthContext = createContext(null);
 // Provider component
 export const AuthProvider = ({ children }) => {
   const [admin, setAdmin] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // Start as true so RequireAuth shows a spinner while we verify the cookie,
+  // preventing an immediate redirect to /admin/login on every page refresh.
+  const [loading, setLoading] = useState(true);
+
+  // On every mount, check whether a valid JWT cookie already exists.
+  useEffect(() => {
+    const verify = async () => {
+      try {
+        const res = await fetchWithTimeout(apiUrl("/api/auth/verify"), {
+          credentials: "include",
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.success) setAdmin(data.admin);
+        }
+      } catch {
+        // No valid cookie or network error — remain logged out
+      } finally {
+        setLoading(false);
+      }
+    };
+    verify();
+  }, []);
 
   const login = async (email, password) => {
     setLoading(true);
     try {
       await fetchCsrfToken();
-      console.log('document.cookie before login:', document.cookie); // Debug CSRF cookie
       const res = await loginAdmin(email, password);
       if (res.success) setAdmin(res.admin);
       return res;
