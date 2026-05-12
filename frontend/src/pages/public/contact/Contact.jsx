@@ -97,9 +97,56 @@ const Contact = () => {
         <meta name="description" content="Schedule your free website and SEO audit. Ask about our digital growth systems for Cape Town service businesses. Chat via WhatsApp or fill out our form." />
         <meta name="keywords" content="contact us, free website audit, SEO audit, Cape Town, Tishbite Digital" />
         <link rel="canonical" href="https://tishbitedigital.co.za/contact" />
+        <meta property="og:site_name" content="Tishbite Digital" />
         <meta property="og:title" content="Get Your Free Website & SEO Audit" />
         <meta property="og:description" content="Schedule your free audit today" />
         <meta property="og:url" content="https://tishbitedigital.co.za/contact" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "ContactPage",
+              "@id": "https://tishbitedigital.co.za/contact#webpage",
+              "url": "https://tishbitedigital.co.za/contact",
+              "name": "Contact Tishbite Digital — Free Website & SEO Audit",
+              "isPartOf": { "@id": "https://tishbitedigital.co.za/#website" },
+              "description": "Book a free website and SEO audit with Tishbite Digital. Cape Town digital marketing agency helping businesses get more clients online.",
+            },
+            {
+              "@type": "LocalBusiness",
+              "@id": "https://tishbitedigital.co.za/#localbusiness",
+              "name": "Tishbite Digital",
+              "url": "https://tishbitedigital.co.za/",
+              "telephone": "+27791684548",
+              "address": {
+                "@type": "PostalAddress",
+                "addressLocality": "Cape Town",
+                "addressRegion": "Western Cape",
+                "addressCountry": "ZA",
+              },
+              "contactPoint": {
+                "@type": "ContactPoint",
+                "telephone": "+27791684548",
+                "contactType": "customer service",
+                "availableLanguage": ["English"],
+                "areaServed": "ZA",
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                "opens": "09:00",
+                "closes": "17:00",
+              },
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tishbitedigital.co.za/" },
+                { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://tishbitedigital.co.za/contact" },
+              ],
+            },
+          ],
+        })}</script>
       </Helmet>
       <PageHeader
         title="Contact Us"

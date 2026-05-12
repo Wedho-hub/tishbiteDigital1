@@ -26,9 +26,34 @@ const HowWeWorkPage = () => (
       <meta name="description" content="Discover our transparent, collaborative 4-step process: Discovery, Strategy, Development, and Launch. Built to deliver measurable results for your business." />
       <meta name="keywords" content="our process, web design process, digital strategy, Cape Town, how we work" />
       <link rel="canonical" href="https://tishbitedigital.co.za/how-we-work" />
+      <meta property="og:site_name" content="Tishbite Digital" />
       <meta property="og:title" content="Our Process: How We Build Digital Growth Systems" />
       <meta property="og:description" content="Transparent, collaborative, results-focused" />
       <meta property="og:url" content="https://tishbitedigital.co.za/how-we-work" />
+      <script type="application/ld+json">{JSON.stringify({
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "HowTo",
+            "name": "How Tishbite Digital Builds Your Digital Growth System",
+            "description": "Our transparent 4-step process for building websites, SEO, and digital systems that generate enquiries for Cape Town businesses.",
+            "totalTime": "P4W",
+            "step": [
+              { "@type": "HowToStep", "position": 1, "name": "Discovery & Consultation", "text": "We start by understanding your goals, challenges, and vision. Every project begins with a conversation to ensure we are aligned with your needs." },
+              { "@type": "HowToStep", "position": 2, "name": "Strategy & Planning", "text": "We craft a tailored strategy and detailed plan, outlining deliverables, timelines, and milestones. You will always know what to expect and when." },
+              { "@type": "HowToStep", "position": 3, "name": "Design & Development", "text": "Our creative and technical teams bring your project to life using modern tools and best practices. We keep you updated at every stage." },
+              { "@type": "HowToStep", "position": 4, "name": "Review & Launch", "text": "We review everything together, make final adjustments, and launch with confidence. Support continues after launch for ongoing success." },
+            ],
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tishbitedigital.co.za/" },
+              { "@type": "ListItem", "position": 2, "name": "How We Work", "item": "https://tishbitedigital.co.za/how-we-work" },
+            ],
+          },
+        ],
+      })}</script>
     </Helmet>
     <motion.section
       className="how-we-work-page"

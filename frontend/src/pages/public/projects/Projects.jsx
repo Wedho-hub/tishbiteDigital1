@@ -255,9 +255,31 @@ const Projects = () => {
         <meta name="description" content="See our portfolio of website design, web development, and digital transformation projects built for Cape Town and South African businesses." />
         <meta name="keywords" content="portfolio, web design projects, case studies, Cape Town web development, digital projects" />
         <link rel="canonical" href="https://tishbitedigital.co.za/projects" />
+        <meta property="og:site_name" content="Tishbite Digital" />
         <meta property="og:title" content="Portfolio: Web Design & Digital Projects" />
         <meta property="og:description" content="Real projects, real results for Cape Town businesses" />
         <meta property="og:url" content="https://tishbitedigital.co.za/projects" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "CollectionPage",
+              "@id": "https://tishbitedigital.co.za/projects#webpage",
+              "url": "https://tishbitedigital.co.za/projects",
+              "name": "Portfolio: Web Design & Digital Projects | Tishbite Digital",
+              "description": "Portfolio of website design, web development, and digital transformation projects built for Cape Town and South African businesses.",
+              "isPartOf": { "@id": "https://tishbitedigital.co.za/#website" },
+              "provider": { "@id": "https://tishbitedigital.co.za/#organization" },
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tishbitedigital.co.za/" },
+                { "@type": "ListItem", "position": 2, "name": "Projects", "item": "https://tishbitedigital.co.za/projects" },
+              ],
+            },
+          ],
+        })}</script>
       </Helmet>
       <PageHeader title="Our Projects" subtitle="See some of the projects we've delivered for our clients." background="light" />
       <MotionSection

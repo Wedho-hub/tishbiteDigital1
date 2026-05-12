@@ -369,9 +369,38 @@ const Services = () => {
         <meta name="description" content="From website design to SEO, ads, and WhatsApp automation. We help Cape Town businesses build digital growth systems that generate qualified leads and drive results." />
         <meta name="keywords" content="website design Cape Town, SEO services, digital marketing, lead generation, WhatsApp marketing, web development South Africa" />
         <link rel="canonical" href="https://tishbitedigital.co.za/services" />
+        <meta property="og:site_name" content="Tishbite Digital" />
         <meta property="og:title" content="Website Design, SEO & Digital Marketing Services" />
         <meta property="og:description" content="Growth-focused digital services for Cape Town businesses" />
         <meta property="og:url" content="https://tishbitedigital.co.za/services" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          "name": "Digital Services — Tishbite Digital",
+          "description": "Website design, SEO, digital marketing, and automation services for Cape Town businesses.",
+          "url": "https://tishbitedigital.co.za/services",
+          "provider": { "@id": "https://tishbitedigital.co.za/#organization" },
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Lead-Generating Website Development", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 2, "name": "Local SEO & Google Visibility", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 3, "name": "WhatsApp & CRM Automation", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 4, "name": "Meta & Google Ads Management", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 5, "name": "Brand Identity & Design", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 6, "name": "Business Registration & Compliance Setup", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 7, "name": "Business Launch Suite", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 8, "name": "Growth Acceleration Suite", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 9, "name": "Revenue Automation Suite", "url": "https://tishbitedigital.co.za/services" },
+            { "@type": "ListItem", "position": 10, "name": "Tishbite Enterprise Growth System", "url": "https://tishbitedigital.co.za/services" },
+          ],
+        })}</script>
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tishbitedigital.co.za/" },
+            { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://tishbitedigital.co.za/services" },
+          ],
+        })}</script>
       </Helmet>
       <PageHeader
         title="Our Services"

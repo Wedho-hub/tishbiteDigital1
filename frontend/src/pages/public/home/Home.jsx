@@ -92,43 +92,67 @@ const Home = () => {
     heroControls.start({ opacity: 1, transition: { duration: 1 } });
   }, [heroControls]);
 
+  const SOCIAL_PROFILES = [
+    "https://web.facebook.com/profile.php?id=61584656188539",
+    "https://www.instagram.com/tishbitedigital/",
+    "https://za.pinterest.com/Tishbite_Digital/",
+  ];
+
   const homeStructuredData = {
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "WebSite",
+        "@id": "https://tishbitedigital.co.za/#website",
+        "name": "Tishbite Digital",
+        "alternateName": "Tishbite Digital Cape Town",
+        "url": "https://tishbitedigital.co.za/",
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://tishbitedigital.co.za/#organization",
+        "name": "Tishbite Digital",
+        "url": "https://tishbitedigital.co.za/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://tishbitedigital.co.za/assets/tishbite_digital_logo.svg",
+          "caption": "Tishbite Digital Logo",
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "telephone": "+27791684548",
+          "contactType": "customer service",
+          "availableLanguage": ["English"],
+          "areaServed": "ZA",
+        },
+        "sameAs": SOCIAL_PROFILES,
+      },
+      {
         "@type": "LocalBusiness",
+        "@id": "https://tishbitedigital.co.za/#localbusiness",
         "name": "Tishbite Digital",
         "url": "https://tishbitedigital.co.za/",
         "telephone": "+27791684548",
         "areaServed": [
-          {
-            "@type": "City",
-            "name": "Cape Town"
-          },
-          {
-            "@type": "State",
-            "name": "Western Cape"
-          },
-          {
-            "@type": "Country",
-            "name": "South Africa"
-          }
+          { "@type": "City", "name": "Cape Town" },
+          { "@type": "State", "name": "Western Cape" },
+          { "@type": "Country", "name": "South Africa" },
         ],
         "description": "Tishbite Digital helps Cape Town businesses get more clients online through websites, SEO, ads, WhatsApp lead generation, and automation.",
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Cape Town",
           "addressRegion": "Western Cape",
-          "addressCountry": "ZA"
+          "addressCountry": "ZA",
         },
         "openingHoursSpecification": {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
           "opens": "09:00",
-          "closes": "17:00"
+          "closes": "17:00",
         },
-        "image": "https://tishbitedigital.co.za/logo.png",
-        "sameAs": ["https://za.pinterest.com/Tishbite_Digital/"],
+        "image": "https://tishbitedigital.co.za/assets/tishbiteHero.png",
+        "sameAs": SOCIAL_PROFILES,
       },
       {
         "@type": "FAQPage",
@@ -157,12 +181,19 @@ const Home = () => {
           content="Cape Town web design, Cape Town SEO, lead generation, WhatsApp marketing, website audit, digital marketing Cape Town, small business web design South Africa"
         />
         <link rel="canonical" href="https://tishbitedigital.co.za/" />
+        <meta property="og:site_name" content="Tishbite Digital" />
         <meta property="og:title" content="We Help Cape Town Businesses Get More Clients Online" />
         <meta
           property="og:description"
           content="Websites. SEO. Ads. Built to generate leads, calls and WhatsApp enquiries for Cape Town businesses."
         />
         <meta property="og:url" content="https://tishbitedigital.co.za/" />
+        <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Tishbite Digital — Cape Town Digital Marketing Agency" />
+        <meta name="twitter:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
         <script type="application/ld+json">{JSON.stringify(homeStructuredData)}</script>
       </Helmet>
 

@@ -208,9 +208,31 @@ const Blog = () => {
         <meta name="description" content="Read practical articles on website design, SEO, lead generation, and digital marketing for Cape Town service businesses. Real strategies, real results." />
         <meta name="keywords" content="SEO blog, digital marketing tips, web design, lead generation, Cape Town business growth" />
         <link rel="canonical" href="https://tishbitedigital.co.za/blog" />
+        <meta property="og:site_name" content="Tishbite Digital" />
         <meta property="og:title" content="Digital Marketing &amp; SEO Blog | Tishbite Digital" />
         <meta property="og:description" content="Growth-focused insights for Cape Town businesses." />
         <meta property="og:url" content="https://tishbitedigital.co.za/blog" />
+        <script type="application/ld+json">{JSON.stringify({
+          "@context": "https://schema.org",
+          "@graph": [
+            {
+              "@type": "Blog",
+              "@id": "https://tishbitedigital.co.za/blog#blog",
+              "url": "https://tishbitedigital.co.za/blog",
+              "name": "Digital Marketing & SEO Blog | Tishbite Digital",
+              "description": "Practical articles on website design, SEO, lead generation, and digital marketing for Cape Town service businesses.",
+              "publisher": { "@id": "https://tishbitedigital.co.za/#organization" },
+              "inLanguage": "en-ZA",
+            },
+            {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tishbitedigital.co.za/" },
+                { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://tishbitedigital.co.za/blog" },
+              ],
+            },
+          ],
+        })}</script>
       </Helmet>
 
       <PageHeader
