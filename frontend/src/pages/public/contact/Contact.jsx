@@ -101,6 +101,8 @@ const Contact = () => {
         <meta property="og:title" content="Get Your Free Website & SEO Audit" />
         <meta property="og:description" content="Schedule your free audit today" />
         <meta property="og:url" content="https://tishbitedigital.co.za/contact" />
+        <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+        <meta property="og:image:alt" content="Contact Tishbite Digital — Free Website & SEO Audit" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@graph": [

@@ -373,6 +373,8 @@ const Services = () => {
         <meta property="og:title" content="Website Design, SEO & Digital Marketing Services" />
         <meta property="og:description" content="Growth-focused digital services for Cape Town businesses" />
         <meta property="og:url" content="https://tishbitedigital.co.za/services" />
+        <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+        <meta property="og:image:alt" content="Tishbite Digital Services — Cape Town" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@type": "ItemList",

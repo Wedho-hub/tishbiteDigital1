@@ -259,6 +259,8 @@ const Projects = () => {
         <meta property="og:title" content="Portfolio: Web Design & Digital Projects" />
         <meta property="og:description" content="Real projects, real results for Cape Town businesses" />
         <meta property="og:url" content="https://tishbitedigital.co.za/projects" />
+        <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+        <meta property="og:image:alt" content="Tishbite Digital Portfolio — Cape Town Web Design Projects" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@graph": [

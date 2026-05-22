@@ -60,6 +60,26 @@ const faqItems = [
     answer:
       "Yes. We build complete growth systems including websites, SEO, Google Business optimization, Meta ads support, WhatsApp lead handling, and CRM automation.",
   },
+  {
+    question: "How much does a website cost in Cape Town?",
+    answer:
+      "Our general services start from R2,500 and our bundled growth packages start from R8,500. Every project is scoped to your specific goals — we offer flexible installment plans so you can get started without paying everything upfront.",
+  },
+  {
+    question: "How long does it take to build a website?",
+    answer:
+      "A standard lead-generating website typically takes 2 to 4 weeks from strategy to launch. More complex builds with integrations or e-commerce can take 4 to 8 weeks. We give you a clear timeline before we start.",
+  },
+  {
+    question: "Do you offer payment plans or installments?",
+    answer:
+      "Yes. Most of our packages include 3 to 6 monthly installment options so your business can invest in growth without a large upfront cost.",
+  },
+  {
+    question: "Can I see examples of your work before hiring you?",
+    answer:
+      "Absolutely. Visit our Projects page to see websites and digital systems we have built for Cape Town businesses. We are happy to walk you through the results each project achieved.",
+  },
 ];
 
 const growthPillars = [
@@ -96,6 +116,7 @@ const Home = () => {
     "https://web.facebook.com/profile.php?id=61584656188539",
     "https://www.instagram.com/tishbitedigital/",
     "https://za.pinterest.com/Tishbite_Digital/",
+    "https://g.page/r/CcbaVAYMBDDAEBM",
   ];
 
   const homeStructuredData = {
@@ -128,13 +149,21 @@ const Home = () => {
         "sameAs": SOCIAL_PROFILES,
       },
       {
-        "@type": "LocalBusiness",
+        "@type": ["LocalBusiness", "ProfessionalService"],
         "@id": "https://tishbitedigital.co.za/#localbusiness",
         "name": "Tishbite Digital",
         "url": "https://tishbitedigital.co.za/",
         "telephone": "+27791684548",
+        "priceRange": "R2500 – R30000+",
+        "currenciesAccepted": "ZAR",
+        "paymentAccepted": "Cash, EFT, Installment Plans",
         "areaServed": [
           { "@type": "City", "name": "Cape Town" },
+          { "@type": "City", "name": "Bellville" },
+          { "@type": "City", "name": "Claremont" },
+          { "@type": "City", "name": "Stellenbosch" },
+          { "@type": "City", "name": "Somerset West" },
+          { "@type": "City", "name": "Paarl" },
           { "@type": "State", "name": "Western Cape" },
           { "@type": "Country", "name": "South Africa" },
         ],
@@ -145,6 +174,12 @@ const Home = () => {
           "addressRegion": "Western Cape",
           "addressCountry": "ZA",
         },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": -33.9249,
+          "longitude": 18.4241,
+        },
+        "hasMap": "https://g.page/r/CcbaVAYMBDDAEBM",
         "openingHoursSpecification": {
           "@type": "OpeningHoursSpecification",
           "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -152,6 +187,13 @@ const Home = () => {
           "closes": "17:00",
         },
         "image": "https://tishbitedigital.co.za/assets/tishbiteHero.png",
+        "makesOffer": [
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Lead-Generating Website Development" }, "price": "2500", "priceCurrency": "ZAR", "priceSpecification": { "@type": "PriceSpecification", "minPrice": "2500", "priceCurrency": "ZAR" } },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Local SEO & Google Visibility" }, "price": "2500", "priceCurrency": "ZAR" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Meta & Google Ads Management" }, "price": "2500", "priceCurrency": "ZAR" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "WhatsApp & CRM Automation" }, "price": "2500", "priceCurrency": "ZAR" },
+          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Brand Identity & Design" }, "price": "2500", "priceCurrency": "ZAR" },
+        ],
         "sameAs": SOCIAL_PROFILES,
       },
       {

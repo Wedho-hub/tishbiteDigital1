@@ -212,6 +212,8 @@ const Blog = () => {
         <meta property="og:title" content="Digital Marketing &amp; SEO Blog | Tishbite Digital" />
         <meta property="og:description" content="Growth-focused insights for Cape Town businesses." />
         <meta property="og:url" content="https://tishbitedigital.co.za/blog" />
+        <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+        <meta property="og:image:alt" content="Tishbite Digital Blog — SEO & Digital Marketing for Cape Town Businesses" />
         <script type="application/ld+json">{JSON.stringify({
           "@context": "https://schema.org",
           "@graph": [

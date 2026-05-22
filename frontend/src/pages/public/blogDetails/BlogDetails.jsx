@@ -129,13 +129,16 @@ const BlogDetails = () => {
     "publisher": {
       "@type": "Organization",
       "name": "Tishbite Digital",
+      "url": "https://tishbitedigital.co.za",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://tishbitedigital.co.za/logo.png",
-        "width": 250,
-        "height": 60
+        "url": "https://tishbitedigital.co.za/assets/tishbite_digital_logo.svg",
+        "width": 400,
+        "height": 160
       }
     },
+    "inLanguage": "en-ZA",
+    "isPartOf": { "@id": "https://tishbitedigital.co.za/blog#blog" },
     "mainEntityOfPage": {
       "@type": "WebPage",
       "@id": `https://tishbitedigital.co.za/blog/${blog._id}`

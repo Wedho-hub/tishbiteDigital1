@@ -91,9 +91,12 @@ const About = () => {
           content="web developer Cape Town, MERN stack developer, React developer South Africa, HyperionDev graduate, full stack developer, Wellington Dhliwayo, Tishbite Digital, digital agency Cape Town, Node.js developer"
         />
         <link rel="canonical" href="https://tishbitedigital.co.za/about" />
+        <meta property="og:type" content="profile" />
         <meta property="og:title" content="Wellington Dhliwayo — Web Developer & Founder | Tishbite Digital" />
         <meta property="og:description" content="HyperionDev Top Student building real-world full-stack applications and growing Cape Town businesses online." />
         <meta property="og:url" content="https://tishbitedigital.co.za/about" />
+        <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+        <meta property="og:image:alt" content="Tishbite Digital — Cape Town Web Design & Digital Marketing" />
         <script type="application/ld+json">{personSchema}</script>
       </Helmet>
 

@@ -30,6 +30,8 @@ const HowWeWorkPage = () => (
       <meta property="og:title" content="Our Process: How We Build Digital Growth Systems" />
       <meta property="og:description" content="Transparent, collaborative, results-focused" />
       <meta property="og:url" content="https://tishbitedigital.co.za/how-we-work" />
+      <meta property="og:image" content="https://tishbitedigital.co.za/assets/tishbiteHero.png" />
+      <meta property="og:image:alt" content="How Tishbite Digital Works — Our 4-Step Process" />
       <script type="application/ld+json">{JSON.stringify({
         "@context": "https://schema.org",
         "@graph": [
