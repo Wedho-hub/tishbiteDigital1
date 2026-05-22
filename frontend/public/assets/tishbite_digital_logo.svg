@@ -1,53 +1,42 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 160" width="400" height="160">
-  <defs>
-    <radialGradient id="flameCore" cx="50%" cy="80%" r="60%">
-      <stop offset="0%" stop-color="#FFE600"/>
-      <stop offset="35%" stop-color="#F5C400"/>
-      <stop offset="65%" stop-color="#4DBD44"/>
-      <stop offset="100%" stop-color="#1A6E2E"/>
-    </radialGradient>
-    <radialGradient id="innerFlame" cx="50%" cy="85%" r="55%">
-      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.95"/>
-      <stop offset="30%" stop-color="#FFE600"/>
-      <stop offset="70%" stop-color="#F5C400"/>
-      <stop offset="100%" stop-color="#C8A800" stop-opacity="0.6"/>
-    </radialGradient>
-    <radialGradient id="outerGlow" cx="50%" cy="70%" r="50%">
-      <stop offset="0%" stop-color="#4DBD44" stop-opacity="0.4"/>
-      <stop offset="100%" stop-color="#1A6E2E" stop-opacity="0"/>
-    </radialGradient>
-    <linearGradient id="tipGrad" x1="0%" y1="100%" x2="0%" y2="0%">
-      <stop offset="0%" stop-color="#F5C400"/>
-      <stop offset="50%" stop-color="#3DAB35"/>
-      <stop offset="100%" stop-color="#1A6E2E"/>
-    </linearGradient>
-    <filter id="glow" x="-30%" y="-30%" width="160%" height="160%">
-      <feGaussianBlur stdDeviation="3.5" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="textShadow" x="-5%" y="-5%" width="110%" height="120%">
-      <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#1A6E2E" flood-opacity="0.3"/>
-    </filter>
-  </defs>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 180">
 
-  <rect width="400" height="160" fill="#0D1F13" rx="12"/>
-  <ellipse cx="72" cy="105" rx="34" ry="28" fill="#2A8C3A" opacity="0.18"/>
+<!-- Abstract brand mark -->
+<g transform="translate(40,30)">
 
-  <g transform="translate(72, 18)" filter="url(#softGlow)">
-    <path d="M 0 102 C -18 88,-22 62,-10 45 C -4 35,2 28,0 14 C 4 22,8 30,4 42 C 14 28,16 12,14 0 C 20 14,22 30,16 46 C 24 32,28 18,26 4 C 32 20,32 36,24 52 C 30 42,36 32,36 18 C 40 30,38 50,30 62 C 36 55,40 48,40 38 C 44 50,42 68,32 82 C 22 96,10 104,0 102 Z" fill="url(#tipGrad)" opacity="0.9"/>
-    <path d="M 0 100 C -14 84,-16 60,-6 42 C 0 30,4 22,2 10 C 8 20,10 32,6 44 C 14 30,18 14,16 2 C 22 16,22 32,16 48 C 22 36,26 20,24 8 C 30 22,30 40,22 54 C 28 44,32 34,32 20 C 36 32,34 52,26 64 C 32 56,36 46,36 36 C 38 48,36 66,26 80 C 18 92,8 100,0 100 Z" fill="url(#flameCore)" filter="url(#glow)"/>
-    <path d="M 4 96 C -4 80,-6 58,2 42 C 6 32,10 24,8 14 C 12 22,14 34,10 46 C 16 34,18 20,18 10 C 22 22,20 38,14 50 C 18 40,22 28,20 18 C 24 28,24 44,18 56 C 22 50,24 40,24 30 C 26 40,24 56,18 68 C 14 78,8 90,4 96 Z" fill="url(#innerFlame)" opacity="0.85"/>
-    <path d="M 9 88 C 6 76,6 60,10 48 C 13 38,16 30,14 22 C 17 30,17 40,14 50 C 16 42,18 32,17 24 C 20 34,18 48,14 58 C 16 52,18 44,17 36 C 19 44,18 56,14 66 C 12 74,10 84,9 88 Z" fill="#FFFFFF" opacity="0.55"/>
-    <ellipse cx="17" cy="6" rx="3" ry="5" fill="#FFE600" opacity="0.8" transform="rotate(-3, 17, 6)"/>
-    <ellipse cx="17" cy="4" rx="1.5" ry="3" fill="#FFFFFF" opacity="0.9"/>
-  </g>
+<path d="M70 110
+C40 90 35 55 60 30
+C80 12 110 18 125 40
+C140 60 130 90 100 110
+C90 118 80 118 70 110Z"
+fill="#2d6a4f"/>
 
-  <text x="118" y="82" font-family="Georgia, 'Times New Roman', serif" font-size="36" font-weight="700" letter-spacing="2" fill="#F5C400" filter="url(#textShadow)">TISHBITE</text>
-  <text x="120" y="110" font-family="Georgia, 'Times New Roman', serif" font-size="18" font-weight="400" letter-spacing="8" fill="#4DBD44">DIGITAL</text>
-  <line x1="118" y1="91" x2="370" y2="91" stroke="#2A8C3A" stroke-width="1" opacity="0.6"/>
-  <circle cx="110" cy="91" r="2" fill="#FFE600" opacity="0.8"/>
+<path d="M82 95
+C65 82 65 58 82 40
+C96 25 116 30 124 48
+C132 65 120 82 102 95
+C95 100 90 100 82 95Z"
+fill="black" opacity="0.92"/>
+
+<circle cx="118" cy="44" r="5" fill="#f4c95d"/>
+
+</g>
+
+<!-- Brand text -->
+<text x="210" y="92"
+font-family="Inter, Helvetica, Arial, sans-serif"
+font-size="42"
+font-weight="600"
+fill="black"
+letter-spacing="1">
+Tishbite
+</text>
+
+<text x="212" y="125"
+font-family="Inter, Helvetica, Arial, sans-serif"
+font-size="22"
+letter-spacing="5"
+fill="#2d6a4f">
+DIGITAL
+</text>
+
 </svg>

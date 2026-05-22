@@ -90,18 +90,16 @@
 
 .navbar-logo {
   display: block;
-  width: 190px;
-  /* Never wider than viewport minus room for other navbar elements */
-  max-width: min(190px, calc(100vw - 110px));
+  width: 220px;
+  max-width: 100%;
   height: auto;
-  border-radius: 8px;
   filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.35));
   transition: transform 0.28s ease, filter 0.28s ease;
 }
 
 .navbar-brand:hover .navbar-logo {
   transform: translateY(-1px);
-  filter: drop-shadow(0 6px 20px rgba(245, 196, 0, 0.45));
+  filter: drop-shadow(0 8px 22px rgba(244, 201, 93, 0.4));
 }
 
 .navbar-logo-mark {
@@ -398,14 +396,22 @@
   }
 
   .navbar-logo {
-    width: 160px;
-    max-width: min(160px, calc(100vw - 90px));
-    border-radius: 7px;
+    width: 196px;
   }
 
   .navbar-logo-mark {
     width: 34px;
     height: 34px;
+  }
+
+  .navbar-brand-mobile-text {
+    font-size: 1rem;
+  }
+
+  .navbar .slogan {
+    font-size: 0.55rem;
+    letter-spacing: 1.3px;
+    margin-top: 3px;
   }
 
   .mobile-nav-menu {
@@ -504,15 +510,13 @@
     padding-right: 0.75rem;
   }
 
-  .navbar-logo {
-    width: 138px;
-    max-width: min(138px, calc(100vw - 80px));
-    border-radius: 6px;
-  }
-
   .navbar-logo-mark {
     width: 30px;
     height: 30px;
+  }
+
+  .navbar-brand-mobile-text {
+    font-size: 0.9rem;
   }
 
   .navbar .phone-link a {
