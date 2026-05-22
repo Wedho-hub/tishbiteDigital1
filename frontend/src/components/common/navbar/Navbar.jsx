@@ -203,15 +203,11 @@ const Navbar = () => {
           <div className="navbar-mobile-bottom d-flex align-items-center justify-content-between w-100">
             <Link className="navbar-brand" to="/">
               <img
-                src="/assets/tishbite_digital_favicon.svg"
+                src="/assets/tishbite_digital_logo.svg"
                 alt="Tishbite Digital"
-                className="navbar-logo-mark"
+                className="navbar-logo"
                 loading="eager"
               />
-              <span className="navbar-brand-mobile-text">
-                Tishbite Digital
-                <span className="slogan">Growing Together</span>
-              </span>
             </Link>
 
             <button
