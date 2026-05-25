@@ -385,21 +385,21 @@ const Home = () => {
             className="row"
           >
             <MotionDiv className="col-md-4" variants={fadeUp}>
-              <h2 className="stat-number">
+              <p className="stat-number" aria-label="50 plus businesses supported">
                 {statsInView ? <CountUp end={50} duration={2.2} /> : 0}+
-              </h2>
+              </p>
               <p>Businesses supported with online growth systems</p>
             </MotionDiv>
             <MotionDiv className="col-md-4" variants={fadeUp}>
-              <h2 className="stat-number">
+              <p className="stat-number" aria-label="120 percent average traffic uplift">
                 {statsInView ? <CountUp end={120} duration={2.2} /> : 0}%
-              </h2>
+              </p>
               <p>Average traffic uplift achieved through SEO and structured pages</p>
             </MotionDiv>
             <MotionDiv className="col-md-4" variants={fadeUp}>
-              <h2 className="stat-number">
+              <p className="stat-number" aria-label="24 automation systems deployed">
                 {statsInView ? <CountUp end={24} duration={2.2} /> : 0}
-              </h2>
+              </p>
               <p>Lead capture &amp; automation systems deployed</p>
             </MotionDiv>
           </MotionDiv>
@@ -482,19 +482,27 @@ const Home = () => {
               {[
                 {
                   img: "/assets/MaffyPic.png",
-                  name: "Maffy Online"
+                  name: "Maffy Online",
+                  desc: "Corporate HR & recruitment website",
+                  link: "https://maffyonline.netlify.app/"
                 },
                 {
                   img: "/assets/fogPic.png",
-                  name: "FOG Educare"
+                  name: "FOG Educare",
+                  desc: "Early childhood education website",
+                  link: null
                 },
                 {
                   img: "/assets/toolTrackPic.png",
-                  name: "Tool Tracking App"
+                  name: "Tool Tracking App",
+                  desc: "Full-stack inventory management system",
+                  link: "https://tooltracking.netlify.app/"
                 },
                 {
                   img: "/assets/churchWebPic.png",
-                  name: "Church Website"
+                  name: "Church Website",
+                  desc: "Community & ministry web presence",
+                  link: "https://inkosiyezasdachurch.netlify.app/"
                 }
               ].map((project) => (
                 <MotionDiv
@@ -506,17 +514,39 @@ const Home = () => {
                   viewport={{ once: true, amount: 0.2 }}
                   whileHover={{ scale: 1.05 }}
                 >
-                  <div className="home-project-card">
-                    <div className="home-project-image-wrap">
-                      <img
-                        src={project.img}
-                        alt={project.name}
-                        className="img-fluid"
-                        loading="lazy"
-                      />
+                  {project.link ? (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="home-project-card home-project-card--link"
+                      aria-label={`View ${project.name} live project`}
+                    >
+                      <div className="home-project-image-wrap">
+                        <img
+                          src={project.img}
+                          alt={`${project.name} — ${project.desc}`}
+                          className="img-fluid"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="home-project-name text-center fw-bold">{project.name}</div>
+                      <div className="home-project-desc text-center">{project.desc}</div>
+                    </a>
+                  ) : (
+                    <div className="home-project-card">
+                      <div className="home-project-image-wrap">
+                        <img
+                          src={project.img}
+                          alt={`${project.name} — ${project.desc}`}
+                          className="img-fluid"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div className="home-project-name text-center fw-bold">{project.name}</div>
+                      <div className="home-project-desc text-center">{project.desc}</div>
                     </div>
-                    <div className="home-project-name text-center fw-bold">{project.name}</div>
-                  </div>
+                  )}
                 </MotionDiv>
               ))}
             </div>

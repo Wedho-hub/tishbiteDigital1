@@ -73,8 +73,7 @@ const Footer = () => {
               <span className="slogan">Growing Together</span>
             </Link>
             <p className="footer-description">
-              We help businesses grow through strategic branding,
-              web development and digital marketing solutions.
+              Cape Town digital agency helping service businesses get more enquiries, better Google visibility, and sustainable online growth.
             </p>
           </motion.div>
 

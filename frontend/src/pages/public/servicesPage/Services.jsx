@@ -171,6 +171,28 @@ const loadingPrompts = [
   "Helping Cape Town businesses grow online with measurable results.",
 ];
 
+/* ─── Hardcoded fallback — shown instantly while Render wakes up ─── */
+const FALLBACK_GENERAL_SERVICES = [
+  { _id: "fb-reg",    title: "Company Registration & Compliance Setup",          category: "general" },
+  { _id: "fb-brand",  title: "Brand Identity & Business Design",                 category: "general" },
+  { _id: "fb-web",    title: "Professional Website Development",                  category: "general" },
+  { _id: "fb-seo",    title: "Google Business Profile & Local SEO Optimization", category: "general" },
+  { _id: "fb-meta",   title: "Meta Business Suite & Social Platform Integration", category: "general" },
+  { _id: "fb-social", title: "Social Media Growth Strategy & Management",         category: "general" },
+  { _id: "fb-ads",    title: "Lead Generation & Paid Advertising Campaigns",      category: "general" },
+  { _id: "fb-crm",    title: "CRM, Automation & Conversion Optimization",         category: "general" },
+];
+
+const FALLBACK_BUNDLE_SERVICES = [
+  { _id: "fb-launch",     title: "Business Launch Suite",              category: "bundle" },
+  { _id: "fb-foundation", title: "Digital Foundation Suite",           category: "bundle" },
+  { _id: "fb-growth",     title: "Growth Acceleration Suite",          category: "bundle" },
+  { _id: "fb-revenue",    title: "Revenue Automation Suite",           category: "bundle" },
+  { _id: "fb-enterprise", title: "Tishbite Enterprise Growth System",  category: "bundle" },
+];
+
+const FALLBACK_SERVICES = [...FALLBACK_GENERAL_SERVICES, ...FALLBACK_BUNDLE_SERVICES];
+
 const pricingPolicyRows = [
   {
     service: "General Services",
@@ -232,9 +254,10 @@ const GENERAL_SERVICE_PRICE = 3500;
 
 const Services = () => {
   const navigate = useNavigate();
-  const [services, setServices] = useState([]);
+  // Start with fallback content — users see real content immediately
+  const [services, setServices] = useState(FALLBACK_SERVICES);
   const [expanded, setExpanded] = useState({});
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [loadingPromptIndex, setLoadingPromptIndex] = useState(0);
   const [showAllGeneral, setShowAllGeneral] = useState(false);
   const [showAllBundles, setShowAllBundles] = useState(false);
@@ -245,6 +268,9 @@ const Services = () => {
     navigate(`/checkout?service=${encodeURIComponent(serviceName)}&price=${price}`);
   };
 
+  // Silently try to load live data from backend in the background.
+  // If Render is sleeping this may take up to 30s — users won't notice
+  // because fallback content is already visible.
   useEffect(() => {
     let mounted = true;
 
@@ -252,12 +278,12 @@ const Services = () => {
       try {
         const data = await getServices();
         if (!mounted) return;
-        setServices(Array.isArray(data) ? data : []);
+        // Only replace fallback if the API returned real data
+        if (Array.isArray(data) && data.length > 0) {
+          setServices(data);
+        }
       } catch (_error) {
-        if (!mounted) return;
-        setServices([]);
-      } finally {
-        if (mounted) setLoading(false);
+        // API failed — fallback content stays, nothing to do
       }
     };
 
@@ -411,26 +437,7 @@ const Services = () => {
       />
 
       <div className="services-page-wrap container" role="region" aria-labelledby="services-overview-heading">
-        {loading && (
-          <>
-            <p className="services-loading-prompt" aria-live="polite">
-              {loadingPrompts[loadingPromptIndex]}
-            </p>
-            <div className="services-skeleton-grid" aria-hidden="true">
-              {Array.from({ length: 4 }, (_, i) => (
-                <div key={i} className="services-skeleton-card">
-                  <div className="skel skel-icon" />
-                  <div className="skel skel-title" />
-                  <div className="skel skel-line" />
-                  <div className="skel skel-line skel-line--short" />
-                </div>
-              ))}
-            </div>
-          </>
-        )}
-
-        {!loading && (
-          <>
+        <>
             <section className="services-hero-panel reveal-on-scroll" style={{ "--reveal-delay": "40ms" }}>
               <div className="services-hero-top">
                 <div className="services-hero-content">
@@ -590,8 +597,7 @@ const Services = () => {
                 </button>
               </div>
             </section>
-          </>
-        )}
+        </>
       </div>
     </>
   );

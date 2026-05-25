@@ -246,6 +246,13 @@ const Navbar = () => {
                 </li>
               ))}
             </ul>
+            {/* Phone CTA inside the mobile menu */}
+            <div className="mobile-menu-phone">
+              <a href={phone.href} aria-label={`Call Tishbite Digital on ${phone.number}`}>
+                <FaPhoneAlt aria-hidden="true" />
+                {phone.number}
+              </a>
+            </div>
           </div>
 
           <button

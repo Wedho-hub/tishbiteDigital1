@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { motion as Motion } from "framer-motion";
-import { FaWhatsapp, FaPaperPlane, FaClock, FaCalendarAlt } from "react-icons/fa";
+import { FaWhatsapp, FaPaperPlane, FaClock, FaCalendarAlt, FaPhone, FaEnvelope } from "react-icons/fa";
 import PageHeader from "../../../components/common/pageHeader/PageHeader";
 import { createEnquiry } from "../../../services/enquiryService";
 import "./contact.css";
@@ -188,8 +188,18 @@ const Contact = () => {
                   automation system, or SEO-driven marketing strategy —
                   we structure systems that scale your business.
                 </Motion.p>
+                <div className="contact-direct-links mt-4">
+                  <a href="tel:+27791684548" className="contact-direct-link">
+                    <FaPhone aria-hidden="true" />
+                    +27 79 168 4548
+                  </a>
+                  <a href="mailto:info@tishbitedigital.co.za" className="contact-direct-link">
+                    <FaEnvelope aria-hidden="true" />
+                    info@tishbitedigital.co.za
+                  </a>
+                </div>
                 <Motion.a
-                  href="https://wa.me/27791684548"
+                  href="https://wa.me/27791684548?text=Hello%20Tishbite%20Digital,%20I%20want%20a%20free%20website%20and%20SEO%20audit."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn mt-3 whatsapp-btn"
@@ -343,14 +353,25 @@ const Contact = () => {
                   </Motion.button>
                   {success && (
                     <Motion.div
-                      className="alert alert-success mt-3"
+                      className="contact-success-box mt-3"
                       role="status"
                       aria-live="polite"
-                      initial={{ opacity: 0, scale: 0.8 }}
+                      initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.5 }}
                     >
-                      Your enquiry has been submitted successfully.
+                      <p className="contact-success-title">✅ Message received!</p>
+                      <p className="contact-success-body">
+                        We'll be in touch within <strong>24 hours</strong>. Want a faster response?
+                      </p>
+                      <a
+                        href="https://wa.me/27791684548?text=Hi%20Tishbite%20Digital,%20I%20just%20submitted%20an%20enquiry%20and%20would%20love%20to%20chat."
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="contact-success-whatsapp"
+                      >
+                        <FaWhatsapp aria-hidden="true" /> Chat on WhatsApp now
+                      </a>
                     </Motion.div>
                   )}
                   {error && (

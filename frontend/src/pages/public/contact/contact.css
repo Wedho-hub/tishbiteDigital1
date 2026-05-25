@@ -192,6 +192,77 @@
   outline-offset: 2px;
 }
 
+/* Direct contact links */
+.contact-direct-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.contact-direct-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: #1b4332;
+  font-weight: 600;
+  font-size: 0.92rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contact-direct-link:hover {
+  color: #2d6a4f;
+  text-decoration: underline;
+}
+
+.contact-direct-link svg {
+  color: #2d6a4f;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+/* Enriched success state */
+.contact-success-box {
+  border-radius: 14px;
+  background: linear-gradient(145deg, #f0faf5, #e8f7ee);
+  border: 1px solid rgba(45, 106, 79, 0.25);
+  padding: 1.2rem 1.4rem;
+}
+
+.contact-success-title {
+  font-weight: 700;
+  color: #1b4332;
+  font-size: 1rem;
+  margin: 0 0 0.35rem;
+}
+
+.contact-success-body {
+  color: #486154;
+  font-size: 0.9rem;
+  margin: 0 0 0.8rem;
+  line-height: 1.55;
+}
+
+.contact-success-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: #25d366;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 0.55rem 1.1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.contact-success-whatsapp:hover {
+  background: #1ebe5d;
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
 .contact-form .alert-success {
   border: 1px solid rgba(45, 106, 79, 0.28);
   background: rgba(45, 106, 79, 0.1);

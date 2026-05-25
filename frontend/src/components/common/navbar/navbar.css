@@ -258,10 +258,11 @@
   background: rgba(244, 201, 93, 0.14);
   color: #f4c95d;
   border: 1px solid rgba(244, 201, 93, 0.28);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
   text-decoration: none;
   transition: all 0.3s ease;
+  white-space: nowrap;
 }
 
 .navbar .phone-link a:hover {
@@ -270,6 +271,34 @@
   border-color: #f4c95d;
   transform: translateY(-3px);
   box-shadow: 0 12px 28px rgba(244, 201, 93, 0.35);
+}
+
+/* Phone inside the open hamburger menu */
+.mobile-menu-phone {
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  padding: 0.9rem 0.15rem 0.4rem;
+  margin-top: 0.4rem;
+}
+
+.mobile-menu-phone a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #f4c95d;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  padding: 0.55rem 0.85rem;
+  border-radius: 10px;
+  background: rgba(244, 201, 93, 0.1);
+  border: 1px solid rgba(244, 201, 93, 0.22);
+  width: 100%;
+  transition: background 0.2s ease;
+}
+
+.mobile-menu-phone a:hover {
+  background: rgba(244, 201, 93, 0.2);
+  color: #f4c95d;
 }
 
 .navbar .main-nav-link:focus-visible {
@@ -480,8 +509,8 @@
 
   .navbar .phone-link a {
     gap: 0.38rem;
-    font-size: 0.73rem;
-    padding: 0.44rem 0.7rem;
+    font-size: 0.78rem;
+    padding: 0.44rem 0.75rem;
     white-space: nowrap;
   }
 
@@ -520,8 +549,8 @@
   }
 
   .navbar .phone-link a {
-    font-size: 0.67rem;
-    padding: 0.36rem 0.54rem;
+    font-size: 0.73rem;
+    padding: 0.4rem 0.6rem;
   }
 
   /* keep 44×44 minimum touch target even on the smallest screens */

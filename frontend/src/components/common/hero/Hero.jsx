@@ -100,7 +100,9 @@ const Hero = () => {
                 src="/assets/tishbiteHero.png"
                 alt="Tishbite Digital leading small businesses from struggle to sustainable digital growth"
                 className="img-fluid hero-image"
-                loading="lazy"
+                fetchpriority="high"
+                width="600"
+                height="500"
               />
             </div>
           </motion.div>
