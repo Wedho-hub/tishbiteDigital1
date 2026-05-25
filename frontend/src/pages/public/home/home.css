@@ -338,8 +338,8 @@
 }
 
 .about-founder-img {
-  width: 280px;
-  height: 280px;
+  width: min(280px, 68vw);
+  height: min(280px, 68vw);
   border-radius: 50%;
   object-fit: cover;
   object-position: top center;
@@ -498,6 +498,22 @@
   .about-link-wrapper::before,
   .about-link-wrapper .about-icon {
     animation: none;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Prevent the animated scale(1.03) from pushing the image wrapper
+     past the container boundary on narrow phones (320–480 px). */
+  .about-link-wrapper {
+    max-width: calc(100% - 0.5rem);
+  }
+
+  .about-link-wrapper::before {
+    inset: -3px; /* reduce the glow extension that bleeds beyond the edge */
+  }
+
+  .about-link-wrapper::after {
+    right: 0; /* keep the "Tap me" badge inside the viewport */
   }
 }
 

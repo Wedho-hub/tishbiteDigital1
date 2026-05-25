@@ -107,6 +107,7 @@
 .checkout-toggle-btn {
   flex: 1;
   padding: 0.6rem;
+  min-height: 44px; /* WCAG touch target */
   border-radius: 10px;
   border: 2px solid rgba(255, 255, 255, 0.25);
   background: transparent;

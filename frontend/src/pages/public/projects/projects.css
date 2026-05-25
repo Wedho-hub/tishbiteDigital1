@@ -120,8 +120,8 @@
 }
 
 .projects-page-link {
-  width: 34px;
-  height: 34px;
+  width: 40px;
+  height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -147,7 +147,7 @@
 .projects-page-readmore {
   align-self: flex-start;
   margin: 0 1.1rem 1.2rem;
-  min-height: 40px;
+  min-height: 44px;
   padding: 0.45rem 0.95rem;
   border-radius: 999px;
   border: 1px solid rgba(27, 67, 50, 0.25);
@@ -288,8 +288,8 @@
   }
 
   .projects-page-link {
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     flex-shrink: 0;
   }
 

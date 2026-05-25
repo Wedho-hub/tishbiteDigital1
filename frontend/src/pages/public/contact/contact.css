@@ -200,6 +200,7 @@
 
 @media (max-width: 767px) {
   .contact-section {
+    min-height: unset; /* remove 70vh which forces excessive whitespace on mobile */
     padding-top: 1.8rem !important;
     padding-bottom: 2rem !important;
   }
