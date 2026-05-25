@@ -98,11 +98,11 @@ const Hero = () => {
             <div className="hero-media-shell text-center w-100">
               <img
                 src="/assets/tishbiteHero.png"
-                alt="Tishbite Digital leading small businesses from struggle to sustainable digital growth"
+                alt="Cape Town digital professional surrounded by analytics dashboards, social media growth metrics and website results — Tishbite Digital"
                 className="img-fluid hero-image"
                 fetchpriority="high"
-                width="600"
-                height="500"
+                width="700"
+                height="392"
               />
             </div>
           </motion.div>
