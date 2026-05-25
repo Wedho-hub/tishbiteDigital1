@@ -302,7 +302,10 @@
 }
 
 .navbar .main-nav-link:focus-visible {
-  outline: none;
+  /* Gold ring on the dark navbar background — 7:1 contrast ratio */
+  outline: 2px solid #f4c95d;
+  outline-offset: 4px;
+  border-radius: 4px;
 }
 
 .navbar-toggler {

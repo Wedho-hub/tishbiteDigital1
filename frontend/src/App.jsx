@@ -1,5 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { MotionConfig } from "framer-motion";
 import ScrollToTop from "./components/common/ScrollToTop";
 import PublicLayout from "./components/layout/PublicLayout";
 
@@ -52,6 +53,11 @@ class ErrorBoundary extends React.Component {
 function App() {
   return (
     <ErrorBoundary>
+      {/* reducedMotion="user" reads the OS prefers-reduced-motion setting
+          and disables all Framer Motion animations automatically.
+          The CSS @media(prefers-reduced-motion) rule only stops CSS
+          transitions — it has no effect on JS-driven Framer animations. */}
+      <MotionConfig reducedMotion="user">
       <BrowserRouter>
         <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
@@ -76,6 +82,7 @@ function App() {
           </Routes>
         </Suspense>
       </BrowserRouter>
+      </MotionConfig>
     </ErrorBoundary>
   );
 }

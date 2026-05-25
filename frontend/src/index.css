@@ -99,9 +99,25 @@ body {
   border: 0;
 }
 
+/* ── Focus ring ────────────────────────────────────────────────────────────
+   Dark green on white = 15:1 contrast ratio (WCAG AAA).
+   Components on dark backgrounds (navbar, cards) override with gold below.
+   Never use outline:none without providing an equivalent visual indicator.
+──────────────────────────────────────────────────────────────────────────── */
 :focus-visible {
-  outline: 3px solid #f4c95d;
-  outline-offset: 2px;
+  outline: 3px solid #1b4332;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* On dark/green backgrounds the dark ring would be invisible — use gold */
+.navbar :focus-visible,
+.checkout-summary-card :focus-visible,
+.stats-section :focus-visible,
+.hww-trust-bar :focus-visible,
+.about-cta :focus-visible,
+.testimonials-section :focus-visible {
+  outline-color: #f4c95d;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -116,6 +132,41 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ── Windows High Contrast Mode (forced-colors) ────────────────────────────
+   When the OS forces high-contrast colours (e.g. Windows HC White/Black),
+   browser overrides most colours. Declare explicit ButtonText / Highlight
+   overrides so the UI stays usable. The outline:2px solid ButtonText
+   guarantees focus rings survive colour inversion.
+──────────────────────────────────────────────────────────────────────────── */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline: 3px solid ButtonText;
+    outline-offset: 3px;
+  }
+
+  .hero-btn,
+  .hww-cta-btn-primary,
+  .hww-cta-btn-whatsapp,
+  .checkout-submit-btn,
+  .whatsapp-float,
+  .about-cta-btn-primary,
+  .contact-success-whatsapp,
+  .services-process-cta-btn {
+    /* Safari doesn't implement forced-colors so this block never runs there */
+    -webkit-forced-color-adjust: none;
+    forced-color-adjust: none;
+    border: 2px solid ButtonText;
+  }
+
+  .skip-link {
+    -webkit-forced-color-adjust: none;
+    forced-color-adjust: none;
+    background: Highlight;
+    color: HighlightText;
+    border: 2px solid ButtonText;
   }
 }
 

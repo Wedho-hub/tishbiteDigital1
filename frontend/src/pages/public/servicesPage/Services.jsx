@@ -370,6 +370,12 @@ const Services = () => {
           <button
             className="read-more-btn"
             onClick={() => toggleExpand(service._id)}
+            aria-expanded={isExpanded}
+            aria-label={
+              isExpanded
+                ? `Show less about ${getDisplayTitle(service)}`
+                : `Read more about ${getDisplayTitle(service)}`
+            }
           >
             {isExpanded ? "Show Less" : "Read More"}
           </button>
@@ -536,15 +542,18 @@ const Services = () => {
                 <p>Starting prices and flexible payment plans for all services and bundles.</p>
               </div>
               <div className="pricing-table-wrap">
-                <table className="pricing-table">
+                <table className="pricing-table" aria-describedby="pricing-table-caption">
+                  <caption id="pricing-table-caption" className="sr-only">
+                    Pricing and payment options for Tishbite Digital services and bundles
+                  </caption>
                   <thead>
                     <tr>
-                      <th>Service / Bundle</th>
-                      <th>Starting Price</th>
-                      <th>Subscription / Installments</th>
-                      <th>Maintenance / Support</th>
-                      <th>Notes</th>
-                      <th aria-label="Action"></th>
+                      <th scope="col">Service / Bundle</th>
+                      <th scope="col">Starting Price</th>
+                      <th scope="col">Subscription / Installments</th>
+                      <th scope="col">Maintenance / Support</th>
+                      <th scope="col">Notes</th>
+                      <th scope="col"><span className="sr-only">Action</span></th>
                     </tr>
                   </thead>
                   <tbody>

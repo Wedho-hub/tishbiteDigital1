@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import "./navbar.css";
 import { Link, useLocation } from "react-router-dom";
 import { FaFacebookF, FaInstagram, FaPinterestP, FaPhoneAlt } from "react-icons/fa";
@@ -25,15 +25,52 @@ const navLinks = [
   { to: "/contact", label: "Contact" },
 ];
 
+const FOCUSABLE = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
 const Navbar = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [navOpacity, setNavOpacity] = useState(0.88);
 
+  const togglerRef = useRef(null);
+  const mobileMenuRef = useRef(null);
+
   const handleNavLinkClick = () => {
     setMenuOpen(false);
   };
+
+  const closeMenu = useCallback(() => {
+    setMenuOpen(false);
+    // Return focus to the toggler so keyboard users don't lose their place
+    togglerRef.current?.focus();
+  }, []);
+
+  // Move focus into the menu when it opens
+  useEffect(() => {
+    if (!menuOpen || !mobileMenuRef.current) return;
+    const first = mobileMenuRef.current.querySelector(FOCUSABLE);
+    first?.focus();
+  }, [menuOpen]);
+
+  // Focus trap — keep Tab / Shift+Tab inside the open menu
+  useEffect(() => {
+    if (!menuOpen) return;
+    const handleTab = (e) => {
+      if (e.key !== 'Tab' || !mobileMenuRef.current) return;
+      const nodes = Array.from(mobileMenuRef.current.querySelectorAll(FOCUSABLE));
+      if (!nodes.length) return;
+      const first = nodes[0];
+      const last = nodes[nodes.length - 1];
+      if (e.shiftKey) {
+        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
+    };
+    window.addEventListener('keydown', handleTab);
+    return () => window.removeEventListener('keydown', handleTab);
+  }, [menuOpen]);
 
   // Keep navbar stable by only changing visual style (not layout height) with hysteresis.
   useEffect(() => {
@@ -80,12 +117,11 @@ const Navbar = () => {
 
   useEffect(() => {
     const handleEscape = (event) => {
-      if (event.key === "Escape") setMenuOpen(false);
+      if (event.key === "Escape" && menuOpen) closeMenu();
     };
-
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);
-  }, []);
+  }, [menuOpen, closeMenu]);
 
   useEffect(() => {
     if (typeof document === "undefined") return undefined;
@@ -215,6 +251,7 @@ const Navbar = () => {
             </Link>
 
             <button
+              ref={togglerRef}
               className={`navbar-toggler${menuOpen ? " open" : ""}`}
               type="button"
               aria-label={menuOpen ? "Close navigation" : "Open navigation"}
@@ -231,7 +268,14 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu */}
-          <div id="mobile-nav-menu" className={`mobile-nav-menu${menuOpen ? " show" : ""}`}>
+          <div
+            id="mobile-nav-menu"
+            ref={mobileMenuRef}
+            className={`mobile-nav-menu${menuOpen ? " show" : ""}`}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
+          >
             <ul className="navbar-nav mt-3">
               {navLinks.map(link => (
                 <li className="nav-item" key={link.to}>
@@ -259,7 +303,8 @@ const Navbar = () => {
             type="button"
             className={`mobile-nav-backdrop${menuOpen ? " show" : ""}`}
             aria-label="Close menu"
-            onClick={() => setMenuOpen(false)}
+            onClick={closeMenu}
+            tabIndex={menuOpen ? 0 : -1}
           />
 
         </div>
