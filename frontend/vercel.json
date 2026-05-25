@@ -10,14 +10,6 @@
       "destination": "https://tishbitedigital1.onrender.com/uploads/:path*"
     },
     {
-      "source": "/sitemap.xml",
-      "destination": "https://tishbitedigital1.onrender.com/sitemap.xml"
-    },
-    {
-      "source": "/robots.txt",
-      "destination": "https://tishbitedigital1.onrender.com/robots.txt"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
