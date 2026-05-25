@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { isEmail, isNotEmpty } from "../../utils/validate";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider.jsx";
@@ -14,7 +15,6 @@ const AdminLogin = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Frontend validation
     if (!isEmail(email)) {
       setError("Please enter a valid email address.");
       return;
@@ -35,30 +35,39 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="admin-login login-center">
-      <div className="login-card">
-        <h2>Admin Login</h2>
-        <form onSubmit={handleSubmit} autoComplete="on">
-          <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            required
-            autoFocus
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-            required
-          />
-          <button type="submit" disabled={loading}>{loading ? "Logging in..." : "Login"}</button>
-          {error && <div className="error login-error-anim">{error}</div>}
-        </form>
+    <>
+      <Helmet>
+        {/* Tell Google not to index any admin page */}
+        <meta name="robots" content="noindex, nofollow" />
+        <title>Admin Login</title>
+      </Helmet>
+      <div className="admin-login login-center">
+        <div className="login-card">
+          <h2>Admin Login</h2>
+          <form onSubmit={handleSubmit} autoComplete="on">
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              required
+              autoFocus
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+              required
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </button>
+            {error && <div className="error login-error-anim">{error}</div>}
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
